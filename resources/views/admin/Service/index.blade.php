@@ -148,7 +148,17 @@
                                                                         <label for="id-field" class="form-label">Agent</label>
                                                                         <input type="text" name="agent[]" id="nom" class="form-control" placeholder="Entrer nom " required />
                                                                     </div>
-                                    
+                                                                    
+                                                                    <div class="mb-3" id="modal-id">
+                                                                        <label for="choices-multiple-remove-button" class="form-label text-muted">With remove button</label>
+                                                                        <select class="form-control" id="choices-multiple-remove-button" data-choices data-choices-removeItem name="choices-multiple-remove-button" multiple>
+                                                                            <option value="Choice 1" selected>Choice 1</option>
+                                                                            <option value="Choice 2">Choice 2</option>
+                                                                            <option value="Choice 3">Choice 3</option>
+                                                                            <option value="Choice 4">Choice 4</option>
+                                                                        </select>
+                                                                    </div>
+                                                                   
                                                                     <div class="mb-3" id="modal-id">
                                                                         <label for="id-field" class="form-label">Heure</label>
                                                                         <input type="text" name="heure[]" id="nom" class="form-control" placeholder="Entrer nom " required />
