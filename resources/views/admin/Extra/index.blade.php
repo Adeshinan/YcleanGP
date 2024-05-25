@@ -136,43 +136,25 @@
                             <h5 class="modal-title" id="exampleModalLabel"></h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                         </div>
-                        <form class="tablelist-form" autocomplete="off" method="Post" action="{{route('service.store')}}">
+                        <form class="tablelist-form" autocomplete="off" method="Post" action="{{route('extra.store')}}">
                             @csrf
                             <div class="modal-body">
                                 <div class="mb-3" id="modal-id">
-                                    <label for="id-field" class="form-label">Nom du Service</label>
-                                    <input type="text" name="nom" id="nom" class="form-control" placeholder="Entrer nom " required />
+                                    <label for="id-field" class="form-label">Nom de l'extra</label>
+                                    <input type="text" name="nom" id="nom" class="form-control" placeholder="Entrer le nom " required />
                                 </div>
 
+                              
                                 <div class="mb-3">
-                                    <h6 class="fw-semibold">Multi Select</h6>
-                                    <select class="js-example-basic-multiple" name="states[]" multiple="multiple">
-                                        
-                                            <option value="London">London</option>
-                                            <option value="Manchester">Manchester</option>
-                                            <option value="Liverpool">Liverpool</option>
-                                       
-                                       
-                                    </select>
-                                </div>
-                                <div class="">
-                                    <h6 class="fw-semibold">Ajax Select</h6>
-                                    <select class="js-example-data-array" name="state"></select>
-                                </div>
-
-
-                                
-
-
-
-                                <div class="mb-3">
-                                    <label for="choices-multiple-default" class="form-label text-muted">Default</label>
-                                    <p class="text-muted">Set <code>data-choices multiple</code> attribute.</p>
-                                    <select class="form-control" id="choices-multiple-default" data-choices name="choices-multiple-default" multiple>
+                                    <label for="choices-multiple-default" class="form-label text-muted">Service</label>
+                                  
+                                    <select name="service_id" class="form-control" id="choices-multiple-default" >
                                         <option value="Choice 1" selected>Choice 1</option>
-                                        <option value="Choice 2">Choice 2</option>
-                                        <option value="Choice 3">Choice 3</option>
-                                        <option value="Choice 4" disabled>Choice 4</option>
+                                        @foreach ($services as $service)
+                                        
+                                        <option value="{{$service->id}}">{{$service->nom}}</option>
+                                            
+                                        @endforeach
                                     </select>
                                 </div>
                                
@@ -180,6 +162,20 @@
                                     <label for="email-field" class="form-label">Prix du service</label>
                                     <input type="number" name="prix" id="prix" class="form-control" placeholder="Entrer le prix" />
                                     <div class="invalid-feedback">Please enter an email.</div>
+                                </div> 
+
+                                <div class="mb-3">
+                                    <label for="choices-multiple-default" class="form-label text-muted">Icon de l'extra</label>
+                                  
+                                    <select name="icon_id" class="form-control" id="choices-multiple-default">
+                                        <option value="Choice 1" selected>Choice 1</option>
+                                        @foreach ($icons as $icon)
+                                        
+                                        <option value="{{$icon->id}}"><i class="bx bxs-notification-off"></i></option>
+                                            
+                                        @endforeach
+                                       
+                                    </select>
                                 </div>
 
                             </div>

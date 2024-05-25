@@ -44,6 +44,12 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link menu-link" href="{{route('extra.index')}}">
+                    <i class="ri-honour-line"></i> <span data-key="t-widgets">Extra</span>
+                </a>
+            </li>
+
 
             <li class="nav-item">
                 <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">

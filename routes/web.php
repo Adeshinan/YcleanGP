@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExtraController;
 use App\Http\Controllers\ServiceController;
 
 /*
@@ -20,3 +21,4 @@ Route::get('/', function () {
 });
 
 Route::resource('service', ServiceController::class);
+Route::resource('extra', ExtraController::class);

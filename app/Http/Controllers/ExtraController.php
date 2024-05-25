@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Icon;
+use App\Models\Extra;
 use App\Models\Service;
 use Illuminate\Http\Request;
 
-class ServiceController extends Controller
+class ExtraController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +19,13 @@ class ServiceController extends Controller
         //
         try
         {
-            $page = 'Services';
+            $page = 'Extra';
             $int =1;
-            $entete = ' Liste des Service - Y Clean';
-            $services = Service::latest()->paginate(10);
-                return view('admin.Service.index', compact('services','int','entete','page'))
+            $entete = ' Liste des Extra - Y Clean';
+            $icons = Icon::all();
+            $services = Service::all();
+            $extra = Extra::latest()->paginate(10);
+                return view('admin.Extra.index', compact('extra','int','entete','page','icons','services'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);
         }
         catch(\Illuminate\Database\QueryException $ex)
@@ -52,29 +56,31 @@ class ServiceController extends Controller
     {
         //
 
+       
         try {
             // Valider les données de la requête
             $validatedData = $request->validate([
                 'nom' => 'required|string|max:255',
+                'icon_id' => 'required',
+                'service_id' => 'required',
                 'prix' => 'required|numeric',
-                'agent' => 'required|array',
-                'agent.*' => 'integer|min:1',
-                'heure' => 'required|array',
-                'heure.*' => 'integer|min:0',
+                
             ]);
     
+           
             // Créer le service
-            $extra = Service::create([
+            $extra = Extra::create([
                 'nom' => $validatedData['nom'],
-                'agent' => json_encode($validatedData['agent']),
-                'heure' => json_encode($validatedData['heure']),
+                'icon_id' => $validatedData['icon_id'],
+                'service_id' => $validatedData['service_id'],
                 'prix' => $validatedData['prix'],
             ]);
     
-            return redirect()->route('service.index')->with('success', 'Service created successfully.');
+            return redirect()->route('extra.index')->with('success', 'Service created successfully.');
     
         } catch (\Throwable $ex) {
             // Gérer l'erreur
+            dd($ex);
             return back()->withErrors(['error' => 'An error occurred: ' . $ex->getMessage()]);
         }
     }
