@@ -15,10 +15,16 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
-            $table->json('agent');
-            $table->json('heure');
-            $table->decimal('prix', 8, 2);
+            $table->string('libelle');
+            $table->boolean('est_agent')->default(0);
+            $table->boolean('personalise')->default(0);
+            $table->integer('agent')->nullable();
+            $table->integer('heure')->nullable();
+            $table->integer('pourcentage')->nullable();
+            $table->decimal('prixhors', 8, 2)->nullable();
+            $table->json('extra')->nullable();
+      
+            
             $table->timestamps();
         });
     }

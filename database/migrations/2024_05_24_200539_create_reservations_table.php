@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->string('address');
+            $table->string('code');
+            $table->string('ville');
             $table->string('nbre_fois');
-            $table->text('service');
+            $table->json('extra');
             $table->integer('nbre_personne')->nullable();
             $table->string('chambre')->default(0);
             $table->string('cuisine')->default(0);
@@ -28,16 +30,17 @@ return new class extends Migration
             $table->string('entre_couloir')->default(0);
             $table->string('escalier')->default(0);
             $table->string('heure_session')->nullable();
-            $table->date('date_visite');
-            $table->string('heure_travail');
-            $table->string('pour_qui')->nullable();
+            $table->datetime('date_visite');
+            //$table->string('heure_travail');
+            $table->boolean('pour_qui')->default(0);
             $table->string('type_paiement')->nullable();
-            $table->text('autre_info')->nullable();
+            //$table->text('autre_info')->nullable();
             $table->integer('valider')->default(0);
             $table->string('prixTotal');
-            $table->string('prixMenager')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('service_id');
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
             $table->timestamps();
         });
     }

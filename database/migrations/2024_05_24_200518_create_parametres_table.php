@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('parametres', function (Blueprint $table) {
             $table->id();
+            $table->string('libelle');
             $table->string('nom');
             $table->decimal('prix', 8, 2)->nullable();
             $table->timestamps();

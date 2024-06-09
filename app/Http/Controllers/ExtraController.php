@@ -6,6 +6,7 @@ use App\Models\Icon;
 use App\Models\Extra;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ExtraController extends Controller
 {
@@ -24,8 +25,8 @@ class ExtraController extends Controller
             $entete = ' Liste des Extra - Y Clean';
             $icons = Icon::all();
             $services = Service::all();
-            $extra = Extra::latest()->paginate(10);
-                return view('admin.Extra.index', compact('extra','int','entete','page','icons','services'))
+            $extras = Extra::latest()->paginate(10);
+                return view('admin.extra.index', compact('extras','int','entete','page','icons','services'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);
         }
         catch(\Illuminate\Database\QueryException $ex)
@@ -59,8 +60,8 @@ class ExtraController extends Controller
        
         try {
             // Valider les données de la requête
-            $validatedData = $request->validate([
-                'nom' => 'required|string|max:255',
+            $validator = Validator::make($request->all(), [
+                'libelle' => 'required|string|max:255',
                 'icon_id' => 'required',
                 'service_id' => 'required',
                 'prix' => 'required|numeric',
@@ -69,12 +70,8 @@ class ExtraController extends Controller
     
            
             // Créer le service
-            $extra = Extra::create([
-                'nom' => $validatedData['nom'],
-                'icon_id' => $validatedData['icon_id'],
-                'service_id' => $validatedData['service_id'],
-                'prix' => $validatedData['prix'],
-            ]);
+            $extra = Extra::create($request->all());
+    
     
             return redirect()->route('extra.index')->with('success', 'Service created successfully.');
     
@@ -129,4 +126,34 @@ class ExtraController extends Controller
     {
         //
     }
+
+    public function getExtra(Request $request)
+    {  
+        $serviceId = $request->id;
+
+        $service = Service::find($serviceId);
+        
+        if ($service) {
+            $extras = $service->extra; // Pas besoin de décoder car $service->extra est déjà un tableau
+            $listeExtra = Extra::whereIn('id', $extras)->get();
+            return response()->json($listeExtra);
+        } else {
+            return response()->json([], 404);
+        }
+    }
+
+
+    public function getExtraprix(Request $request)
+{
+    $extraId = $request->id;
+    $extra = Extra::find($extraId);
+    
+    if ($extra) {
+        return response()->json($extra);
+    } else {
+        return response()->json(['message' => 'Extra non trouvé'], 404);
+    }
+}
+    
+
 }

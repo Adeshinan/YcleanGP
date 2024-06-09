@@ -2,13 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Service;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Extra extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nom', 'prix','icon_id','service_id'];
+    protected $fillable = ['libelle', 'prix','icon_id','service_id'];
+
+    public function service(){
+        return $this->belongsTo(Service::class);
+    }
 
 }

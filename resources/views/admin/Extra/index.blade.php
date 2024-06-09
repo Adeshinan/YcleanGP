@@ -1,4 +1,4 @@
-@extends('layout.admin')
+@extends('layouts.admin')
 @section('contenu')
     
 
@@ -60,15 +60,14 @@
                                                         <input class="form-check-input" type="checkbox" id="checkAll" value="option">
                                                     </div>
                                                 </th>
-                                                <th class="sort" data-sort="customer_name">Customer</th>
-                                                <th class="sort" data-sort="email">Email</th>
-                                                <th class="sort" data-sort="phone">Phone</th>
-                                                <th class="sort" data-sort="date">Joining Date</th>
-                                                <th class="sort" data-sort="status">Delivery Status</th>
+                                                <th class="sort" data-sort="customer_name">Nom de l'extra</th>
+                                                <th class="sort" data-sort="phone">Prix de l'extra</th>
                                                 <th class="sort" data-sort="action">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody class="list form-check-all">
+                                            @foreach ($extras as $extra)
+                                           
                                             <tr>
                                                 <th scope="row">
                                                     <div class="form-check">
@@ -76,11 +75,9 @@
                                                     </div>
                                                 </th>
                                                 <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a></td>
-                                                <td class="customer_name">Mary Cousar</td>
-                                                <td class="email">marycousar@velzon.com</td>
-                                                <td class="phone">580-464-4694</td>
-                                                <td class="date">06 Apr, 2021</td>
-                                                <td class="status"><span class="badge bg-success-subtle text-success text-uppercase">Active</span></td>
+                                                <td class="customer_name">{{$extra->libelle}}</td>
+                                                <td class="phone">{{$extra->prix}}</td>
+                                                
                                                 <td>
                                                     <div class="d-flex gap-2">
                                                         <div class="edit">
@@ -92,6 +89,8 @@
                                                     </div>
                                                 </td>
                                             </tr>
+                                                 
+                                            @endforeach
                                         </tbody>
                                     </table>
                                     <div class="noresult" style="display: none">
@@ -141,7 +140,7 @@
                             <div class="modal-body">
                                 <div class="mb-3" id="modal-id">
                                     <label for="id-field" class="form-label">Nom de l'extra</label>
-                                    <input type="text" name="nom" id="nom" class="form-control" placeholder="Entrer le nom " required />
+                                    <input type="text" name="libelle" id="libelle" class="form-control" placeholder="Entrer le nom " required />
                                 </div>
 
                               
@@ -152,7 +151,7 @@
                                         <option value="Choice 1" selected>Choice 1</option>
                                         @foreach ($services as $service)
                                         
-                                        <option value="{{$service->id}}">{{$service->nom}}</option>
+                                        <option value="{{$service->id}}">{{$service->libelle}}</option>
                                             
                                         @endforeach
                                     </select>
@@ -171,7 +170,7 @@
                                         <option value="Choice 1" selected>Choice 1</option>
                                         @foreach ($icons as $icon)
                                         
-                                        <option value="{{$icon->id}}"><i class="bx bxs-notification-off"></i></option>
+                                        <option value="{{$icon->id}}"><i class='bx bx-moon fs-22'></i></option>
                                             
                                         @endforeach
                                        

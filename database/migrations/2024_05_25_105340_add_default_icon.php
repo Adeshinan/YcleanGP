@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+       
             DB::table('icons')->insert([
                 [
                     "id" => 1,
                     "nom" => 'lemon',
-                    "icon" => 'bx bx-lemon',
+                    "icon" => 'las la-trophy',
                 ],
                 [
                     "id" => 2,
@@ -46,7 +46,7 @@ return new class extends Migration
                     "icon" => 'bx bx-fork',
                 ],
             ]);
-        });
+      
     }
 
     /**
