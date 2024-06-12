@@ -12,12 +12,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Basic Elements</h4>
+                        <h4 class="mb-sm-0">{{$page}}</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
-                                <li class="breadcrumb-item active">Basic Elements</li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Service</a></li>
+                                <li class="breadcrumb-item active">{{$page}}</li>
                             </ol>
                         </div>
 
@@ -63,8 +63,7 @@
                                             </div>
                                         </fieldset>
 
-                                        <div class="mb-4"
-                                            style="display:{{ $service->est_agent == 1 ? 'block' : 'none' }};"
+                                        <div class="mb-4" style="display:{{ $service->est_agent == 1 ? 'block' : 'none' }};"
                                             id="afficheAgent">
                                             <div class="mb-3" id="agent-container">
                                                 <label for="agent-field" class="form-label">Agent</label>
@@ -83,13 +82,12 @@
                                                     reduction</label>
                                                 <input type="number" name="pourcentage" id="prix-field"
                                                     class="form-control" placeholder="Entrer le pourcentage"
-                                                    value="{{ $service->pourcentage }}" />
+                                                    value="{{$service->pourcentage}}" />
                                                 <div class="invalid-feedback">Please enter an email.</div>
                                             </div>
                                         </div>
 
                                         <div class="mb-3"
-                                            style="display:{{ $service->est_agent == 0 ? 'block' : 'none' }};"
                                             id="prixhors-container">
                                             <label for="prixhors-field" class="form-label">Prix du service</label>
                                             <input type="number" name="prixhors" id="prixhors-field"
@@ -169,5 +167,44 @@
     </div>
     @endsection
 
-
-    @include('profile.partials.js.reservation')
+    <script>
+        function toggleChamps(value) {
+            var afficheAgent = document.getElementById('afficheAgent');
+         
+            
+            if (value === '1') {
+                afficheAgent.style.display = 'block';
+                
+    
+                // Set required attribute for inputs inside #afficheAgent
+                var agentInputs = afficheAgent.querySelectorAll('input');
+                agentInputs.forEach(function(input) {
+                    input.required = true;
+                });
+    
+             
+    
+            } else {
+                afficheAgent.style.display = 'none';
+               
+    
+                // Remove required attribute and reset values for inputs inside #afficheAgent
+                var agentInputs = afficheAgent.querySelectorAll('input');
+                agentInputs.forEach(function(input) {
+                    input.required = false;
+                    input.value = '';
+                });
+    
+                // Set required attribute for inputs inside #prixhorsContainer
+              
+            }
+        }
+    
+        function entete() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        }
+    </script>

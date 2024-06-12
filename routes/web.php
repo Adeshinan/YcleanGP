@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExtraController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
@@ -30,12 +31,34 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+Route::middleware(['auth', 'isadmin'])->group(function () {
+
+    /////// Service ///////
+    Route::resource('service', ServiceController::class);
+
+    
+    //////////Extra //////
+    Route::resource('extra', ExtraController::class);
+
+    /////// Parametre //////////
+    Route::resource('parametre', ParametreController::class);
+});
+
+
+Route::get('user_profile',[UserController::class,'profile'])->name('user.profile');
+
+
 Route::get('messagerie',[MessageController::class,'index'])->name('messagerie.index');
 
-Route::resource('service', ServiceController::class);
-Route::resource('extra', ExtraController::class);
-Route::resource('parametre', ParametreController::class);
+
+
+
+
 Route::resource('reservation', ReservationController::class);
+Route::get('/valider/{id}', [ReservationController::class,'Valider'])->name('reservation.valider');
+Route::get('/valider_reservation', [ReservationController::class,'ReservationValider'])->name('reservationliste.valider');
+Route::get('/success', [ReservationController::class,'success'])->name('success');
+Route::get('/checkout', [ReservationController::class,'checkout'])->name('checkout');
 
 
 Route::get('prix_extra',[ExtraController::class,'getExtraprix'])->name('extra.prix');

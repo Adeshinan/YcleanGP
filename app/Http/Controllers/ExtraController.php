@@ -72,13 +72,13 @@ class ExtraController extends Controller
             // Créer le service
             $extra = Extra::create($request->all());
     
+            Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
+            return redirect()->route('extra.index');
     
-            return redirect()->route('extra.index')->with('success', 'Service created successfully.');
-    
-        } catch (\Throwable $ex) {
-            // Gérer l'erreur
-            dd($ex);
-            return back()->withErrors(['error' => 'An error occurred: ' . $ex->getMessage()]);
+        }  catch (\Throwable $ex) {
+            Alert::toast('Une erreur est survenue lors de l\'enrengistrement', 'error')->position('top-end')->timerProgressBar();
+                \Log::error($ex->getMessage());
+                return back()->withInput();
         }
     }
 
@@ -128,19 +128,30 @@ class ExtraController extends Controller
     }
 
     public function getExtra(Request $request)
-    {  
-        $serviceId = $request->id;
+{
+    $serviceId = $request->id;
 
-        $service = Service::find($serviceId);
-        
-        if ($service) {
-            $extras = $service->extra; // Pas besoin de décoder car $service->extra est déjà un tableau
-            $listeExtra = Extra::whereIn('id', $extras)->get();
+    $service = Service::find($serviceId);
+
+    if ($service) {
+        $extras = $service->extra;
+
+        // Vérifier si $extras est une chaîne JSON et la décoder en tableau
+        $extrasArray = json_decode($extras, true);
+
+        if (is_array($extrasArray)) {
+            // Utiliser $extrasArray dans la requête
+            $listeExtra = Extra::whereIn('id', $extrasArray)->get();
             return response()->json($listeExtra);
         } else {
+            // Gérer le cas où $extras n'est pas un tableau valide
             return response()->json([], 404);
         }
+    } else {
+        return response()->json([], 404);
     }
+}
+
 
 
     public function getExtraprix(Request $request)

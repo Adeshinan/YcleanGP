@@ -116,7 +116,7 @@
                                             <label for="username" class="form-label">Sexe <span class="text-danger">*</span></label>
                                            
                                             <select class="form-control" name="sexe" id="sexe" placeholder="Enter username" required id="">
-                                                <option selected >Choisisez le sexe</option>
+                                                <option selected value="" >Choisisez le sexe</option>
                                                 <option value="Masculin">Masculin</option>
                                                 <option value="Féminin">Féminin</option>
                                             </select>

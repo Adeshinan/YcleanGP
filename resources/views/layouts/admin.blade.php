@@ -18,7 +18,7 @@
     <link href="Admin/assets/libs/swiper/swiper-bundle.min.css" rel="stylesheet" type="text/css" />
 
     <!-- Layout config Js -->
-    <script src="Admin/assets/js/layout.js"></script>
+    <script src="Admin/assets/js/layout.js"></script> 
     <!-- Bootstrap Css -->
     <link href="Admin/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
@@ -31,7 +31,7 @@
     <link href="Admin/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
       <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-      <link rel="stylesheet" href="assets/libs/glightbox/css/glightbox.min.css">
+      <link rel="stylesheet" href="Admin/assets/libs/glightbox/css/glightbox.min.css">
    {{--    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}"> --}}
 </head>
 
@@ -69,41 +69,11 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
         <!-- ========== App Menu ========== -->
-        <div class="app-menu navbar-menu">
-            <!-- LOGO -->
-            <div class="navbar-brand-box">
-                <!-- Dark Logo-->
-                <a href="index.html" class="logo logo-dark">
-                    <span class="logo-sm">
-                        <img src="Admin/assets/images/logo-sm.png" alt="" height="22">
-                    </span>
-                    <span class="logo-lg">
-                        <img src="Admin/assets/images/logo-dark.png" alt="" height="17">
-                    </span>
-                </a>
-                <!-- Light Logo-->
-                <a href="index.html" class="logo logo-light">
-                    <span class="logo-sm">
-                        <img src="Admin/assets/images/logo-sm.png" alt="" height="22">
-                    </span>
-                    <span class="logo-lg">
-                        <img src="Admin/assets/images/logo-light.png" alt="" height="17">
-                    </span>
-                </a>
-                <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
-                    <i class="ri-record-circle-line"></i>
-                </button>
-            </div>
+       
     
-            
-           
-           
-           
-           
            @include('layouts.sliderbar')
 
-            <div class="sidebar-background"></div>
-        </div>
+           
         <!-- Left Sidebar End -->
         <!-- Vertical Overlay-->
         <div class="vertical-overlay"></div>
@@ -111,6 +81,8 @@
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
+
+        @include('sweetalert::alert')
         @yield('contenu')
         <!-- end main content-->
 

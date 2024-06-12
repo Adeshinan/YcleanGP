@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\PrixService;
+use App\Models\Reservation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -17,4 +18,9 @@ class Service extends Model
         'extra' => 'array',
     ];
 
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }

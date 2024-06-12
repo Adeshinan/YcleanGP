@@ -6,6 +6,7 @@ use App\Models\Extra;
 use App\Models\Service;
 use App\Models\Parametre;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
 
 class ServiceController extends Controller
@@ -20,7 +21,7 @@ class ServiceController extends Controller
         //
         try
         {
-            $page = 'Services';
+            $page = 'Liste des Services';
             $int =1;
             $entete = ' Liste des Service - Y Clean';
             $parametre = Parametre::all();
@@ -84,13 +85,16 @@ class ServiceController extends Controller
             'prixhors' => $validatedData['prixhors'],
             'extra' => json_encode($validatedData['extra']),
         ]);
+
+        Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
+        return redirect()->route('service.index');
         
-        return redirect()->route('service.index')->with('success', 'Service created successfully.');
+        
 
     } catch (\Throwable $ex) {
-        dd($ex);
-        // Gérer l'erreur
-        return back()->withErrors(['error' => 'An error occurred: ' . $ex->getMessage()]);
+        Alert::toast('Une erreur est survenue lors de l\'enrengistrement', 'error')->position('top-end')->timerProgressBar();
+            \Log::error($ex->getMessage());
+            return back()->withInput();
     }
 }
 

@@ -537,6 +537,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function updateTotalPrice(discountPercentage = 0) {
+
+    const taxRates = {
+            TPS: {{ $tps }},
+            TVQ: {{ $tvq }}
+        };
+
+        console.log(taxRates);
     const servicePrice = parseFloat(document.getElementById('prixTotalHT').getAttribute('data-service-price') || 0);
     const extraPrice = parseFloat(document.getElementById('prixTotalHT').getAttribute('data-extra-price') || 0);
     const fieldPrice = parseFloat(document.getElementById('prixTotalHT').getAttribute('data-field-price') || 0);
@@ -548,9 +555,27 @@ function updateTotalPrice(discountPercentage = 0) {
             discountedServicePrice -= discount;
             const totalPrice = discountedServicePrice + extraPrice + fieldPrice;
              document.getElementById('prixTotalHT').textContent = totalPrice.toFixed(2);
+
+             const somTaxes = taxRates.TPS + taxRates.TVQ;
+             const totalTaxes = totalPrice * (somTaxes / 100 );
+
+            document.getElementById('taxes').textContent = totalTaxes.toFixed(2);
+
+            // Calculate total price with taxes
+            const totalPriceTTC = totalPrice + totalTaxes;
+            document.getElementById('prixTotalTTC').textContent = totalPriceTTC.toFixed(2);
     }else{
         const totalPrice = servicePrice + extraPrice + fieldPrice;
         document.getElementById('prixTotalHT').textContent = totalPrice.toFixed(2);
+
+        const somTaxes = taxRates.TPS + taxRates.TVQ;
+        const totalTaxes = totalPrice * (somTaxes / 100 );
+           
+            document.getElementById('taxes').textContent = totalTaxes.toFixed(2);
+
+            // Calculate total price with taxes
+            const totalPriceTTC = totalPrice + totalTaxes;
+            document.getElementById('prixTotalTTC').textContent = totalPriceTTC.toFixed(2);
     }
    
    
