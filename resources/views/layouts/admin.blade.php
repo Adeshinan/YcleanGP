@@ -1189,6 +1189,7 @@
     <script src="Admin/assets/libs/feather-icons/feather.min.js"></script>
     <script src="Admin/assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
     <script src="Admin/assets/js/plugins.js"></script>
+    <script src="js/jquery-3.6.0.min.js"></script>
 
     <!-- apexcharts -->
     <script src="Admin/assets/libs/apexcharts/apexcharts.min.js"></script>
