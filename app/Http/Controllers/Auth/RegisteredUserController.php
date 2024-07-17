@@ -66,7 +66,7 @@ class RegisteredUserController extends Controller
     
             return redirect(RouteServiceProvider::HOME);
         } catch (\Throwable $ex) {
-           
+           dd($ex);
             //throw $th;
         }
        
