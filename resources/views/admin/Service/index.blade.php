@@ -112,6 +112,7 @@
 
                                             @endforeach
                                         </tbody>
+                                        {{$services->links()}}
                                     </table>
                                     <div class="noresult" style="display: none">
                                         <div class="text-center">

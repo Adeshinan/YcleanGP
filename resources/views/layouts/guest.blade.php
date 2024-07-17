@@ -13,18 +13,15 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100" style="background-image: url('{{asset('Admin/assets/img/bg5.jpg')}}'); background-size: cover; background-repeat: no-repeat;">
-            <div>
-                <a href="/">
-                   <img src="{{asset('Admin/assets/img/logo.png')}}" alt="" style="width: 150px;height:150px ;">
-                </a>
-            </div>
 
-            <div class="w-full sm:max-w-md mt-3 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
-            </div>
+        <!-- Styles -->
+        @livewireStyles
+    </head>
+    <body>
+        <div class="font-sans text-gray-900 antialiased">
+            {{ $slot }}
         </div>
+
+        @livewireScripts
     </body>
 </html>

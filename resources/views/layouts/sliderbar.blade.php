@@ -1,6 +1,6 @@
 <div class="app-menu navbar-menu">
     <!-- LOGO -->
-    <div class="navbar-brand-box">
+    <div class="navbar-brand-box mt-4">
         <!-- Dark Logo-->
         <a href="index.html" class="logo logo-dark">
             <span class="logo-sm">
@@ -100,10 +100,12 @@
                                 <a href="{{route('reservation.index')}}" class="nav-link" data-key="t-analytics"> En
                                     attente </a>
                             </li>
+                            
                             <li class="nav-item">
                                 <a href="{{route('reservationliste.valider')}}" class="nav-link" data-key="t-crm"> valider </a>
                             </li>
-                            <li class="nav-item">
+
+                           {{--  <li class="nav-item">
                                 <a href="index.html" class="nav-link" data-key="t-ecommerce"> Ecommerce </a>
                             </li>
                             <li class="nav-item">
@@ -117,10 +119,18 @@
                             </li>
                             <li class="nav-item">
                                 <a href="dashboard-job.html" class="nav-link" data-key="t-job">Job</a>
-                            </li>
+                            </li> --}}
                         </ul>
+
                     </div>
-                </li> <!-- end Dashboard Menu -->
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{route('agenda.client')}}">
+                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Agenda</span>
+                    </a>
+                </li>
+                <!-- end Dashboard Menu -->
 
                 {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarLayouts" data-bs-toggle="collapse" role="button"

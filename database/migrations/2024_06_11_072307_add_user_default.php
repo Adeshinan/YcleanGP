@@ -16,7 +16,7 @@ return new class extends Migration
         DB::table('users')->insert([
                        
             [
-                "nomprenoms" => 'Yclean',
+                "name" => 'Yclean',
                 "numero" => '+1 000000000000',
                 "address" => "Montral",
                 "postal" => "Montral",

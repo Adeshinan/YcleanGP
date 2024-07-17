@@ -62,35 +62,19 @@
                                 <div class="chat-message-list">
 
                                     <ul class="list-unstyled chat-list chat-user-list" id="userList">
-                                        
+                                      
                                     </ul>
                                 </div>
 
-                                <div class="d-flex align-items-center px-4 mt-4 pt-2 mb-2">
-                                    <div class="flex-grow-1">
-                                        <h4 class="mb-0 fs-11 text-muted text-uppercase">Channels</h4>
-                                    </div>
-                                    <div class="flex-shrink-0">
-                                        <div data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="bottom" title="Create group">
-                                            <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-soft-success btn-sm">
-                                                <i class="ri-add-line align-bottom"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="chat-message-list">
-
-                                    <ul class="list-unstyled chat-list chat-user-list mb-0" id="channelList">
-                                    </ul>
-                                </div>
                                 <!-- End chat-message-list -->
                             </div>
                         </div>
                         <div class="tab-pane" id="contacts" role="tabpanel">
                             <div class="chat-room-list pt-3" data-simplebar>
-                                <div class="sort-contact">            
+                                <div class="sort-contact">    
+                                    @foreach ($clients as $client)
+                                    <p><a href="{{route('messages.chat',$client->id)}} ">{{$client->name}} </a> </p>
+                                @endforeach        
                                 </div>
                             </div>
                         </div>
@@ -343,9 +327,6 @@
             </div>
         </div>
     </footer>
-</div>
-<!-- end main content-->
-
 </div>
 
 @endsection

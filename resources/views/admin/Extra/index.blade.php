@@ -101,18 +101,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{$extras->links()}}
 
-                                <div class="d-flex justify-content-end">
-                                    <div class="pagination-wrap hstack gap-2">
-                                        <a class="page-item pagination-prev disabled" href="javascript:void(0);">
-                                            prec
-                                        </a>
-                                        <ul class="pagination listjs-pagination mb-0"></ul>
-                                        <a class="page-item pagination-next" href="javascript:void(0);">
-                                            Suiv
-                                        </a>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div><!-- end card -->
                     </div>
@@ -144,38 +135,15 @@
                                 </div>
 
                               
-                                <div class="mb-3">
-                                    <label for="choices-multiple-default" class="form-label text-muted">Service</label>
-                                  
-                                    <select name="service_id" class="form-control" id="choices-multiple-default" >
-                                        <option value="Choice 1" selected>Choice 1</option>
-                                        @foreach ($services as $service)
-                                        
-                                        <option value="{{$service->id}}">{{$service->libelle}}</option>
-                                            
-                                        @endforeach
-                                    </select>
-                                </div>
+                                
                                
                                 <div class="mb-3">
-                                    <label for="email-field" class="form-label">Prix du service</label>
+                                    <label for="email-field" class="form-label">Prix de l'extra</label>
                                     <input type="number" name="prix" id="prix" class="form-control" placeholder="Entrer le prix" />
                                     <div class="invalid-feedback">Please enter an email.</div>
                                 </div> 
 
-                                <div class="mb-3">
-                                    <label for="choices-multiple-default" class="form-label text-muted">Icon de l'extra</label>
-                                  
-                                    <select name="icon_id" class="form-control" id="choices-multiple-default">
-                                        <option value="Choice 1" selected>Choice 1</option>
-                                        @foreach ($icons as $icon)
-                                        
-                                        <option value="{{$icon->id}}"><i class='bx bx-moon fs-22'></i></option>
-                                            
-                                        @endforeach
-                                       
-                                    </select>
-                                </div>
+                                
 
                             </div>
                             <div class="modal-footer">

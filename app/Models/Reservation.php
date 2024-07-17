@@ -13,7 +13,10 @@ class Reservation extends Model
     
     protected $guarded = [];
 
-
+    protected $casts = [
+        'session_dates' => 'array',
+    ];
+    
     public function user()
     {
         return $this->belongsTo(User::class);

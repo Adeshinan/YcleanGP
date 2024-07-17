@@ -20,7 +20,7 @@
                     <!--end col-->
                     <div class="col">
                         <div class="p-2">
-                            <h3 class="text-white mb-1">{{Auth::user()->nomprenoms}}</h3>
+                            <h3 class="text-white mb-1">{{Auth::user()->name}}</h3>
                             <p class="text-white text-opacity-75"></p>
                             <div class="hstack text-white-50 gap-1">
                                 <div class="me-2"><i class="ri-map-pin-user-line me-1 text-white text-opacity-75 fs-16 align-middle"></i>{{Auth::user()->ville}}, {{Auth::user()->address}}</div>
@@ -72,7 +72,7 @@
                                                         <tbody>
                                                             <tr>
                                                                 <th class="ps-0" scope="row">Nom et prénom :</th>
-                                                                <td class="text-muted">{{Auth::user()->nomprenoms}}</td>
+                                                                <td class="text-muted">{{Auth::user()->name}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th class="ps-0" scope="row">Contact :</th>

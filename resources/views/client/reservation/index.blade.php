@@ -29,17 +29,20 @@
                                                     <div class="col-lg-12">
                                                         <div class="card">
                                                             <div class="card-header">
-                                                                <h4 class="card-title mb-0">Add, Edit & Remove</h4>
+                                                                <h4 class="card-title mb-0"></h4>
                                                             </div><!-- end card header -->
                                     
                                                             <div class="card-body">
                                                                 <div class="listjs-table" id="customerList">
                                                                     <div class="row g-4 mb-3">
                                                                         <div class="col-sm-auto">
+                                                                            @if (Auth::user()->type_connecter != 'admin')
                                                                             <div>
                                                                                 <a href="{{route('reservation.create')}}" class="btn btn-success"><i class="ri-add-line align-bottom me-1"></i> Passer Réservation</a>
                                                                                 <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
                                                                             </div>
+                                                                            @endif
+                                                                            
                                                                         </div>
                                                                         <div class="col-sm">
                                                                             <div class="d-flex justify-content-sm-end">
@@ -78,7 +81,7 @@
                                                                                     </th>
                                                                                    
                                                                                     <td class="customer_name">{{$reservation->service->libelle}}</td>
-                                                                                    <td class="email">{{$reservation->user->nomprenoms}}</td>
+                                                                                    <td class="email">{{$reservation->user->name}}</td>
                                                                                     <td class="email">{{$reservation->date_visite}}</td>
                                                                                     <td class="email">{{$reservation->prixTotal}}$ CAD</td>
                                                                                     

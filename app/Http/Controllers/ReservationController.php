@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Stripe\Stripe;
 use App\Models\Taux;
 use App\Models\Taxe;
@@ -30,11 +31,11 @@ class ReservationController extends Controller
             $entete = ' Liste des Reservation en attente - Y Clean';
             if(Auth::user()->type_connecter == 'admin'){
                 
-                $reservations = Reservation::where('valider',0)->paginate(10);
+                $reservations = Reservation::where('valider',0)->paginate(5);
             }else{
                 $reservations = Reservation::where('user_id',Auth::id())
                                             ->where('valider',0)
-                                            ->paginate(10);
+                                            ->paginate(5);
             }
                 return view('client.reservation.index', compact('reservations','int','entete','page'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -71,7 +72,7 @@ class ReservationController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+{
     try {
         $validated = $request->validate([
             'service_id' => 'required|exists:services,id',
@@ -95,30 +96,23 @@ class ReservationController extends Controller
             'type_paiement' => 'required|integer',
         ]);
 
-       
-
+        //dd($validated);
         Stripe::setApiKey(config('stripe.sk'));
-       
-        // Ajouter l'ID de l'utilisateur connecté aux données validées
+
         $validated['user_id'] = Auth::id();
 
-        // Récupérer le service sélectionné
         $service = Service::findOrFail($validated['service_id']);
-        
         $servicePrice = $service->prixhors;
 
-        // Calculer le prix total des extras
         $extrasPrice = 0;
         if (isset($validated['extra'])) {
             $extras = Extra::whereIn('id', $validated['extra'])->get();
             foreach ($extras as $extra) {
                 $extrasPrice += $extra->prix;
             }
-            // Convertir l'array extra en JSON
             $validated['extra'] = json_encode($validated['extra']);
         }
 
-        // Vérifier et appliquer la réduction sur le prix du service si applicable
         if (
             isset($validated['nbre_personne']) && $validated['nbre_personne'] <= $service->agent &&
             isset($validated['heure_session']) && $validated['heure_session'] <= $service->heure
@@ -126,7 +120,6 @@ class ReservationController extends Controller
             $servicePrice -= ($servicePrice * ($service->pourcentage / 100));
         }
 
-        // Calculer le prix des éléments supplémentaires
         $params = ['chambre', 'cuisine', 'salle_bain', 'salle_eau', 'salon', 'buanderie', 'entre_couloir', 'escalier'];
         $paramsPrice = 0;
         foreach ($params as $param) {
@@ -138,36 +131,30 @@ class ReservationController extends Controller
             }
         }
 
-        // Calculer le PrixDebut
         $PrixDebut = $servicePrice + $extrasPrice + $paramsPrice;
 
-        
         $taxes = Taxe::all();
         $totalTaxPercentage = $taxes->sum('pourcentage');
 
-        
-        // Appliquer les taxes sur le prix de départ
         $taxAmount = $PrixDebut * ($totalTaxPercentage / 100);
         $PrixDebutWithTaxes = $PrixDebut + $taxAmount;
 
-        // Appliquer la réduction basée sur nbre_fois si applicable
         $PrixTotal = $PrixDebutWithTaxes;
-     
-       
         if (isset($validated['nbre_fois'])) {
             $taux = Taux::where('libelle', $validated['nbre_fois'])->first();
             if ($taux) {
                 $PrixTotal = $PrixDebutWithTaxes - ($PrixDebutWithTaxes * ($taux->pourcentage / 100));
             }
         }
-       /*  $f = $taux->pourcentage / 100;
-        $c = $PrixDebutWithTaxes * ($taux->pourcentage / 100);
-        dd('service',$servicePrice,'extrasPrice',$extrasPrice,'paramsPrice',$paramsPrice,'PrixDebut',$PrixDebut,'PrixDebutWithTaxes', $PrixDebutWithTaxes,'PrixTotal', $PrixTotal,'tps',$taxAmount,'f',$f,$c); */
-        // Enregistrer la réservation avec le prix total calculé
-        $validated['prixTotal'] = $PrixTotal;
        
+        // Générer les dates des séances à venir
+        $sessionDates = $this->getSessionDates($validated['date_visite'], $validated['nbre_fois']);
+        $validated['session_dates'] = json_encode($sessionDates);
+
+       
+        $validated['prixTotal'] = $PrixTotal;
+
         if($validated['type_paiement'] == 1){
-            
             $session = Session::create([
                 'line_items'=>[
                 [
@@ -180,30 +167,62 @@ class ReservationController extends Controller
                     ],
                     'quantity'=> 1,
                 ],
-                
-            ],
-            'mode' => 'payment',
-            'success_url' => route('success' ),
-            'cancel_url' => route('checkout'),
+                ],
+                'mode' => 'payment',
+                'success_url' => route('success' ),
+                'cancel_url' => route('checkout'),
             ]);
-          
+
             Reservation::create($validated);
             Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
             return redirect($session->url);
-            
-        }else{
+        } else {
             Reservation::create($validated);
             Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
             return redirect()->route('reservation.index');
         }
-       
-       // return redirect()->back()->with('success', 'Réservation enregistrée avec succès.');
-    }  catch (\Throwable $ex) {
-        Alert::toast('Une erreur est survenue lors de l\'enrengistrement', 'error')->position('top-end')->timerProgressBar();
-            \Log::error($ex->getMessage());
-            return back()->withInput();
+
+    } catch (\Throwable $ex) {
+        dd($ex);
+        Alert::toast('Une erreur est survenue lors de l\'enregistrement', 'error')->position('top-end')->timerProgressBar();
+        \Log::error($ex->getMessage());
+        return back()->withInput();
     }
+}
+
+
+
+private function getSessionDates($date_visite, $nbre_fois)
+{
+    $dates = [];
+    $date = Carbon::parse($date_visite);
+    $interval = null;
+    $end_date = Carbon::now()->addYear();
+    switch ($nbre_fois) {
+        case '1 fois par semaine':
+            $interval = '1 week';
+            break;
+        case '1 fois par quinzaine':
+            $interval = '2 weeks';
+            break;
+        case '1 fois par mois':
+            $interval = '1 month';
+            break;
+        case 'Juste cette fois ci':
+            $dates[] = $date->format('d-m-Y H:i');
+            return $dates;
+        default:
+            throw new \Exception("Fréquence inconnue: $nbre_fois");
     }
+
+    while ($date->isBefore($end_date)) {
+        $dates[] = $date->format('d-m-Y H:i');
+        $date->add($interval);
+    }
+
+    return $dates;
+}
+
     /**
      * Display the specified resource.
      */
@@ -219,8 +238,30 @@ class ReservationController extends Controller
         $service = Service::where('id',$reservation->service_id)->first();
         $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
         $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
-        return view('client.reservation.show',compact('reservation','entete','extra','parametre','taux','service','tps','tvq','page'));
+        $next_sessions = $this->getNextSessions($reservation->session_dates);
+        return view('client.reservation.show',compact('reservation','entete','extra','parametre','taux','service','tps','tvq','page','next_sessions'));
     }
+
+
+    private function getNextSessions($session_dates)
+{
+    $sessions = json_decode($session_dates, true);
+    $now = Carbon::now();
+    $upcoming_sessions = [];
+
+    foreach ($sessions as $session) {
+        $session_date = Carbon::parse($session);
+        if ($session_date->isFuture()) {
+            $upcoming_sessions[] = $session_date;
+        }
+        if (count($upcoming_sessions) == 4) {
+            break;
+        }
+    }
+
+    return $upcoming_sessions;
+}
+
 
     /**
      * Show the form for editing the specified resource.
@@ -247,7 +288,8 @@ class ReservationController extends Controller
     }
 
 
-    public function Valider($id){
+    public function Valider($id)
+    {
         $reservation = Reservation::find($id);
         if($reservation){
             $reservation->update(['valider' => 1]);
@@ -259,7 +301,8 @@ class ReservationController extends Controller
         }
     }
 
-    public function ReservationValider(){
+    public function ReservationValider()
+    {
         
         try
         {
@@ -267,10 +310,10 @@ class ReservationController extends Controller
             $int =1;
             $entete = ' Liste des Reservation en valider - Y Clean';
             if(Auth::user()->type_connecter == 'admin'){
-                $reservations = Reservation::where('user_id',Auth::id())
-                                            ->where('valider',1)->paginate(10);
+                $reservations = Reservation::where('valider',1)->paginate(5);
              }else{
-                $reservations = Reservation::where('valider',1)->paginate(10);
+                $reservations = Reservation::where('user_id',Auth::id())
+                                            ->where('valider',1)->paginate(5);
                 
             }
                 return view('client.reservation.valider', compact('reservations','int','entete','page'))
@@ -293,5 +336,23 @@ class ReservationController extends Controller
         return "paiement echoué";
     }
 
-    
+
+    public function getNextSessionsFromReservation($id)
+{
+    $reservation = Reservation::find($id);
+    $next_sessions = $this->getNextSessions($reservation->session_dates);
+
+    return response()->json(['sessions' => $next_sessions->map(function ($session) {
+        return $session->format('d/m/Y H:i');
+    })]);
+}
+
+
+public function getAll()
+{
+    $reservations = Reservation::all();
+
+    return response()->json(['reservations' => $reservations]);
+}
+ 
 }

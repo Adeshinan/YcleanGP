@@ -26,7 +26,7 @@ class ServiceController extends Controller
             $entete = ' Liste des Service - Y Clean';
             $parametre = Parametre::all();
             $extra = Extra::all();
-            $services = Service::latest()->paginate(10);
+            $services = Service::latest()->paginate(5);
                 return view('admin.service.index', compact('services','int','entete','page','parametre','extra'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);
         }

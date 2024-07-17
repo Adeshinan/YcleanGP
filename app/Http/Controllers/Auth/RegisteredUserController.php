@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
             //code...
 
             $request->validate([
-                'nomprenoms' => ['required', 'string', 'max:255'],
+                'name' => ['required', 'string', 'max:255'],
                 'address' => ['required', 'string', 'max:255'],
                 'postal' => ['required', 'string', 'max:10'],
                 'ville' => ['required', 'string', 'max:100'],
@@ -43,21 +43,13 @@ class RegisteredUserController extends Controller
                // 'mode_connexion' => ['required', 'string', 'max:50'],
                 'sexe' => ['required', 'string'],
                 'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users'],
-                'password' => [
-                    'required',
-                    'confirmed',
-                    Rules\Password::defaults(),
-                    'min:8',                                // Minimum 8 caractères
-                    'regex:/[a-z]/',                        // Au moins une lettre minuscule
-                    'regex:/[A-Z]/',                        // Au moins une lettre majuscule
-                    'regex:/[0-9]/',                        // Au moins un chiffre
-                ],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
             ]);
             
 
            
             $user = User::create([
-                'nomprenoms' => $request->nomprenoms,
+                'name' => $request->name,
                 'address' => $request->address,
                 'postal' => $request->postal,
                 'ville' => $request->ville,

@@ -25,7 +25,7 @@ class ExtraController extends Controller
             $entete = ' Liste des Extra - Y Clean';
             $icons = Icon::all();
             $services = Service::all();
-            $extras = Extra::latest()->paginate(10);
+            $extras = Extra::latest()->paginate(5);
                 return view('admin.extra.index', compact('extras','int','entete','page','icons','services'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);
         }

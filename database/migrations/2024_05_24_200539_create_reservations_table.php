@@ -34,6 +34,7 @@ return new class extends Migration
             //$table->string('heure_travail');
             $table->boolean('pour_qui')->default(0);
             $table->integer('type_paiement');
+            $table->json('session_dates')->nullable();
             //$table->text('autre_info')->nullable();
             $table->integer('valider')->default(0);
             $table->decimal('prixTotal', 8, 2)->nullable();

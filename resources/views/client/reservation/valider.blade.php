@@ -75,7 +75,7 @@
                                                                                     </th>
                                                                                    
                                                                                     <td class="customer_name">{{$reservation->service->libelle}}</td>
-                                                                                    <td class="email">{{$reservation->user->nomprenoms}}</td>
+                                                                                    <td class="email">{{$reservation->user->name}}</td>
                                                                                     <td class="email">{{$reservation->date_visite}}</td>
                                                                                     <td class="email">{{$reservation->prixTotal}}$ CAD</td>
                                                                                     

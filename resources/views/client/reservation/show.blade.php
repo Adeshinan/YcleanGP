@@ -38,7 +38,7 @@
                                             <img src="assets/images/logo-light.png" class="card-logo card-logo-light"
                                                 alt="logo light" height="17">
                                             <div class="mt-sm-5 mt-4">
-                                                <h6 class="text-muted text-uppercase fw-semibold">Adresse</h6>
+                                                <h6 class="text-muted text-uppercase fw-semibold">Adresse </h6>
                                                 <p class="text-muted mb-1" id="address-details">
                                                     {{$reservation->user->address}}</p>
                                                 <p class="text-muted mb-0" id="zip-code"><span>code
@@ -47,9 +47,9 @@
                                         </div>
                                         <div class="flex-shrink-0 mt-sm-0 mt-3">
 
-                                            <h6><span class="text-muted fw-normal">Email:</span><span
+                                            <h6><span class="text-muted fw-normal">Email: </span><span
                                                     id="email">{{$reservation->user->email}}</span></h6>
-                                            <h6 class="mb-0"><span class="text-muted fw-normal">Numéro de contact:
+                                            <h6 class="mb-0"><span class="text-muted fw-normal">Numéro de contact: 
                                                 </span><span id="contact-no"> {{$reservation->user->numero}}</span></h6>
                                         </div>
                                     </div>
@@ -91,6 +91,19 @@
                                 </div>
                                 <!--end card-body-->
                             </div>
+
+
+                            <div id="sessions-list">
+                                <h3>Prochaines sessions</h3>
+                                <ul id="sessions">
+                                     @foreach ($next_sessions as $session)
+
+                                     <li> {{$reservation->formatted_date_session =
+                                        Carbon\Carbon::parse($session)->translatedFormat('d
+                                        F Y à H\h:i\m'); }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                             <!--end col-->
                             
                             <!--end col-->
@@ -109,6 +122,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="products-list">
+                                                <tr>
+
+                                                    <td class="text-start">
+                                                        <span class="fw-medium">{{$reservation->service->libelle}}</span>
+
+                                                    </td>
+                                                    <td>{{$reservation->service->prixhors}}</td>
+                                                    <td></td>
+                                                    <td class="text-end">${{$reservation->service->prixhors}} CAD</td>
+                                                </tr>
                                                 @php
                                                 $reservationExtras = json_decode($reservation->extra, true);
                                                 $totalExtraPrice = 0;
@@ -316,17 +339,28 @@
                                         </table>
                                         <!--end table-->
                                     </div>
-                                    <div class="mt-3">
-                                        <h6 class="text-muted text-uppercase fw-semibold mb-3"> Details du paiement:</h6>
-                                        <p class="text-muted mb-1"> Methode de paiement: <span class="fw-medium"
-                                                id="payment-method" style="font-weight: bold">@if ($reservation->type_paiement == 1)
-                                                    Carte Bancaire
-                                                @else
-                                                    Espèce
-                                                @endif</span></p>
-                                        <p class="text-muted">Total payé: <span class="fw-medium" id="">$ </span><span
-                                                id="card-total-amount">{{$prixTTC}} CAD</span></p>
+                                    <div class="row">
+
+                                        <div class="col-6 mt-3">
+                                            <h6 class="text-muted text-uppercase fw-semibold mb-3"> Details du paiement:</h6>
+                                            <p class="text-muted mb-1"> Methode de paiement: <span class="fw-medium"
+                                                    id="payment-method" style="font-weight: bold">@if ($reservation->type_paiement == 1)
+                                                        Carte Bancaire
+                                                    @else
+                                                        Espèce
+                                                    @endif</span></p>
+                                            <p class="text-muted">Total payé: <span class="fw-medium" id="">$ </span><span
+                                                    id="card-total-amount">{{$prixTTC}} CAD</span></p>
+                                        </div>
+
+                                        @if($reservation->type_paiement == 1)
+                                        <div class="col-6 mt-3">
+                                            <img src="{{asset('Admin/assets/img/payer.jpg')}}" alt="" height="100">
+                                        </div>
+                                        @endif
+                                        
                                     </div>
+                                    
                                     
                                     @if(Auth::user()->type_connecter == 'admin' && $reservation->valider == 0)
                                     <div class="hstack gap-2 justify-content-end d-print-none mt-4">
@@ -369,6 +403,32 @@
 </div><!-- end main content-->
 
 </div>
-<!-- END 
+
 
 @endsection
+
+<script>
+    // Fonction pour récupérer les prochaines sessions via AJAX
+    function fetchNextSessions() {
+        fetch('{{ route('reservation.getNextSessions', ['id' => $reservation->id]) }}')
+            .then(response => response.json())
+            .then(data => {
+                const sessionsList = document.getElementById('sessions-list');
+                sessionsList.innerHTML = ''; // Efface le contenu précédent de la liste
+                data.sessions.forEach(session => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = session;
+                    sessionsList.appendChild(listItem); // Ajoute chaque session à la liste
+                });
+            })
+            .catch(error => console.error('Error fetching sessions:', error));
+    }
+    
+    // Rafraîchir les sessions toutes les 60 secondes (60000 ms)
+    setInterval(fetchNextSessions, 60000);
+    
+    // Appeler fetchNextSessions une première fois au chargement de la page
+    fetchNextSessions();
+</script>
+
+    
