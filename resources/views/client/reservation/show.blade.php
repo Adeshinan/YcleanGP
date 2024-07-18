@@ -39,10 +39,20 @@
                                                 alt="logo light" height="17">
                                             <div class="mt-sm-5 mt-4">
                                                 <h6 class="text-muted text-uppercase fw-semibold">Adresse </h6>
+                                                @if ($reservation->pour_qui == 1)
+                                                
                                                 <p class="text-muted mb-1" id="address-details">
                                                     {{$reservation->user->address}}</p>
-                                                <p class="text-muted mb-0" id="zip-code"><span>code
-                                                        postal:</span>{{$reservation->user->postal}}</p>
+                                                <p class="text-muted mb-0" id="zip-code"><span>Code
+                                                        postal : </span>{{$reservation->user->postal}}</p>
+                                                @else
+                                                <p class="text-muted mb-1" id="address-details">
+                                                    {{$reservation->address}}</p>
+                                                <p class="text-muted mb-0" id="zip-code"><span>Code
+                                                        postal : </span>{{$reservation->code}}</p>
+                                                        <p class="text-muted mb-0" id="zip-code"><span>Ville : </span>{{$reservation->ville}}</p>
+                                                @endif
+                                               
                                             </div>
                                         </div>
                                         <div class="flex-shrink-0 mt-sm-0 mt-3">
@@ -92,18 +102,25 @@
                                 <!--end card-body-->
                             </div>
 
+                            <div class="row">
+                                <div class="col-6 mt-sm-5 mt-4 ml-3" id="sessions-list">
+                                    <h3>Prochaines sessions</h3>
+                                    <ul id="sessions">
+                                         @foreach ($next_sessions as $session)
+    
+                                         <li> {{$reservation->formatted_date_session =
+                                            Carbon\Carbon::parse($session)->translatedFormat('d
+                                            F Y à H\h:i\m'); }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
 
-                            <div id="sessions-list">
-                                <h3>Prochaines sessions</h3>
-                                <ul id="sessions">
-                                     @foreach ($next_sessions as $session)
+                                    <div class="col-6">
 
-                                     <li> {{$reservation->formatted_date_session =
-                                        Carbon\Carbon::parse($session)->translatedFormat('d
-                                        F Y à H\h:i\m'); }}</li>
-                                    @endforeach
-                                </ul>
+                                    </div>
                             </div>
+
+                           
                             <!--end col-->
                             
                             <!--end col-->

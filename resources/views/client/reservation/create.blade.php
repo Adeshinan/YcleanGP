@@ -212,60 +212,70 @@
                                             </fieldset>
                                         </div>
 
-                                        {{-- <div class="col-xxl-6 col-md-6" id="addressField">
+                                        <div class="col-xxl-6 col-md-6" id="addressField">
                                             <div>
                                                 <label for="borderInputAddress" class="form-label">Adresse de
                                                     l'intéressé</label>
-                                                <input type="text" name="address" class="form-control"
-                                                    id="" placeholder="Entrez votre adresse" >
+                                                <input type="text" name="address" class="form-control" id=""
+                                                    placeholder="Entrez votre adresse">
                                             </div>
                                         </div>
-                                         <div class="col-xxl-6 col-md-6" id="postalCodeField">
+
+
+                                        <div class="col-xxl-6 col-md-6" id="postalCodeField">
                                             <div>
                                                 <label for="borderInputPostalCode" class="form-label">Code postal de
                                                     l'intéressé</label>
-                                                <input type="text" name="code" class="form-control"
-                                                    id="" placeholder="Entrez votre code postal" required>
+                                                <input type="text" name="code" class="form-control" id=""
+                                                    placeholder="Entrez votre code postal" required>
                                             </div>
                                         </div>
                                         <div class="col-xxl-6 col-md-6" id="cityField">
                                             <div>
                                                 <label for="borderInputCity" class="form-label">Ville de
                                                     l'intéressé</label>
-                                                <input type="text" name="ville" class="form-control"
-                                                    id="" placeholder="Entrez votre ville" required>
+                                                <input type="text" name="ville" class="form-control" id=""
+                                                    placeholder="Entrez votre ville" required>
                                             </div>
-                                        </div>  --}}
+                                        </div>
 
                                         <div class="hstack gap-2 justify-content-end">
 
                                             <div class="col-xxl-6 col-md-6">
-                                                <div data-bs-toggle="collapse" data-bs-target="#paymentmethodCollapse.show" aria-expanded="false" aria-controls="paymentmethodCollapse">
+                                                <div data-bs-toggle="collapse"
+                                                    data-bs-target="#paymentmethodCollapse.show" aria-expanded="false"
+                                                    aria-controls="paymentmethodCollapse">
                                                     <div class="form-check card-radio">
-                                                        <input id="paymentMethod03" name="type_paiement" type="radio" value="0" class="form-check-input" checked>
+                                                        <input id="paymentMethod03" name="type_paiement" type="radio"
+                                                            value="0" class="form-check-input" checked>
                                                         <label class="form-check-label" for="paymentMethod03">
-                                                            <span class="fs-16 text-muted me-2"><i class="ri-money-dollar-box-fill align-bottom"></i></span>
+                                                            <span class="fs-16 text-muted me-2"><i
+                                                                    class="ri-money-dollar-box-fill align-bottom"></i></span>
                                                             <span class="fs-14 text-wrap">Paiement en espèce</span>
                                                         </label>
                                                     </div>
                                                 </div>
                                             </div>
-                                        <div class="col-xxl-6 col-md-6">
-                                            <div data-bs-toggle="collapse" data-bs-target="#paymentmethodCollapse" aria-expanded="true" aria-controls="paymentmethodCollapse">
-                                                <div class="form-check card-radio">
-                                                    <input id="paymentMethod02" name="type_paiement" type="radio" value="1" class="form-check-input" >
-                                                    <label class="form-check-label" for="paymentMethod02">
-                                                        <span class="fs-16 text-muted me-2"><i class="ri-bank-card-fill align-bottom"></i></span>
-                                                        <span class="fs-14 text-wrap">Paiement par Carte Bancaire</span>
-                                                    </label>
+                                            <div class="col-xxl-6 col-md-6">
+                                                <div data-bs-toggle="collapse" data-bs-target="#paymentmethodCollapse"
+                                                    aria-expanded="true" aria-controls="paymentmethodCollapse">
+                                                    <div class="form-check card-radio">
+                                                        <input id="paymentMethod02" name="type_paiement" type="radio"
+                                                            value="1" class="form-check-input">
+                                                        <label class="form-check-label" for="paymentMethod02">
+                                                            <span class="fs-16 text-muted me-2"><i
+                                                                    class="ri-bank-card-fill align-bottom"></i></span>
+                                                            <span class="fs-14 text-wrap">Paiement par Carte
+                                                                Bancaire</span>
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        
-                                    </div>
+
+                                        </div>
                                         <div class="hstack gap-2 justify-content-end">
-                                           
+
                                             <button type="submit" class="btn btn-success">Enrégistrer</button>
                                             <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
                                         </div>
@@ -301,7 +311,7 @@
                 </div>
             </div>
 
-            
+
 
         </div>
         <!-- container-fluid -->
