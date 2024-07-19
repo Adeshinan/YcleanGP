@@ -1,5 +1,5 @@
-import type Swiper from '../swiper-class.d.ts';
-import type { CSSSelector } from '../shared.d.ts';
+import Swiper from '../swiper-class';
+import { CSSSelector } from '../shared';
 
 export interface MousewheelMethods {
   /**

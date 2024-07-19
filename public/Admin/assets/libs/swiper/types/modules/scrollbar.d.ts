@@ -1,5 +1,5 @@
-import type { CSSSelector } from '../shared.d.ts';
-import type Swiper from '../swiper-class.d.ts';
+import { CSSSelector } from '../shared';
+import Swiper from '../swiper-class';
 
 export interface ScrollbarMethods {
   /**

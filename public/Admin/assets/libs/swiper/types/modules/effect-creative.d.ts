@@ -1,3 +1,5 @@
+import { CSSSelector } from '../shared';
+
 interface CreativeEffectTransform {
   translate?: (string | number)[];
   rotate?: number[];

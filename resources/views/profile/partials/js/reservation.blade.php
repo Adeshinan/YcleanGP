@@ -3,7 +3,7 @@
         var afficheAgent = document.getElementById('afficheAgent');
      
         
-        if (value === '1') {
+        if (value === '0') {
             afficheAgent.style.display = 'block';
             
 
@@ -23,7 +23,7 @@
             var agentInputs = afficheAgent.querySelectorAll('input');
             agentInputs.forEach(function(input) {
                 input.required = false;
-                input.value = '';
+                input.value = null;
             });
 
             // Set required attribute for inputs inside #prixhorsContainer

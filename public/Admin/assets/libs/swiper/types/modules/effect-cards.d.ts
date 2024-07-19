@@ -1,3 +1,5 @@
+import { CSSSelector } from '../shared';
+
 export interface CardsEffectMethods {}
 
 export interface CardsEffectEvents {}

@@ -1,4 +1,4 @@
-export interface VirtualMethods<T = any> {
+export interface VirtualMethods {
   /**
    * Object with cached slides HTML elements
    */
@@ -17,7 +17,7 @@ export interface VirtualMethods<T = any> {
   /**
    * Array with slide items passed by `virtual.slides` parameter
    */
-  slides: T[];
+  slides: any[];
 
   /*
    * Methods
@@ -59,7 +59,7 @@ export interface VirtualMethods<T = any> {
 
 export interface VirtualEvents {}
 
-export interface VirtualData<T> {
+export interface VirtualData {
   /**
    * slides left/top offset in px
    */
@@ -75,10 +75,10 @@ export interface VirtualData<T> {
   /**
    * array with slide items to be rendered
    */
-  slides: T[];
+  slides: any[];
 }
 
-export interface VirtualOptions<T = any> {
+export interface VirtualOptions {
   /**
    * Whether the virtual slides are enabled
    *
@@ -90,7 +90,7 @@ export interface VirtualOptions<T = any> {
    *
    * @default []
    */
-  slides?: T[];
+  slides?: any[];
   /**
    * Enables DOM cache of rendering slides html elements. Once they are rendered they will be saved to cache and reused from it.
    *
@@ -114,7 +114,7 @@ export interface VirtualOptions<T = any> {
    *
    * @default null
    */
-  renderSlide?: (slide: T, index: any) => any | null;
+  renderSlide?: (slide: any, index: any) => any | null;
   /**
    * Function for external rendering (e.g. using some other library to handle DOM manipulations and state like React.js or Vue.js). As an argument it accepts `data` object with the following properties:
    *
@@ -125,7 +125,7 @@ export interface VirtualOptions<T = any> {
    *
    * @default null
    */
-  renderExternal?: (data: VirtualData<T>) => any | null;
+  renderExternal?: (data: VirtualData) => any | null;
   /**
    * When enabled (by default) it will update Swiper layout right after renderExternal called. Useful to disable and update swiper manually when used with render libraries that renders asynchronously
    *

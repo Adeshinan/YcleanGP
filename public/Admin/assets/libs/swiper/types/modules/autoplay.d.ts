@@ -1,4 +1,4 @@
-import type Swiper from '../swiper-class.d.ts';
+import Swiper from '../swiper-class';
 
 export interface AutoplayMethods {
   /**

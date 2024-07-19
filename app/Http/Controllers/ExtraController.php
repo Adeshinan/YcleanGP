@@ -25,8 +25,9 @@ class ExtraController extends Controller
             $entete = ' Liste des Extra - Y Clean';
             $icons = Icon::all();
             $services = Service::all();
+            $route = route('extra.delete', [":id"]);
             $extras = Extra::latest()->paginate(5);
-                return view('admin.extra.index', compact('extras','int','entete','page','icons','services'))
+                return view('admin.extra.index', compact('extras','int','entete','page','icons','services','route'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);
         }
         catch(\Illuminate\Database\QueryException $ex)
@@ -126,6 +127,25 @@ class ExtraController extends Controller
     {
         //
     }
+
+
+    public function delete($id){
+        
+        try{
+
+            $service = Service::find($id);
+            $service->delete();
+            Alert::toast('Service supprimé avec succès', 'success')->position('top-end')->timerProgressBar();
+            return redirect()->route('service.index');
+
+        } catch(\Illuminate\Database\QueryException $ex){
+            //dd($ex);
+            Alert::toast('Une erreur est survenue lors de la suppression.', 'error')->position('top-end')->timerProgressBar();
+            \Log::error($ex->getMessage());
+            return back();
+        }
+    }
+
 
     public function getExtra(Request $request)
 {

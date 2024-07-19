@@ -100,7 +100,7 @@
                                             <label for="choices-multiple-remove-button" class="form-label">Les Extras</label>
                                             <select class="form-control" name="extra[]" id="choices-multiple-remove-button" multiple>
                                                 @foreach ($extra as $item)
-                                                    <option value="{{ $item->id }}" {{ is_array($service->extra) && in_array($item->id, $service->extra) ? 'selected' : '' }}>
+                                                    <option value="{{ $item->id }}" {{ is_array($service->extra) && in_array($item->id,$service->extra) ? 'selected' : '' }}>
                                                         {{ $item->libelle }}
                                                     </option>
                                                 @endforeach
@@ -124,8 +124,8 @@
                                     </div>
                                     <div class="modal-footer">
                                         <div class="hstack gap-2 justify-content-end">
-                                            <button type="button" class="btn btn-light"
-                                                data-bs-dismiss="modal">Fermer</button>
+                                            <a role="button" href="{{route('service.index')}}" class="btn btn-light"
+                                               >Fermer</a>
                                             <button type="submit" class="btn btn-success" id="add-btn">Mettre à jour le
                                                 service</button>
                                         </div>

@@ -1,28 +1,28 @@
-import type { A11yOptions } from './modules/a11y.d.ts';
-import type { AutoplayOptions } from './modules/autoplay.d.ts';
-import type { ControllerOptions } from './modules/controller.d.ts';
-import type { CoverflowEffectOptions } from './modules/effect-coverflow.d.ts';
-import type { CubeEffectOptions } from './modules/effect-cube.d.ts';
-import type { FadeEffectOptions } from './modules/effect-fade.d.ts';
-import type { FlipEffectOptions } from './modules/effect-flip.d.ts';
-import type { CreativeEffectOptions } from './modules/effect-creative.d.ts';
-import type { CardsEffectOptions } from './modules/effect-cards.d.ts';
-import type { HashNavigationOptions } from './modules/hash-navigation.d.ts';
-import type { HistoryOptions } from './modules/history.d.ts';
-import type { KeyboardOptions } from './modules/keyboard.d.ts';
-import type { MousewheelOptions } from './modules/mousewheel.d.ts';
-import type { NavigationOptions } from './modules/navigation.d.ts';
-import type { PaginationOptions } from './modules/pagination.d.ts';
-import type { ParallaxOptions } from './modules/parallax.d.ts';
-import type { ScrollbarOptions } from './modules/scrollbar.d.ts';
-import type { ThumbsOptions } from './modules/thumbs.d.ts';
-import type { VirtualOptions } from './modules/virtual.d.ts';
-import type { ZoomOptions } from './modules/zoom.d.ts';
-import type { FreeModeOptions } from './modules/free-mode.d.ts';
-import type { GridOptions } from './modules/grid.d.ts';
+import { A11yOptions } from './modules/a11y';
+import { AutoplayOptions } from './modules/autoplay';
+import { ControllerOptions } from './modules/controller';
+import { CoverflowEffectOptions } from './modules/effect-coverflow';
+import { CubeEffectOptions } from './modules/effect-cube';
+import { FadeEffectOptions } from './modules/effect-fade';
+import { FlipEffectOptions } from './modules/effect-flip';
+import { CreativeEffectOptions } from './modules/effect-creative';
+import { CardsEffectOptions } from './modules/effect-cards';
+import { HashNavigationOptions } from './modules/hash-navigation';
+import { HistoryOptions } from './modules/history';
+import { KeyboardOptions } from './modules/keyboard';
+import { MousewheelOptions } from './modules/mousewheel';
+import { NavigationOptions } from './modules/navigation';
+import { PaginationOptions } from './modules/pagination';
+import { ParallaxOptions } from './modules/parallax';
+import { ScrollbarOptions } from './modules/scrollbar';
+import { ThumbsOptions } from './modules/thumbs';
+import { VirtualOptions } from './modules/virtual';
+import { ZoomOptions } from './modules/zoom';
+import { FreeModeOptions } from './modules/free-mode';
+import { GridOptions } from './modules/grid';
 
-import type { CSSSelector, SwiperModule } from './shared.d.ts';
-import type { SwiperEvents } from './swiper-events.d.ts';
+import { CSSSelector, SwiperModule } from './shared';
+import { SwiperEvents } from './swiper-events';
 
 export interface SwiperOptions {
   /**
@@ -30,8 +30,7 @@ export interface SwiperOptions {
    *
    * @example
    * ```js
-   * import Swiper from 'swiper';
-   * import { Navigation, Pagination } from 'swiper/modules';
+   * import Swiper, { Navigation, Pagination } from 'swiper';
    *
    * const swiper = new Swiper('.swiper', {
    *    modules: [ Navigation, Pagination ],
@@ -176,13 +175,6 @@ export interface SwiperOptions {
   createElements?: boolean;
 
   /**
-   * Event name prefix for all DOM events emitted by Swiper Element (web component)
-   *
-   * @default `swiper`
-   */
-  eventsPrefix?: string;
-
-  /**
    * CSS selector for focusable elements. Swiping will be disabled on such elements if they are "focused"
    *
    * @default 'input, select, option, textarea, button, video, label'
@@ -271,16 +263,17 @@ export interface SwiperOptions {
    * - `resistance` doesn't have any effect
    * - `allowSlidePrev/Next`
    * - `swipeHandler`
+   * - `freeMode` and all relevant features
    *
    * In case if you use it with other effects, especially 3D effects, it is required to wrap slide's content with `<div class="swiper-slide-transform">` element. And if you use any custom styles on slides (like background colors, border radius, border, etc.), they should be set on `swiper-slide-transform` element instead.
    *
-   * @example
+   * * @example
    * ```html
    * <div class="swiper">
    *   <div class="swiper-wrapper">
    *     <div class="swiper-slide">
    *       <!-- wrap slide content with transform element -->
-   *       <div class="swiper-slide-transform">
+   *       <div class="swiper-slide">
    *         ... slide content ...
    *       </div>
    *     </div>
@@ -500,7 +493,7 @@ export interface SwiperOptions {
   touchMoveStopPropagation?: boolean;
 
   /**
-   * Enable to release Swiper events for swipe-back work in app. If set to `'prevent'` then it will prevent system swipe-back navigation instead. This feature works only with "touch" events (and not pointer events), so it will work on iOS/Android devices and won't work on Windows devices with pointer (touch) events.
+   * Enable to release Swiper events for swipe-back work in app. If set to `'prevent'` then it will prevent system swipe-back navigation instead
    *
    * @default false
    */
@@ -514,7 +507,7 @@ export interface SwiperOptions {
   edgeSwipeThreshold?: number;
 
   /**
-   * Enable to release touch events on slider edge position (beginning, end) to allow for further page scrolling. This feature works only with "touch" events (and not pointer events), so it will work on iOS/Android devices and won't work on Windows devices with pointer events. Also `threshold` parameter must be set to `0`
+   * Enable to release touch events on slider edge position (beginning, end) to allow for further page scrolling
    *
    * @default false
    */
@@ -628,11 +621,7 @@ export interface SwiperOptions {
   /**
    * Set to `true` to enable continuous loop mode
    *
-   * Because of nature of how the loop mode works (it will rearrange slides), total number of slides must be:
-   *
-   * - more than or equal to `slidesPerView` + `slidesPerGroup`
-   * - even to `slidesPerGroup` (or use `loopAddBlankSlides` parameter)
-   * - even to `grid.rows` (or use `loopAddBlankSlides` parameter)
+   * Because of nature of how the loop mode works (it will rearrange slides), total number of slides must be >= slidesPerView * 2
    *
    * @default false
    *
@@ -640,20 +629,11 @@ export interface SwiperOptions {
   loop?: boolean;
 
   /**
-   * Automatically adds blank slides if you use Grid or `slidesPerGroup` and the total amount of slides is not even to `slidesPerGroup` or to `grid.rows`
+   * Defines how many slides before end/beginning it should rearrange (loop) slides. If not specified, defaults to `slidesPerView`
    *
-   *
-   * @default false
-   *
+   * @default null
    */
-  loopAddBlankSlides?: boolean;
-
-  /**
-   * Allows to increase amount of looped slides
-   *
-   * @default 0
-   */
-  loopAdditionalSlides?: number;
+  loopedSlides?: number | null;
 
   /**
    * If enabled then slideNext/Prev will do nothing while slider is animating in loop mode
@@ -733,6 +713,8 @@ export interface SwiperOptions {
    * Base for breakpoints (beta). Can be `window` or `container`. If set to `window` (by default) then breakpoint keys mean window width. If set to `container` then breakpoint keys treated as swiper container width
    *
    * @default 'window'
+   *
+   * @note Currently in beta and not supported by Swiper React and Vue components
    */
   breakpointsBase?: string;
 
@@ -787,7 +769,7 @@ export interface SwiperOptions {
   slideActiveClass?: string;
 
   /**
-   * CSS class name of currently/partially visible slide
+   * CSS class name of currently visible slide
    *
    * @default 'swiper-slide-visible'
    *
@@ -796,24 +778,6 @@ export interface SwiperOptions {
    * @note Not supported in Swiper React/Vue
    */
   slideVisibleClass?: string;
-
-  /**
-   * CSS class name of fully (when whole slide is in the viewport) visible slide
-   *
-   * @default 'swiper-slide-fully-visible'
-   *
-   * @note Not supported in Swiper React/Vue
-   */
-  slideFullyVisibleClass?: string;
-
-  /**
-   * CSS class name of the blank slide added by the loop mode (when `loopAddBlankSlides` is enabled)
-   *
-   * @default 'swiper-slide-blank'
-   *
-   * @note Not supported in Swiper React/Vue
-   */
-  slideBlankClass?: string;
 
   /**
    * CSS class name of slide which is right after currently active slide

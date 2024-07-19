@@ -817,12 +817,6 @@ export interface Plugin<TType extends ChartType = ChartType, O = AnyObject> exte
   id: string;
 
   /**
-   * The events option defines the browser events that the plugin should listen.
-   * @default ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove']
-   */
-  events?: (keyof HTMLElementEventMap)[]
-
-  /**
    * @desc Called when plugin is installed for this chart instance. This hook is also invoked for disabled plugins (options === false).
    * @param {Chart} chart - The chart instance.
    * @param {object} args - The call arguments.
@@ -1167,40 +1161,15 @@ export interface CoreScaleOptions {
    */
   alignToPixels: boolean;
   /**
-   * Background color of the scale area.
-   */
-  backgroundColor: Color;
-  /**
    * Reverse the scale.
    * @default false
    */
   reverse: boolean;
   /**
-   * Clip the dataset drawing against the size of the scale instead of chart area.
-   * @default true
-   */
-  clip: boolean;
-  /**
    * The weight used to sort the axis. Higher weights are further away from the chart area.
    * @default true
    */
   weight: number;
-  /**
-   * User defined minimum value for the scale, overrides minimum value from data.
-   */
-  min: unknown;
-  /**
-   * User defined maximum value for the scale, overrides maximum value from data.
-   */
-  max: unknown;
-  /**
-   * Adjustment used when calculating the maximum data value.
-   */
-  suggestedMin: unknown;
-  /**
-   * Adjustment used when calculating the minimum data value.
-   */
-  suggestedMax: unknown;
   /**
    * Callback called before the update process starts.
    */
@@ -1341,7 +1310,7 @@ export interface Scale<O extends CoreScaleOptions = CoreScaleOptions> extends El
   getBasePixel(): number;
 
   init(options: O): void;
-  parse(raw: unknown, index?: number): unknown;
+  parse(raw: unknown, index: number): unknown;
   getUserBounds(): { min: number; max: number; minDefined: boolean; maxDefined: boolean };
   getMinMax(canStack: boolean): { min: number; max: number };
   getTicks(): Tick[];
@@ -1628,7 +1597,7 @@ export interface CoreChartOptions<TType extends ChartType> extends ParsingOption
    */
   responsive: boolean;
   /**
-   * Maintain the original canvas aspect ratio (width / height) when resizing. For this option to work properly the chart must be in its own dedicated container.
+   * Maintain the original canvas aspect ratio (width / height) when resizing.
    * @default true
    */
   maintainAspectRatio: boolean;
@@ -2221,7 +2190,7 @@ export type DecimationOptions = LttbDecimationOptions | MinMaxDecimationOptions;
 
 export declare const Filler: Plugin;
 export interface FillerOptions {
-  drawTime: 'beforeDraw' | 'beforeDatasetDraw' | 'beforeDatasetsDraw';
+  drawTime: 'beforeDatasetDraw' | 'beforeDatasetsDraw';
   propagate: boolean;
 }
 
@@ -2424,10 +2393,6 @@ export interface LegendOptions<TType extends ChartType> {
      * @default 10
      */
     padding: number;
-    /**
-     * If usePointStyle is true, the width of the point style used for the legend.
-     */
-    pointStyleWidth: number;
     /**
      * Generates legend items for each thing in the legend. Default implementation returns the text + styling for the color box. See Legend Item for details.
      */
@@ -2996,7 +2961,7 @@ export interface GridLineOptions {
   /**
    * @default []
    */
-  tickBorderDash: Scriptable<number[], ScriptableScaleContext>;
+  tickBorderDash: number[];
   /**
    * @default 0
    */
@@ -3333,61 +3298,6 @@ export declare const LogarithmicScale: ChartComponent & {
   new <O extends LogarithmicScaleOptions = LogarithmicScaleOptions>(cfg: AnyObject): LogarithmicScale<O>;
 };
 
-export type TimeScaleTimeOptions = {
-  /**
-   * Custom parser for dates.
-   */
-  parser: string | ((v: unknown) => number);
-  /**
-   * If defined, dates will be rounded to the start of this unit. See Time Units below for the allowed units.
-   */
-  round: false | TimeUnit;
-  /**
-   * If boolean and true and the unit is set to 'week', then the first day of the week will be Monday. Otherwise, it will be Sunday.
-   * If `number`, the index of the first day of the week (0 - Sunday, 6 - Saturday).
-   * @default false
-   */
-  isoWeekday: boolean | number;
-  /**
-   * Sets how different time units are displayed.
-   */
-  displayFormats: {
-    [key: string]: string;
-  };
-  /**
-   * The format string to use for the tooltip.
-   */
-  tooltipFormat: string;
-  /**
-   * If defined, will force the unit to be a certain type. See Time Units section below for details.
-   * @default false
-   */
-  unit: false | TimeUnit;
-  /**
-   * The minimum display format to be used for a time unit.
-   * @default 'millisecond'
-   */
-  minUnit: TimeUnit;
-};
-
-export type TimeScaleTickOptions = {
-  /**
-   * Ticks generation input values:
-   * - 'auto': generates "optimal" ticks based on scale size and time options.
-   * - 'data': generates ticks from data (including labels from data `{t|x|y}` objects).
-   * - 'labels': generates ticks from user given `data.labels` values ONLY.
-   * @see https://github.com/chartjs/Chart.js/pull/4507
-   * @since 2.7.0
-   * @default 'auto'
-   */
-  source: 'labels' | 'auto' | 'data';
-  /**
-   * The number of units between grid lines.
-   * @default 1
-   */
-  stepSize: number;
-};
-
 export type TimeScaleOptions = Omit<CartesianScaleOptions, 'min' | 'max'> & {
   min: string | number;
   max: string | number;
@@ -3416,9 +3326,60 @@ export type TimeScaleOptions = Omit<CartesianScaleOptions, 'min' | 'max'> & {
     date: unknown;
   };
 
-  time: TimeScaleTimeOptions;
+  time: {
+    /**
+     * Custom parser for dates.
+     */
+    parser: string | ((v: unknown) => number);
+    /**
+     * If defined, dates will be rounded to the start of this unit. See Time Units below for the allowed units.
+     */
+    round: false | TimeUnit;
+    /**
+     * If boolean and true and the unit is set to 'week', then the first day of the week will be Monday. Otherwise, it will be Sunday.
+     * If `number`, the index of the first day of the week (0 - Sunday, 6 - Saturday).
+     * @default false
+     */
+    isoWeekday: boolean | number;
+    /**
+     * Sets how different time units are displayed.
+     */
+    displayFormats: {
+      [key: string]: string;
+    };
+    /**
+     * The format string to use for the tooltip.
+     */
+    tooltipFormat: string;
+    /**
+     * If defined, will force the unit to be a certain type. See Time Units section below for details.
+     * @default false
+     */
+    unit: false | TimeUnit;
+    /**
+     * The minimum display format to be used for a time unit.
+     * @default 'millisecond'
+     */
+    minUnit: TimeUnit;
+  };
 
-  ticks: TimeScaleTickOptions;
+  ticks: {
+    /**
+     * Ticks generation input values:
+     * - 'auto': generates "optimal" ticks based on scale size and time options.
+     * - 'data': generates ticks from data (including labels from data `{t|x|y}` objects).
+     * - 'labels': generates ticks from user given `data.labels` values ONLY.
+     * @see https://github.com/chartjs/Chart.js/pull/4507
+     * @since 2.7.0
+     * @default 'auto'
+     */
+    source: 'labels' | 'auto' | 'data';
+    /**
+     * The number of units between grid lines.
+     * @default 1
+     */
+    stepSize: number;
+  };
 };
 
 export interface TimeScale<O extends TimeScaleOptions = TimeScaleOptions> extends Scale<O> {
@@ -3468,6 +3429,8 @@ export type RadialTickOptions = TickOptions & {
 }
 
 export type RadialLinearScaleOptions = CoreScaleOptions & {
+  backgroundColor: Color;
+
   animate: boolean;
 
   startAngle: number;

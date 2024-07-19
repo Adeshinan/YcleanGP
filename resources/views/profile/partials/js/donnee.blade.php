@@ -455,7 +455,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 field.style.display = 'none';
                 var inputs = field.querySelectorAll('input');
                 inputs.forEach(function(input) {
-                    input.required = true;
+                    input.required = false;
+                    input.value = '';
                 });
             });
         } else {
@@ -464,8 +465,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 field.style.display = 'block';
                 var inputs = field.querySelectorAll('input');
                 inputs.forEach(function(input) {
-                    input.required = false;
-                    input.value = '';
+                    input.required = true;
+                    
                 });
             });
         }

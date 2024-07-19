@@ -56,9 +56,7 @@
                                         <thead class="table-light">
                                             <tr>
                                                 <th scope="col" style="width: 50px;">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="checkAll" value="option">
-                                                    </div>
+                                                   
                                                 </th>
                                                 <th class="sort" data-sort="customer_name">Nom de l'extra</th>
                                                 <th class="sort" data-sort="phone">Prix de l'extra</th>
@@ -70,9 +68,7 @@
                                            
                                             <tr>
                                                 <th scope="row">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" name="chk_child" value="option1">
-                                                    </div>
+                                                   
                                                 </th>
                                                 <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a></td>
                                                 <td class="customer_name">{{$extra->libelle}}</td>
@@ -84,7 +80,10 @@
                                                             <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#showModal">Edit</button>
                                                         </div>
                                                         <div class="remove">
-                                                            <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#deleteRecordModal">Remove</button>
+                                                            <button type="button" class="btn btn-sm btn-danger remove-item-btn"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#deleteRecordModal"
+                                                            onclick="showModal('{{ $route }}',{{ $extra->id }})">Supprimer</button>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -159,30 +158,7 @@
             </div>
 
             <!-- Modal -->
-            <div class="modal fade zoomIn" id="deleteRecordModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mt-2 text-center">
-                                <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop" colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
-                                <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-                                    <h4>Are you Sure ?</h4>
-                                    <p class="text-muted mx-4 mb-0">Are you Sure You want to Remove this Record ?</p>
-                                </div>
-                            </div>
-                            <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-                                <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn w-sm btn-danger " id="delete-record">Yes, Delete It!</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--end modal -->
-
+          
         </div>
         <!-- container-fluid -->
     </div>
@@ -206,4 +182,6 @@
 
 
 @endsection
+
+@include('profile.partials.deletemodal')
 

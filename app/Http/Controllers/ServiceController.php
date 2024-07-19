@@ -26,8 +26,9 @@ class ServiceController extends Controller
             $entete = ' Liste des Service - Y Clean';
             $parametre = Parametre::all();
             $extra = Extra::all();
+            $route = route('service.delete', [":id"]);
             $services = Service::latest()->paginate(5);
-                return view('admin.service.index', compact('services','int','entete','page','parametre','extra'))
+                return view('admin.service.index', compact('services','int','entete','page','parametre','extra','route'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);
         }
         catch(\Illuminate\Database\QueryException $ex)
@@ -125,6 +126,7 @@ class ServiceController extends Controller
             $entete = 'Modifier Service - Y Clean';
             $service = Service::find($id);
             $extra = Extra::all();
+           
             return view('admin.service.edit', compact('service','entete','page','extra'));
         }
             catch(\Illuminate\Database\QueryException $ex){
@@ -187,6 +189,24 @@ class ServiceController extends Controller
     public function destroy($id)
     {
         //
+        
+    }
+
+    public function delete($id){
+        
+        try{
+
+            $service = Service::find($id);
+            $service->delete();
+            Alert::toast('Service supprimé avec succès', 'success')->position('top-end')->timerProgressBar();
+            return redirect()->route('service.index');
+
+        } catch(\Illuminate\Database\QueryException $ex){
+            //dd($ex);
+            Alert::toast('Une erreur est survenue lors de la suppression.', 'error')->position('top-end')->timerProgressBar();
+            \Log::error($ex->getMessage());
+            return back();
+        }
     }
 
 

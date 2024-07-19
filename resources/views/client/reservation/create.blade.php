@@ -207,12 +207,12 @@
                                                     <label for="oui">Pour moi</label>
                                                     <input type="radio" id="oui" name="pour_qui" value="1" checked>
                                                     <label style="margin-left:0.8rem;" for="non">Pour autre</label>
-                                                    <input type="radio" id="non" name="pour_qui" value="0">
+                                                    <input type="radio" id="non" name="pour_qui" value="0" >
                                                 </div>
                                             </fieldset>
                                         </div>
 
-                                        <div class="col-xxl-6 col-md-6" id="addressField">
+                                        <div class="col-xxl-6 col-md-6" id="addressField" >
                                             <div>
                                                 <label for="borderInputAddress" class="form-label">Adresse de
                                                     l'intéressé</label>

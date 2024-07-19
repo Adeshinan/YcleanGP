@@ -40,14 +40,13 @@
                                             <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal"
                                                 id="create-btn" data-bs-target="#showModal"><i
                                                     class="ri-add-line align-bottom me-1"></i> Ajouter</button>
-                                            <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i
-                                                    class="ri-delete-bin-2-line"></i></button>
+                                            
                                         </div>
                                     </div>
                                     <div class="col-sm">
                                         <div class="d-flex justify-content-sm-end">
                                             <div class="search-box ms-2">
-                                                <input type="text" class="form-control search" placeholder="Search...">
+                                                <input type="text" id="searchInput" class="form-control search" placeholder="Search..">
                                                 <i class="ri-search-line search-icon"></i>
                                             </div>
                                         </div>
@@ -59,10 +58,7 @@
                                         <thead class="table-light">
                                             <tr>
                                                 <th scope="col" style="width: 50px;">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="checkAll"
-                                                            value="option">
-                                                    </div>
+                                                   
                                                 </th>
                                                 <th class="sort" data-sort="customer_name">Services</th>
                                                 <th class="sort" data-sort="email">pourcentage de reduiction</th>
@@ -74,13 +70,10 @@
                                             @foreach ($services as $service)
 
                                             <tr>
+                                                
                                                 <th scope="row">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" name="chk_child"
-                                                            value="option1">
-                                                    </div>
+                                                   
                                                 </th>
-
                                                 <td class="customer_name">{{$service->libelle}}</td>
                                                 <td class="email">@if ($service->pourcentage)
                                                     {{$service->pourcentage}} %
@@ -102,10 +95,13 @@
                                                             <a class="btn btn-sm btn-success edit-item-btn" href="{{route('service.edit',$service->id)}}">Modifier</a>
                                                         </div>
                                                         <div class="remove">
-                                                            <button class="btn btn-sm btn-danger remove-item-btn"
+                                                            <button type="button" class="btn btn-sm btn-danger remove-item-btn"
                                                                 data-bs-toggle="modal"
-                                                                data-bs-target="#deleteRecordModal">Remove</button>
+                                                                data-bs-target="#deleteRecordModal"
+                                                                onclick="showModal('{{ $route }}',{{ $service->id }})">Supprimer</button>
                                                         </div>
+
+                                                        
                                                     </div>
                                                 </td>
                                             </tr>
@@ -260,32 +256,7 @@
             </div>
 
             <!-- Modal -->
-            <div class="modal fade zoomIn" id="deleteRecordModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                                id="btn-close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mt-2 text-center">
-                                <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop"
-                                    colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px">
-                                </lord-icon>
-                                <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-                                    <h4>Are you Sure ?</h4>
-                                    <p class="text-muted mx-4 mb-0">Are you Sure You want to Remove this Record ?</p>
-                                </div>
-                            </div>
-                            <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-                                <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn w-sm btn-danger " id="delete-record">Yes, Delete
-                                    It!</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           
             <!--end modal -->
 
         </div>
@@ -318,6 +289,7 @@
 
 @endsection
 
+@include('profile.partials.deletemodal')
 <script>
     function toggleChamps(value) {
         var afficheAgent = document.getElementById('afficheAgent');
@@ -358,4 +330,23 @@
             }
         });
     }
+</script>
+<script>
+    $(document).ready(function() {
+        $('#searchInput').on('keyup', function() {
+            var searchTerm = $(this).val().toLowerCase();
+
+            // on parcourt chaque ligne du tableau pour vérifier la correspondance avec le terme de recherche
+            $('table tbody tr').each(function() {
+                var rowData = $(this).text().toLowerCase();
+                if (rowData.indexOf(searchTerm) === -1) {
+                    // Masquer la ligne si elle ne correspond pas au terme de recherche
+                    $(this).hide();
+                } else {
+                    // Afficher la ligne si elle correspond au terme de recherche
+                    $(this).show();
+                }
+            });
+        });
+    });
 </script>
