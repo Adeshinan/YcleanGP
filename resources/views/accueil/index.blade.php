@@ -92,7 +92,7 @@
                                     <!--end col-->
                                     <div class="col-md-4">
                                         <div class="h-100">
-                                            <button class="btn btn-primary submit-btn w-100 h-100" type="submit"><i
+                                            <button class="btn btn-primary submit-btn w-100 h-100" type="submit" href="#hero"><i
                                                     class="ri-search-2-line align-bottom me-1"></i>Reservation</button>
                                         </div>
                                     </div>
@@ -150,7 +150,7 @@
             <!-- end container -->
         </section>
         <!-- start services -->
-        <section class="section bg-light">
+        <section class="section bg-light" id="#reserve">
             
             <div class="container col-12">
                 <div class="row justify-content-center">
