@@ -2,12 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use Stripe\Stripe;
 use App\Models\Taux;
 use App\Models\Taxe;
+use App\Models\User;
 use App\Models\Extra;
 use App\Models\Service;
 use App\Models\Parametre;
+use App\Models\Reservation;
+use Faker\Factory as Faker;
 use Illuminate\Http\Request;
+use Stripe\Checkout\Session;
+
+use App\Mail\ReservationDetailsMail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Providers\RouteServiceProvider;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Validation\Rules\Password;
+use App\Notifications\ValidationNotification;
 
 class AccueilController extends Controller
 {
@@ -28,7 +43,7 @@ class AccueilController extends Controller
 
 
 
-    public function Reservation(){
+    public function Reservation(Request $request){
         
 
         try {
@@ -73,9 +88,19 @@ class AccueilController extends Controller
                 'vill' => $validated['vill'],
             ];
 
+
+           
             $reservationData = $validated;
+
+
+            
             unset($reservationData['name'], $reservationData['adress'], $reservationData['email'], $reservationData['postal'], $reservationData['contact'], $reservationData['vill']);
 
+           
+            
+            $user = User::where('name', $userData['name'])
+            ->where('email', $userData['email'])
+            ->first();
 
             if ($user) {
                 // User exists, create reservation with existing user ID
@@ -93,7 +118,9 @@ class AccueilController extends Controller
                     foreach ($extras as $extra) {
                         $extrasPrice += $extra->prix;
                     }
-                    $validated['extra'] = json_encode($validated['extra']);
+                    $reservationData['extra'] = json_encode($validated['extra']);
+
+                   
                 }
         
                 if (
@@ -130,13 +157,14 @@ class AccueilController extends Controller
                     }
                 }
                
-                // Générer les dates des séances à venir
                 $sessionDates = $this->getSessionDates($validated['date_visite'], $validated['nbre_fois']);
-                $validated['session_dates'] = json_encode($sessionDates);
+                $reservationData['session_dates'] = json_encode($sessionDates);
         
                
-                $validated['prixTotal'] = $PrixTotal;
+               
+                $reservationData['prixTotal'] = $PrixTotal;
         
+                
                 if($validated['type_paiement'] == 1){
                     $session = Session::create([
                         'line_items'=>[
@@ -156,48 +184,58 @@ class AccueilController extends Controller
                         'cancel_url' => route('checkout'),
                     ]);
         
-                     Reservation::create($reservationData);
+                    $reservation = Reservation::create($reservationData);
 
-                     Mail::to($user->email)->send(new ReservationDetailsMail($reservation));
+                     
             
                 // Send reservation details email to all admins
                 $admin = User::where('type_connecter', 'admin')->first();
                
-                    Mail::to($admin->email)->send(new AdminNotificationMail($reservation));
+                    Mail::to($admin->email)->send(new ReservationDetailsMail($reservation));
               
                     Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
                     return redirect($session->url);
                     
                 } else {
-                    Reservation::create($reservationData);
+                    $reservation =  Reservation::create($reservationData);
                     
-                    Mail::to($user->email)->send(new ReservationDetailsMail($reservation));
+                   // Mail::to($user->email)->send(new ReservationDetailsMail($reservation));
             
                 // Send reservation details email to all admins
                    $admin = User::where('type_connecter', 'admin')->first();
                 
-                    Mail::to($admin->email)->send(new AdminNotificationMail($reservation));
+                   Mail::to($admin->email)->send(new ReservationDetailsMail($reservation));
                 
                     Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
-                    return redirect()->route('reservation.index');
+                    return back();
                 }
 
 
                 // Send reservation details email to user
                 
             } else {
-                // User does not exist, create new user
-                $faker = Faker::create();
+
+                
+                $faker = \Faker\Factory::create();
                 $password = $faker->password;
             
-                $user = User::create(array_merge($userData, [
-                    'password' => bcrypt($password),
-                    'email_verified_at' => null, // Ensure the email verification flow
-                ]));
-            
                
+                // User does not exist, create new user
+                $user = User::create(array_merge( [
+                    'name' => $userData['name'],
+                    'address' => $userData['adress'],
+                    'email' => $userData['email'],
+                    'postal' => $userData['postal'],
+                    'numero' => $userData['contact'],
+                    'ville' => $userData['vill'],
+                    'password' => bcrypt($password),
+                    'email_verified_at' => null, 
+                ]));
+
+            
                 Stripe::setApiKey(config('stripe.sk'));
                 $reservationData['user_id'] = $user->id;
+               
               
 
         
@@ -210,7 +248,7 @@ class AccueilController extends Controller
                     foreach ($extras as $extra) {
                         $extrasPrice += $extra->prix;
                     }
-                    $validated['extra'] = json_encode($validated['extra']);
+                    $reservationData['extra'] = json_encode($validated['extra']);
                 }
         
                 if (
@@ -272,76 +310,39 @@ class AccueilController extends Controller
                         'success_url' => route('success' ),
                         'cancel_url' => route('checkout'),
                     ]);
-        
-                     Reservation::create($reservationData);
 
-                    // Send account verification email to user
-                $verificationLink = route('verification.notice'); // Adjust this as needed
-                Mail::to($user->email)->send(new AccountVerificationMail($user, $verificationLink));
+        
+                    $reservation= Reservation::create($reservationData);
+
+              
+               
+                $user->notify(new ValidationNotification($user));
+               
             
-                // Send reservation details email to user
-                Mail::to($user->email)->send(new ReservationDetailsMail($reservation));
-            
-                // Send reservation details email to all admins
                 $admin = User::where('type_connecter', 'admin')->first();
               
-                    Mail::to($admin->email)->send(new AdminNotificationMail($reservation));
+                Mail::to($admin->email)->send(new ReservationDetailsMail($reservation));
                
                     Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
                     return redirect($session->url);
                     
                 } else {
-                    Reservation::create($reservationData);
+                    $reservation = Reservation::create($reservationData);
                     
-                     // Send account verification email to user
-                $verificationLink = route('verification.notice'); // Adjust this as needed
-                Mail::to($user->email)->send(new AccountVerificationMail($user, $verificationLink));
-            
-                // Send reservation details email to user
-                Mail::to($user->email)->send(new ReservationDetailsMail($reservation));
-            
-                // Send reservation details email to all admins
-                $admin = User::where('type_connecter', 'admin')->first();
+                    
+                     $user->notify(new ValidationNotification($user));
+                     
+                     $admin = User::where('type_connecter', 'admin')->first();
               
-                    Mail::to($admin->email)->send(new AdminNotificationMail($reservation));
-                
+                     Mail::to($admin->email)->send(new ReservationDetailsMail($reservation));
                 
                     Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
-                    return redirect()->route('reservation.index');
+                    return back();
                 }
 
 
             }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
-    
-            //dd($validated);
-           
-    
         } catch (\Throwable $ex) {
             dd($ex);
             Alert::toast('Une erreur est survenue lors de l\'enregistrement', 'error')->position('top-end')->timerProgressBar();
@@ -350,5 +351,77 @@ class AccueilController extends Controller
         }
 
         
+    }
+
+
+    private function getSessionDates($date_visite, $nbre_fois)
+{
+    $dates = [];
+    $date = Carbon::parse($date_visite);
+    $interval = null;
+    $end_date = Carbon::now()->addYear();
+    switch ($nbre_fois) {
+        case '1 fois par semaine':
+            $interval = '1 week';
+            break;
+        case '1 fois par quinzaine':
+            $interval = '2 weeks';
+            break;
+        case '1 fois par mois':
+            $interval = '1 month';
+            break;
+        case 'Juste cette fois ci':
+            $dates[] = $date->format('d-m-Y H:i');
+            return $dates;
+        default:
+            throw new \Exception("Fréquence inconnue: $nbre_fois");
+    }
+
+    while ($date->isBefore($end_date)) {
+        $dates[] = $date->format('d-m-Y H:i');
+        $date->add($interval);
+    }
+
+    return $dates;
+}
+
+
+
+
+
+    public function Modification($id){
+        
+        $user = User::find($id);
+        return view('accueil.validation',compact('user'));
+    }
+
+
+    public function Validation(Request $request ,$id){
+        
+        try {
+            //code...
+
+            $validated = $request->validate([
+                'password' => ['required', 'confirmed',Password::defaults()],
+               
+            ]);
+    
+          
+            $user = User::find($id);
+            
+               
+                $user->update(['password' => Hash::make($request->password)]);
+                Auth::login($user);
+                Alert::toast('Compte valider avec succès', 'success')->position('top-end')->timerProgressBar();
+                return redirect(RouteServiceProvider::HOME);
+            
+        } catch (\Throwable $th) {
+            //throw $th;
+            Alert::toast($th->getMessage(), 'error')->position('top-end')->timerProgressBar();
+            return back();
+        }
+       
+
+       
     }
 }

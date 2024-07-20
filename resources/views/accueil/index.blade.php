@@ -29,7 +29,7 @@
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#navbar-example">
-
+    @include('sweetalert::alert')
     <!-- Begin page -->
     <div class="layout-wrapper landing">
         <nav class="navbar navbar-expand-lg navbar-landing fixed-top job-navbar" id="navbar">
@@ -63,7 +63,7 @@
                     </ul>
 
                     <div class="">
-                        <a href="auth-signin-basic.html" class="btn btn-soft-secondary"><i
+                        <a href="{{route('login')}}" class="btn btn-soft-secondary"><i
                                 class="ri-user-3-line align-bottom me-1"></i> Connexion & Inscription</a>
                     </div>
                 </div>

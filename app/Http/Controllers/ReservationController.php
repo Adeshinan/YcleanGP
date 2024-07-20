@@ -6,13 +6,16 @@ use Carbon\Carbon;
 use Stripe\Stripe;
 use App\Models\Taux;
 use App\Models\Taxe;
+use App\Models\User;
 use App\Models\Extra;
 use App\Models\Service;
 use App\Models\Parametre;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Stripe\Checkout\Session;
+use App\Mail\ReservationDetailsMail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ReservationController extends Controller
@@ -96,7 +99,7 @@ class ReservationController extends Controller
             'type_paiement' => 'required|integer',
         ]);
 
-        //dd($validated);
+       
         Stripe::setApiKey(config('stripe.sk'));
 
         $validated['user_id'] = Auth::id();
@@ -173,11 +176,22 @@ class ReservationController extends Controller
                 'cancel_url' => route('checkout'),
             ]);
 
-            Reservation::create($validated);
+           $reservation =  Reservation::create($validated);
+
+            $admin = User::where('type_connecter', 'admin')->first();
+              
+            Mail::to($admin->email)->send(new ReservationDetailsMail($reservation));
+                
             Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
             return redirect($session->url);
         } else {
-            Reservation::create($validated);
+            
+            $reservation =  Reservation::create($validated);
+
+            $admin = User::where('type_connecter', 'admin')->first();
+              
+            Mail::to($admin->email)->send(new ReservationDetailsMail($reservation));
+            
             Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
             return redirect()->route('reservation.index');
         }

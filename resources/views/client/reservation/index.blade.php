@@ -64,7 +64,10 @@
                                                                                         </div>
                                                                                     </th>
                                                                                     <th class="sort" data-sort="customer_name">Services</th>
+                                                                                    @if (Auth::user()->type_connecter == "admin")
                                                                                     <th class="sort" data-sort="email">Nom du client</th>
+                                                                                    @endif
+
                                                                                     <th class="sort" data-sort="email">Date</th>
                                                                                     <th class="sort" data-sort="email">Montant</th>
                                                                                     <th class="sort" data-sort="action">Action</th>
@@ -81,7 +84,9 @@
                                                                                     </th>
                                                                                    
                                                                                     <td class="customer_name">{{$reservation->service->libelle}}</td>
+                                                                                    @if (Auth::user()->type_connecter == "admin")
                                                                                     <td class="email">{{$reservation->user->name}}</td>
+                                                                                      @endif
                                                                                     <td class="email">{{$reservation->date_visite}}</td>
                                                                                     <td class="email">{{$reservation->prixTotal}}$ CAD</td>
                                                                                     

@@ -13,22 +13,27 @@ class ReservationDetailsMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+
+    public $reservation;
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($reservation)
     {
         //
+
+        $this->reservation = $reservation;
     }
 
     /**
      * Get the message envelope.
      */
-    public function envelope(): Envelope
+    public function build()
     {
-        return new Envelope(
-            subject: 'Reservation Details Mail',
-        );
+        
+        return $this->subject('Nouvelle réservation')
+                    ->view('emails.reservation');
+                    
     }
 
     /**
@@ -37,7 +42,7 @@ class ReservationDetailsMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.reservation',
         );
     }
 

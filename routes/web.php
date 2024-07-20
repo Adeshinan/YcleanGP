@@ -35,6 +35,12 @@ Route::get('/', function () {
 
 Route::get('/reservation_en_ligne',[AccueilController::class,'ReservationLigne'])->name('reservation.ligne');
 Route::post('/passer_reservation_en_ligne',[AccueilController::class,'Reservation'])->name('reservation.passer');
+
+Route::get('/validation_de_compte/{id}',[AccueilController::class,'Modification'])->name('modification.compte');
+Route::post('/validation_compte/{id}',[AccueilController::class,'Validation'])->name('validation.compte');
+
+
+
 Route::get('/dashboard',[DashbordController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::middleware(['auth', 'isadmin'])->group(function () {
 

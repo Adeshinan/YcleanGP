@@ -59,7 +59,7 @@
                     </ul>
 
                     <div class="">
-                        <a href="auth-signin-basic.html" class="btn btn-soft-secondary"><i
+                        <a href="{{route('login')}}" class="btn btn-soft-secondary"><i
                                 class="ri-user-3-line align-bottom me-1"></i> Connexion & Inscription</a>
                     </div>
                 </div>
