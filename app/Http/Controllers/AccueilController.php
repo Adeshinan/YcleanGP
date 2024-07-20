@@ -2,11 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Taux;
+use App\Models\Taxe;
+use App\Models\Extra;
+use App\Models\Service;
+use App\Models\Parametre;
 use Illuminate\Http\Request;
 
 class AccueilController extends Controller
 {
     //
+
+
+
+
+    public function ReservationLigne(){
+        $services = Service::all();
+        $extras = Extra::all();
+        $taux = Taux::all();
+        $parametres = Parametre::all();
+        $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
+        $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
+        return view('accueil.index',compact('extras','services','taux','parametres','tps','tvq'));
+    }
 
 
 

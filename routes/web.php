@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExtraController;
 use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\AccueilController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
@@ -29,16 +30,12 @@ use App\Http\Controllers\ReservationController;
 
 Route::get('/', function () {
     
-    $services = Service::all();
-    $extras = Extra::all();
-    $taux = Taux::all();
-    $parametres = Parametre::all();
-    $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
-    $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
-    return view('accueil.index',compact('extras','services','taux','parametres','tps','tvq'));
+    return redirect()->route('reservation.ligne'); 
 });
 
 
+Route::get('/reservation_en_ligne',[AccueilController::class,'ReservationLigne'])->name('reservation.ligne');
+Route::post('/passer_reservation_en_ligne',[AccueilController::class,'Reservation'])->name('reservation.passer');
 Route::get('/dashboard',[DashbordController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::middleware(['auth', 'isadmin'])->group(function () {
 
