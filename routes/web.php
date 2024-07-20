@@ -29,8 +29,7 @@ use App\Http\Controllers\ReservationController;
 */
 
 Route::get('/', function () {
-    
-    return redirect()->route('reservation.ligne'); 
+    return view('accueil.first');
 });
 
 

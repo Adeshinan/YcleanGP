@@ -48,8 +48,17 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto mt-2 mt-lg-0" id="navbar-example">
+                    <li class="nav-item">
+                            <a class="nav-link" href="/" style='text-transform: uppercase;'>Acceuil</a>
+                        </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#hero" style='text-transform: uppercase;'>Reservation en Ligne</a>
+                            <a class="nav-link" href="#wallet" style='text-transform: uppercase;'>A Propos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{route('reservation.ligne')}}" style='text-transform: uppercase;'>Réservation en ligne</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#categories" style='text-transform: uppercase;'>FAQ</a>
                         </li>
                     </ul>
 
