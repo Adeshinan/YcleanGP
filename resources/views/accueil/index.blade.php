@@ -585,6 +585,53 @@
                                             </div>
 
 
+
+                                            <div class="col-xxl-6 col-md-6">
+                                                <div>
+                                                    <label for="exampleInputtime" class="form-label">Nom et prénoms</label>
+                                                    <input type="text" name="name" class="form-control" id="" placeholder="Entrer le nom" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xxl-6 col-md-6">
+                                                <div>
+                                                    <label for="borderInputCity" class="form-label">Email </label>
+                                                    <input type="text" name="email" class="form-control" id=""
+                                                        placeholder="Entrez votre email" required>
+                                                </div>
+                                            </div>
+
+                                            <!--end col-->
+                                            <div class="col-xxl-6 col-md-6">
+                                                <div>
+                                                    <label for="borderInputPostalCode" class="form-label">Adresse</label>
+                                                    <input type="text" name="adress" class="form-control" id=""
+                                                        placeholder="Entrez votre adresse" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-6 col-md-6">
+                                                <div>
+                                                    <label for="borderInputPostalCode" class="form-label">Code postal</label>
+                                                    <input type="text" name="postal" class="form-control" id=""
+                                                        placeholder="Entrez votre code postal" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-6 col-md-6">
+                                                <div>
+                                                    <label for="borderInputPostalCode" class="form-label">Numero de téléphone</label>
+                                                    <input type="text" name="contact" class="form-control" id=""
+                                                        placeholder="Entrez votre numero de téléphone" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-6 col-md-6">
+                                                <div>
+                                                    <label for="borderInputCity" class="form-label">Ville </label>
+                                                    <input type="text" name="vill" class="form-control" id=""
+                                                        placeholder="Entrez votre ville" required>
+                                                </div>
+                                            </div>
+
+
                                             <!--end col-->
                                             <div class="col-xxl-6 col-md-6">
                                                 <fieldset>
@@ -1631,6 +1678,12 @@
     <!--job landing init -->
     <script src="Admin/assets/js/pages/job-lading.init.js"></script>
     <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<!--select2 cdn-->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script src="Admin/assets/js/pages/select2.init.js"></script>
 
 </body>
 
