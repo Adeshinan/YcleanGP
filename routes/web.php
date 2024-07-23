@@ -31,7 +31,9 @@ use App\Http\Controllers\ReservationController;
 Route::get('/', function () {
     return view('accueil.first');
 });
-
+Route::get('/apropos', function () {
+    return view('accueil.apropos');
+});
 
 Route::get('/reservation_en_ligne',[AccueilController::class,'ReservationLigne'])->name('reservation.ligne');
 Route::post('/passer_reservation_en_ligne',[AccueilController::class,'Reservation'])->name('reservation.passer');

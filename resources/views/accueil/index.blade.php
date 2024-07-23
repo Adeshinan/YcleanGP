@@ -52,14 +52,12 @@
                             <a class="nav-link" href="/" style='text-transform: uppercase;'>Acceuil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#wallet" style='text-transform: uppercase;'>A Propos</a>
+                            <a class="nav-link" href="/apropos" style='text-transform: uppercase;'>A Propos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="{{route('reservation.ligne')}}" style='text-transform: uppercase;'>Réservation en ligne</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#categories" style='text-transform: uppercase;'>FAQ</a>
-                        </li>
+                        
                     </ul>
 
                     <div class="">

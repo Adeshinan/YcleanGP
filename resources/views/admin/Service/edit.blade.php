@@ -30,7 +30,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header align-items-center d-flex">
-                            <h4 class="card-title mb-0 flex-grow-1">Input Example</h4>
+                            <h4 class="card-title mb-0 flex-grow-1">Modifier un service</h4>
 
 
                         </div><!-- end card header -->
