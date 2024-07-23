@@ -22,7 +22,6 @@ return new class extends Migration
                 "postal" => "Montral",
                 "ville" => "quebec",
                 "mode_connexion" => 'email',
-                "sexe" => "Masculin",
                 "valide" => 1,
                 "type_connecter" => 'admin',
                 "email_verified_at" => Carbon::now(),

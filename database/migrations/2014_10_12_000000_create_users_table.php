@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('numero');
             $table->string('type_connecter')->default('Client');
             $table->string('mode_connexion')->nullable();
-            $table->string('sexe');
             $table->string('email')->unique();
             $table->string('valide')->nullable();
             $table->timestamp('email_verified_at')->nullable();

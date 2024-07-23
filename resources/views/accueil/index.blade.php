@@ -64,7 +64,7 @@
 
                     <div class="">
                         <a href="{{route('login')}}" class="btn btn-soft-secondary"><i
-                                class="ri-user-3-line align-bottom me-1"></i> Connexion & Inscription</a>
+                                class="ri-user-3-line align-bottom me-1"></i> Connexion</a>
                     </div>
                 </div>
 
@@ -546,7 +546,7 @@
                     <!-- end col -->
                     <div class="col-sm-auto">
                         <div>
-                            <a href="#!" class="btn bg-gradient btn-secondary">Se Connecter</a>
+                            <a href="{{route('login')}}" class="btn bg-gradient btn-secondary">Se Connecter</a>
                         </div>
                     </div>
                     <!-- end col -->

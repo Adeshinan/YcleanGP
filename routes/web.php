@@ -41,20 +41,30 @@ Route::post('/validation_compte/{id}',[AccueilController::class,'Validation'])->
 
 
 
+Route::get('/erreur',[DashbordController::class,'Erreur'])->name('page.erreur');
 Route::get('/dashboard',[DashbordController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
 Route::middleware(['auth', 'isadmin'])->group(function () {
 
     /////// Service ///////
     Route::resource('service', ServiceController::class);
     Route::get('delete_service/{id}',[ServiceController::class,'delete'])->name('service.delete');
-    
     //////////Extra //////
     Route::resource('extra', ExtraController::class);
     Route::get('delete_extra/{id}',[ExtraController::class,'delete'])->name('extra.delete');
-
-
     /////// Parametre //////////
     Route::resource('parametre', ParametreController::class);
+    Route::get('/valider/{id}', [ReservationController::class,'Valider'])->name('reservation.valider');
+
+});
+
+
+
+Route::middleware(['auth', 'isclient'])->group(function () {
+
+    
 });
 
 
@@ -70,7 +80,6 @@ Route::get('user_profile',[UserController::class,'profile'])->name('user.profile
 
 
 Route::resource('reservation', ReservationController::class);
-Route::get('/valider/{id}', [ReservationController::class,'Valider'])->name('reservation.valider');
 Route::get('/valider_reservation', [ReservationController::class,'ReservationValider'])->name('reservationliste.valider');
 Route::get('/success', [ReservationController::class,'success'])->name('success');
 Route::get('/checkout', [ReservationController::class,'checkout'])->name('checkout');

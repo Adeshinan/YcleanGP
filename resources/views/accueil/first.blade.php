@@ -60,7 +60,7 @@
 
                     <div class="">
                         <a href="{{route('login')}}" class="btn btn-soft-secondary"><i
-                                class="ri-user-3-line align-bottom me-1"></i> Connexion & Inscription</a>
+                                class="ri-user-3-line align-bottom me-1"></i> Connexion </a>
                     </div>
                 </div>
 

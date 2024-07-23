@@ -75,6 +75,19 @@ class ServiceController extends Controller
             'parametre' => 'nullable|array',
         ]);
 
+
+        if($validatedData->fails())
+        {
+            $errors = $validation->errors();
+            $errorMessages = '';
+            foreach ($errors->all() as $message) {
+                $errorMessages .= $message . '<br>';
+            }
+
+            Alert::toast($errorMessages, 'error')->position('top-end')->timerProgressBar();
+            return back()->withInput();
+        }
+
         // Créer le service
         $service = Service::create([
             'libelle' => $validatedData['libelle'],

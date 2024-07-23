@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Rules\StrongPassword;
+use Illuminate\Validation\Rules;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Validator;
 
 class RegisteredUserController extends Controller
 {
@@ -34,18 +37,26 @@ class RegisteredUserController extends Controller
         try {
             //code...
 
-            $request->validate([
+            $validator = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:255'],
                 'address' => ['required', 'string', 'max:255'],
                 'postal' => ['required', 'string', 'max:10'],
                 'ville' => ['required', 'string', 'max:100'],
                 'numero' => ['required', 'string', 'max:15'],
-               // 'mode_connexion' => ['required', 'string', 'max:50'],
-                'sexe' => ['required', 'string'],
                 'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users'],
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'password' => ['required', 'string', 'confirmed', new StrongPassword],
             ]);
-            
+        
+            if ($validator->fails()) {
+                $errors = $validator->errors();
+                $errorMessages = '';
+                foreach ($errors->all() as $message) {
+                    $errorMessages .= $message . '<br>';
+                }
+
+                Alert::toast($errorMessages, 'error')->position('top-end')->timerProgressBar();
+                return back()->withInput();
+            }
 
            
             $user = User::create([
@@ -55,10 +66,11 @@ class RegisteredUserController extends Controller
                 'ville' => $request->ville,
                 'numero' => $request->numero,
                // 'mode_connexion' => $request->mode_connexion,
-                'sexe' => $request->sexe,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
+
+           
             
             event(new Registered($user));
     
@@ -68,6 +80,7 @@ class RegisteredUserController extends Controller
         } catch (\Throwable $ex) {
            dd($ex);
             //throw $th;
+            Alert::toast($th->getMessage(), 'error')->position('top-end')->timerProgressBar();
         }
        
     }

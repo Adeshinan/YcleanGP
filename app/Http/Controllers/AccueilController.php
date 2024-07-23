@@ -15,6 +15,7 @@ use Faker\Factory as Faker;
 use Illuminate\Http\Request;
 use Stripe\Checkout\Session;
 
+use App\Rules\StrongPassword;
 use App\Mail\ReservationDetailsMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -76,6 +77,19 @@ class AccueilController extends Controller
 
                 'type_paiement' => 'required|integer',
             ]);
+
+
+            if($validated->fails())
+        {
+            $errors = $validation->errors();
+            $errorMessages = '';
+            foreach ($errors->all() as $message) {
+                $errorMessages .= $message . '<br>';
+            }
+
+            Alert::toast($errorMessages, 'error')->position('top-end')->timerProgressBar();
+            return back()->withInput();
+        }
 
 
 
@@ -402,9 +416,21 @@ class AccueilController extends Controller
             //code...
 
             $validated = $request->validate([
-                'password' => ['required', 'confirmed',Password::defaults()],
+                'password' => ['required', 'confirmed', new StrongPassword],
                
             ]);
+            
+            if($validated->fails())
+            {
+                $errors = $validation->errors();
+                $errorMessages = '';
+                foreach ($errors->all() as $message) {
+                    $errorMessages .= $message . '<br>';
+                }
+    
+                Alert::toast($errorMessages, 'error')->position('top-end')->timerProgressBar();
+                return back()->withInput();
+            }
     
           
             $user = User::find($id);

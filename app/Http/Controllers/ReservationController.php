@@ -99,6 +99,18 @@ class ReservationController extends Controller
             'type_paiement' => 'required|integer',
         ]);
 
+        if($validated->fails())
+        {
+            $errors = $validation->errors();
+            $errorMessages = '';
+            foreach ($errors->all() as $message) {
+                $errorMessages .= $message . '<br>';
+            }
+
+            Alert::toast($errorMessages, 'error')->position('top-end')->timerProgressBar();
+            return back()->withInput();
+        }
+
        
         Stripe::setApiKey(config('stripe.sk'));
 

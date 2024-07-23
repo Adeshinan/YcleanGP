@@ -47,8 +47,16 @@ class DashbordController extends Controller
         
                             return view('admin.index',compact('entete','total_reservation','reservation_attente','reservation_valider','paiement_espèce','paiement_bancaire'));
     }
-        
-       
+   
+    }
+
+
+
+
+
+
+    public function Erreur(){
+        return view('erreur');
     }
     
 }

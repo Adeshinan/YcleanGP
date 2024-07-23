@@ -1,88 +1,199 @@
-<x-guest-layout >
-    <x-authentication-card >
-        <x-slot name="logo" >
-            <x-authentication-card-logo />
-        </x-slot>
+<!doctype html>
+<html lang="en" data-layout="semibox" data-sidebar-visibility="show" data-topbar="light" data-sidebar="light" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
 
-        <x-validation-errors class="mb-4" />
+<head>
 
-        <form method="POST" action="{{ route('register') }}" >
-            @csrf
+    <meta charset="utf-8" />
+    <title>Inscription | Yclean </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="Admin/assets/images/favicon.ico">
 
-            <div class="mb-2">
-                <x-label for="name" value="{{ __('Nom et prénoms') }}" />
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+    <!-- Layout config Js -->
+    <script src="Admin/assets/js/layout.js"></script>
+    <!-- Bootstrap Css -->
+    <link href="Admin/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="Admin/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="Admin/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="Admin/assets/css/custom.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+    @include('sweetalert::alert')
+    <div class="auth-page-wrapper pt-5">
+        <!-- auth page bg -->
+        <div class="auth-one-bg-position auth-one-bg" id="auth-particles">
+            <div class="bg-overlay"></div>
+
+            <div class="shape">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1440 120">
+                    <path d="M 0,36 C 144,53.6 432,123.2 720,124 C 1008,124.8 1296,56.8 1440,40L1440 140L0 140z"></path>
+                </svg>
             </div>
+        </div>
 
-            <div class="mb-2">
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            </div>
-
-            <div class="mb-2">
-                <x-label for="address" value="{{ __('Addresse') }}" />
-                <x-input id="address" class="block mt-1 w-full" type="text" name="address" :value="old('address')" required />
-            </div>
-
-            <div class="mb-2">
-                <x-label for="postal" value="{{ __('Code Postal') }}" />
-                <x-input id="postal" class="block mt-1 w-full" type="text" name="postal" :value="old('postal')" required />
-            </div>
-
-            <div class="mb-2">
-                <x-label for="ville" value="{{ __('Ville') }}" />
-                <x-input id="ville" class="block mt-1 w-full" type="text" name="ville" :value="old('ville')" required />
-            </div>
-
-            <div class="mb-2">
-                <x-label for="numero" value="{{ __('Numero de téléphone') }}" />
-                <x-input id="numero" class="block mt-1 w-full" type="text" name="numero" :value="old('numero')" required />
-            </div>
-
-            <div class="mb-2">
-                <x-label for="sexe" value="{{ __('Sexe') }}" />
-                <select id="sexe" name="sexe" class="block mt-1 w-full" required>
-                    <option value="" selected>Choisir le sexe</option>
-                    <option value="Masculin">Masculin</option>
-                    <option value="Féminin">Féminin</option>
-                </select>
-            </div>
-
-            <div class="col-span-2">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            </div>
-
-            <div class="col-span-2">
-                <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
-            </div>
-
-            @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
-                <div class="col-span-2">
-                    <x-label for="terms">
-                        <div class="flex items-center">
-                            <x-checkbox name="terms" id="terms" required />
-                            <div class="ml-2">
-                                {!! __('I agree to the :terms_of_service and :privacy_policy', [
-                                    'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Terms of Service').'</a>',
-                                    'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Privacy Policy').'</a>',
-                                ]) !!}
+        <!-- auth page content -->
+        <div class="auth-page-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center mt-sm-5 mb-4 text-white-50">
+                            <div>
+                                <a href="Admin/index.html" class="d-inline-block auth-logo">
+                                    <img src="Admin/assets/images/logo-light.png" alt="" height="20">
+                                </a>
                             </div>
+                            <p class="mt-3 fs-15 fw-medium"></p>
                         </div>
-                    </x-label>
+                    </div>
                 </div>
-            @endif
+                <!-- end row -->
 
-            <div class="flex items-center justify-end col-span-2 mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                    {{ __('Déjà inscrit?') }}
-                </a>
-                <x-button class="ml-4">
-                    {{ __('S\'inscrire') }}
-                </x-button>
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="card mt-4">
+
+                            <div class="card-body p-4">
+                                <div class="text-center mt-2">
+                                    <h5 class="text-primary">Create un Nouveau Compte</h5>
+                                    <p class="text-muted"></p>
+                                </div>
+                                <div class="p-2 mt-4">
+                                   
+                                        <form class="needs-validation" method="POST" action="{{ route('register') }}" >
+                                            @csrf
+
+                                        <div class="mb-3">
+                                            <label for="username" class="form-label">Nom et prénoms <span class="text-danger">*</span></label>
+                                            <input type="text" name="name" class="form-control" id="username" placeholder="Entrer votre nom et prenoms" required>
+                                            <div class="invalid-feedback">
+                                                Please enter username
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="useremail" class="form-label">Email <span class="text-danger">*</span></label>
+                                            <input type="email" name="email" class="form-control" id="useremail" placeholder="Entrer votre email address" required>
+                                            <div class="invalid-feedback">
+                                                Please enter email
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="username" class="form-label">Adresse <span class="text-danger">*</span></label>
+                                            <input type="text" name="address" class="form-control" id="username" placeholder="Entrer votre address" required>
+                                            <div class="invalid-feedback">
+                                                Please enter username
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="username" class="form-label">Code postal <span class="text-danger">*</span></label>
+                                            <input type="text" name="postal" class="form-control" id="username" placeholder="Entrer votre code postal" required>
+                                            <div class="invalid-feedback">
+                                                Please enter username
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="username" class="form-label">Ville <span class="text-danger">*</span></label>
+                                            <input type="text" name="ville" class="form-control" id="username" placeholder="Entrer votre ville" required>
+                                            <div class="invalid-feedback">
+                                                Please enter username
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="username" class="form-label">Numero de téléphone <span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" name="numero" id="username" placeholder="Entrer numero de téléphone" required>
+                                            <div class="invalid-feedback">
+                                                Please enter username
+                                            </div>
+                                        </div>
+                                        
+
+                                        <div class="mb-3">
+                                            <label class="form-label" for="password-input">Mot de passe</label>
+                                            <div class="position-relative auth-pass-inputgroup">
+                                                <input type="password" name="password" class="form-control pe-5 password-input"  placeholder="Entrer votre mot de passe" id="password-input"  required>
+                                                <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                                <div class="invalid-feedback">
+                                                    Please enter password
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label" for="password-input">Confirmer votre mot de passe</label>
+                                            <div class="position-relative auth-pass-inputgroup">
+                                                <input type="password" class="form-control pe-5 password-input" name="password_confirmation"  placeholder="confirmer votre mot de passe" id="password-input" required>
+                                                <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                                <div class="invalid-feedback">
+                                                    Please enter password
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                      
+
+                                        <div id="password-contain" class="p-3 bg-light mb-2 rounded">
+                                            <h5 class="fs-13">Password must contain:</h5>
+                                            <p id="pass-length" class="invalid fs-12 mb-2">Minimum <b>8 characters</b></p>
+                                            <p id="pass-lower" class="invalid fs-12 mb-2">At <b>lowercase</b> letter (a-z)</p>
+                                            <p id="pass-upper" class="invalid fs-12 mb-2">At least <b>uppercase</b> letter (A-Z)</p>
+                                            <p id="pass-number" class="invalid fs-12 mb-0">A least <b>number</b> (0-9)</p>
+                                        </div>
+
+                                        <div class="mt-4">
+                                            <button class="btn btn-secondary w-100" type="submit">S'incrire</button>
+                                        </div>
+
+                                        
+                                    </form>
+
+                                </div>
+                            </div>
+                            <!-- end card body -->
+                        </div>
+                        <!-- end card -->
+
+                        <div class="mt-4 text-center">
+                            <p class="mb-0">Avez vous déjà un compte ? <a href="{{ route('login') }}" class="fw-semibold text-primary text-decoration-underline"> Se Connecter </a> </p>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- end row -->
             </div>
-        </form>
+            <!-- end container -->
+        </div>
+        <!-- end auth page content -->
 
-    </x-authentication-card>
-</x-guest-layout>
+        <!-- footer -->
+        @include('layouts.footerauth')
+        <!-- end Footer -->
+    </div>
+    <!-- end auth-page-wrapper -->
+
+    <!-- JAVASCRIPT -->
+    <script src="Admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="Admin/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="Admin/assets/libs/node-waves/waves.min.js"></script>
+    <script src="Admin/assets/libs/feather-icons/feather.min.js"></script>
+    <script src="Admin/assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="Admin/assets/js/plugins.js"></script>
+
+    <!-- particles js -->
+    <script src="Admin/assets/libs/particles.js/particles.js"></script>
+    <!-- particles app js -->
+    <script src="Admin/assets/js/pages/particles.app.js"></script>
+    <!-- validation init -->
+    <script src="Admin/assets/js/pages/form-validation.init.js"></script>
+    <!-- password create init -->
+    <script src="Admin/assets/js/pages/passowrd-create.init.js"></script>
+</body>
+
+</html>
