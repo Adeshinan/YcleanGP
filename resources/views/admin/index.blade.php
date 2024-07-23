@@ -1,8 +1,5 @@
 @extends('layouts.admin')
 @section('contenu')
-    
-
-
 
 <div class="main-content">
 
@@ -66,7 +63,7 @@
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
-                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{$total_reservation}}" >0</span></h4>
+                                                <h4 class="fs-16 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{$total_reservation}}" >0</span></h4>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-success-subtle rounded fs-3">
@@ -96,8 +93,8 @@
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-2">
                                             <div>
-                                                <h6 class="fs-22 fw-semibold ff-secondary mb-2">En attente : <span class="counter-value" data-target="{{$reservation_attente}}">0</span></h6>
-                                                <h6 class="fs-22 fw-semibold ff-secondary mb-2">Valider : <span class="counter-value" data-target="{{$reservation_valider}}">0 </span></h6>
+                                                <h6 class="fs-16 fw-semibold ff-secondary mb-2">En attente : <span class="counter-value" data-target="{{$reservation_attente}}">0</span></h6>
+                                                <h6 class="fs-16 fw-semibold ff-secondary mb-2">Valider : <span class="counter-value" data-target="{{$reservation_valider}}">0 </span></h6>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-info-subtle rounded fs-3">
@@ -126,7 +123,7 @@
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
-                                                <h6 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{$reservation_attente}}">0</span></h6>
+                                                <h6 class="fs-16 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{$reservation_attente}}">0</span></h6>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-info-subtle rounded fs-3">
@@ -160,7 +157,7 @@
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
-                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{$total_client}}">0</span></h4>
+                                                <h4 class="fs-16 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{$total_client}}">0</span></h4>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-warning-subtle rounded fs-3">
@@ -190,7 +187,7 @@
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-4">
                                             <div>
-                                                <h6 class="fs-22 fw-semibold ff-secondary mb-4"> <span class="counter-value" data-target="{{$reservation_valider}}">0 </span></h6>
+                                                <h6 class="fs-16 fw-semibold ff-secondary mb-4"> <span class="counter-value" data-target="{{$reservation_valider}}">0 </span></h6>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-info-subtle rounded fs-3">
@@ -220,8 +217,8 @@
                                         </div>
                                         <div class="d-flex align-items-end justify-content-between mt-2">
                                             <div>
-                                                <h6 class="fs-22 fw-semibold ff-secondary mb-2">En Espèce : <span class="counter-value" data-target="{{$paiement_espèce}}">0</span></h6>
-                                                <h6 class="fs-22 fw-semibold ff-secondary mb-2">Par Carte Bancaire : <span class="counter-value" data-target="{{$paiement_bancaire}}">0 </span></h6>
+                                                <h6 class="fs-16 fw-semibold ff-secondary mb-2">En Espèce : <span class="counter-value" data-target="{{$paiement_espèce}}">0</span></h6>
+                                                <h6 class="fs-16 fw-semibold ff-secondary mb-2">Par Carte Bancaire : <span class="counter-value" data-target="{{$paiement_bancaire}}">0 </span></h6>
                                             </div>
                                             <div class="avatar-sm flex-shrink-0">
                                                 <span class="avatar-title bg-primary-subtle rounded fs-3">

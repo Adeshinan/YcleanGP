@@ -11,7 +11,7 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                                            <h4 class="mb-sm-0">Liste des Services</h4>
+                                                            <h4 class="mb-sm-0">Liste des Reservations</h4>
                                     
                                                             <div class="page-title-right">
                                                                 <ol class="breadcrumb m-0">
@@ -29,32 +29,26 @@
                                                     <div class="col-lg-12">
                                                         <div class="card">
                                                             <div class="card-header">
-                                                                <h4 class="card-title mb-0"></h4>
+                                                                <h4 class="card-title mb-0">Gestion des reservations en attente</h4>
                                                             </div><!-- end card header -->
                                     
                                                             <div class="card-body">
                                                                 <div class="listjs-table" id="customerList">
+                                                                @if (Auth::user()->type_connecter != 'admin')
                                                                     <div class="row g-4 mb-3">
                                                                         <div class="col-sm-auto">
-                                                                            @if (Auth::user()->type_connecter != 'admin')
                                                                             <div>
                                                                                 <a href="{{route('reservation.create')}}" class="btn btn-success"><i class="ri-add-line align-bottom me-1"></i> Passer Réservation</a>
                                                                                 <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
                                                                             </div>
-                                                                            @endif
-                                                                            
-                                                                        </div>
-                                                                        <div class="col-sm">
-                                                                            <div class="d-flex justify-content-sm-end">
-                                                                                <div class="search-box ms-2">
-                                                                                    <input type="text" class="form-control search" placeholder="Search...">
-                                                                                    <i class="ri-search-line search-icon"></i>
-                                                                                </div>
-                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                    
+                                                                @endif
+                                                                @if (Auth::user()->type_connecter != 'admin')
                                                                     <div class="table-responsive table-card mt-3 mb-1">
+                                                                @else
+                                                                    <div class="table-responsive table-card mb-1">
+                                                                @endif
                                                                         <table class="table align-middle table-nowrap" id="customerTable">
                                                                             <thead class="table-light">
                                                                                 <tr>

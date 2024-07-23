@@ -41,7 +41,7 @@
 
             <div class="mb-2">
                 <x-label for="sexe" value="{{ __('Sexe') }}" />
-                <select id="sexe" name="sexe" class="block mt-1 w-full" required>
+                <select id="sexe" name="sexe" class="block mt-1 w-full" :value="old('sexe')" required>
                     <option value="" selected>Choisir le sexe</option>
                     <option value="Masculin">Masculin</option>
                     <option value="Féminin">Féminin</option>
