@@ -6,6 +6,7 @@ use App\Models\Icon;
 use App\Models\Extra;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
 
 class ExtraController extends Controller
@@ -115,6 +116,31 @@ class ExtraController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        try {
+         
+           
+            $validator = Validator::make($request->all(), [
+                'libelle' => 'required|string|max:255',
+                'prix' => 'required|numeric',
+                
+            ]);
+            $extra = Extra::findOrFail($id);
+    
+            $extra->update([
+                'libelle' => $request->libelle,
+                'prix' => $request->prix,
+            ]);
+            Alert::toast('Modification effectué avec succès', 'success')->position('top-end')->timerProgressBar();
+            return redirect()->route('extra.index');
+    
+        }  catch (\Throwable $ex) {
+            dd($ex);
+            Alert::toast('Une erreur est survenue lors de l\'enrengistrement', 'error')->position('top-end')->timerProgressBar();
+                \Log::error($ex->getMessage());
+                return back()->withInput();
+        }
+       
     }
 
     /**
@@ -131,19 +157,7 @@ class ExtraController extends Controller
 
     public function delete($id){
         
-        try{
-
-            $service = Service::find($id);
-            $service->delete();
-            Alert::toast('Service supprimé avec succès', 'success')->position('top-end')->timerProgressBar();
-            return redirect()->route('service.index');
-
-        } catch(\Illuminate\Database\QueryException $ex){
-            //dd($ex);
-            Alert::toast('Une erreur est survenue lors de la suppression.', 'error')->position('top-end')->timerProgressBar();
-            \Log::error($ex->getMessage());
-            return back();
-        }
+      
     }
 
 

@@ -15,14 +15,22 @@ class ReservationDetailsMail extends Mailable
 
 
     public $reservation;
+    public $taux;
+    public $parametre;
+    public $extra;
+    public $service;
     /**
      * Create a new message instance.
      */
-    public function __construct($reservation)
+    public function __construct($reservation,$taux,$parametre,$extra,$service)
     {
         //
 
         $this->reservation = $reservation;
+        $this->taux = $taux;
+        $this->parametre = $parametre;
+        $this->extra = $extra;
+        $this->service = $service;
     }
 
     /**

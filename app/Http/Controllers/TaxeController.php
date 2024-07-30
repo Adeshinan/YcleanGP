@@ -2,31 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Parametre;
+use App\Models\Taxe;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Validator;
 
-class ParametreController extends Controller
+class TaxeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        try
-        {
-            $page = 'Paramètre';
-            $int = 1;
-            $entete = 'Liste des Paramètres - Y Clean';
-            $parametres = Parametre::paginate(5);
-            return view('admin.parametre.index', compact('parametres', 'int', 'entete', 'page'));
-        }
-        catch(\Illuminate\Database\QueryException $ex)
-        {
-            $error = "Une erreur inattendue s'est produite.";
-            \Log::error($ex->getMessage());
-            return back()->with('error', $error)->withInput();
-        }
+        //
+        $page = 'Liste des Taxes';
+        $entete = ' Liste des Taxes - Y Clean';
+        $taxe = Taxe::paginate(5);
+        return view('admin.taxe.index',compact('taxe','page','entete'));
     }
 
     /**
@@ -64,28 +56,32 @@ class ParametreController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
-        $request->validate([
-            'nom' => 'required|string|max:255',
-            'prix' => 'required|numeric',
-        ]);
+        //
 
-
-       
         try {
-            $parametre = Parametre::findOrFail($id);
-            $parametre->update([
-                'nom' => $request->nom,
-                'prix' => $request->prix,
+         
+          
+            $validator = Validator::make($request->all(), [
+                'libelle' => 'required|string|max:255',
+                'pourcentage' => 'required|string',
+                
+            ]);
+            $taxe = Taxe::findOrFail($id);
+    
+            $taxe->update([
+                'libelle' => $request->libelle,
+                'pourcentage' => $request->pourcentage,
             ]);
             Alert::toast('Modification effectué avec succès', 'success')->position('top-end')->timerProgressBar();
-            return redirect()->route('parametre.index');
-        } catch (\Illuminate\Database\QueryException $ex) {
+            return redirect()->route('taxe.index');
+    
+        }  catch (\Throwable $ex) {
             dd($ex);
             Alert::toast('Une erreur est survenue lors de l\'enrengistrement', 'error')->position('top-end')->timerProgressBar();
-            \Log::error($ex->getMessage());
-            return back()->with('error', "Une erreur inattendue s'est produite.")->withInput();
+                \Log::error($ex->getMessage());
+                return back()->withInput();
         }
     }
 

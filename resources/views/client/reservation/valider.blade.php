@@ -78,9 +78,7 @@
                                                                                             <div class="edit">
                                                                                                 <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#showModal">Edité</button>
                                                                                             </div>
-                                                                                            <div class="remove">
-                                                                                                <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#deleteRecordModal">Supprimé</button>
-                                                                                            </div>
+                                                                                            
                                                                                         </div>
                                                                                     </td>
                                                                                 </tr>
@@ -88,26 +86,16 @@
                                                                                 @endforeach
                                                                             </tbody>
                                                                         </table>
-                                                                        <div class="noresult" style="display: none">
-                                                                            <div class="text-center">
-                                                                                <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px"></lord-icon>
-                                                                                <h5 class="mt-2">Sorry! No Result Found</h5>
-                                                                                <p class="text-muted mb-0">We've searched more than 150+ Orders We did not find any orders for you search.</p>
-                                                                            </div>
+                                                                        <div class="d-flex justify-content-end">
+                                                                            <div class="pagination-wrap hstack gap-2">
+
+                                                                            {{$reservations->links()}}
                                                                         </div>
+                                                                    </div>
+                                                                        
                                                                     </div>
                                     
-                                                                    <div class="d-flex justify-content-end">
-                                                                        <div class="pagination-wrap hstack gap-2">
-                                                                            <a class="page-item pagination-prev disabled" href="javascript:void(0);">
-                                                                                prec
-                                                                            </a>
-                                                                            <ul class="pagination listjs-pagination mb-0"></ul>
-                                                                            <a class="page-item pagination-next" href="javascript:void(0);">
-                                                                                Suiv
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
+                                                                   
                                                                 </div>
                                                             </div><!-- end card -->
                                                         </div>

@@ -239,6 +239,44 @@
                                             </div>
                                         </div>
 
+
+                                        <div class="col-xxl-6 col-md-6">
+                                            <div>
+                                                <label for="labelInput" class="form-label">Vos Instructions</label>
+                                                <select class="form-select" name="instruction" id="">
+                                                    <option value=""></option>
+                                                    <option value="Ne pas touchés les murs">Ne pas touchés les murs</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-xxl-6 col-md-6">
+                                            <div>
+                                                <label for="labelInput" class="form-label">Information de stationnement</label>
+                                                <select class="form-select" name="station" id="">
+                                                    <option value=""></option>
+                                                    <option value="J'ai un stationnement">J'ai un stationnement</option>
+                                                    <option value="J'ai pas un stationnement">J'ai pas un stationnement</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="col-xxl-6 col-md-6">
+                                            <div>
+                                                <label for="labelInput" class="form-label">Comment accéderons-nous à la propriété ?</label>
+                                                <select class="form-select" name="propriete" id="">
+                                                    <option value=""></option>
+                                                    <option value="Je serai présent">Je serai présent</option>
+                                                    <option value=""></option>
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
                                         <div class="hstack gap-2 justify-content-end">
 
                                             <div class="col-xxl-6 col-md-6">

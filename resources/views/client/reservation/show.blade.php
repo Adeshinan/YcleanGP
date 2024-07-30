@@ -33,9 +33,9 @@
                                 <div class="card-header border-bottom-dashed p-4">
                                     <div class="d-flex">
                                         <div class="flex-grow-1">
-                                            <img src="assets/images/logo-dark.png" class="card-logo card-logo-dark"
+                                            <img src="Admin/assets/images/logo-dark.png" class="card-logo card-logo-dark"
                                                 alt="logo dark" height="17">
-                                            <img src="assets/images/logo-light.png" class="card-logo card-logo-light"
+                                            <img src="Admin/assets/images/logo-light.png" class="card-logo card-logo-light"
                                                 alt="logo light" height="17">
                                             <div class="mt-sm-5 mt-4">
                                                 <h6 class="text-muted text-uppercase fw-semibold">Adresse </h6>
@@ -103,7 +103,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-6 mt-sm-5 mt-4 ml-3" id="sessions-list">
+                                <div class="col-6 mt-sm-5 mt-4 mr-3" >
                                     <h3>Prochaines sessions</h3>
                                     <ul id="sessions">
                                          @foreach ($next_sessions as $session)
@@ -115,8 +115,17 @@
                                     </ul>
                                 </div>
 
-                                    <div class="col-6">
+                                    <div class="col-6 mt-sm-5 mt-4 ml-3">
+                                        <h3>Autre information</h3>
 
+                                        <ul id="sessions">
+                                           
+       
+                                            <li> <h4>Instruction spéciale : </h4>{{$reservation->instruction}}</li>
+                                            <li> <h4>Information sur le stationnement : </h4>{{$reservation->station}}</li>
+                                            <li> <h4>Comment accéderons-nous à la propriété : </h4>{{$reservation->propriete}}</li>
+                                          
+                                       </ul>
                                     </div>
                             </div>
 
@@ -269,7 +278,10 @@
                                             
                                             <tr>
                                                 <td class="text-start">
-                                                    <span class="fw-medium">{{ $tauxItem->libelle }} </span>
+                                                    @if ( $tauxItem->libelle )
+                                                        
+                                                    <span class="fw-medium">Rabais </span>
+                                                    @endif
                                                 </td>
                                                 <td>{{ $tauxItem->pourcentage }} %</td>
                                                 <td></td>
@@ -379,12 +391,14 @@
                                     </div>
                                     
                                     
-                                    @if(Auth::user()->type_connecter == 'admin' && $reservation->valider == 0)
                                     <div class="hstack gap-2 justify-content-end d-print-none mt-4">
-                                       
-                                        <a href="{{route('reservation.valider',$reservation->id)}} " class="btn btn-primary"></i> Valider la reservation</a>
+                                        @if($reservation->valider == 1)
+                                        <a href="{{route('reservation.facture',$reservation->id)}} " class="btn btn-primary"> <i class="ri-file-ppt-2-line"></i> Télécharger la facture</a>
+                                        @endif
+                                        @if(Auth::user()->type_connecter == 'admin' && $reservation->valider == 0)
+                                        <a href="{{route('reservation.valider',$reservation->id)}} " class="btn btn-primary"><i class="ri-checkbox-circle-line"></i>  Valider la reservation</a>
+                                        @endif
                                     </div>
-                                    @endif
                                 </div>
                                 <!--end card-body-->
                             </div>

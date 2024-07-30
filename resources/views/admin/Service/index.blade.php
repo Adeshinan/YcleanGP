@@ -40,13 +40,14 @@
                                             <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal"
                                                 id="create-btn" data-bs-target="#showModal"><i
                                                     class="ri-add-line align-bottom me-1"></i> Ajouter</button>
-                                            
+
                                         </div>
                                     </div>
                                     <div class="col-sm">
                                         <div class="d-flex justify-content-sm-end">
                                             <div class="search-box ms-2">
-                                                <input type="text" id="searchInput" class="form-control search" placeholder="Search..">
+                                                <input type="text" id="searchInput" class="form-control search"
+                                                    placeholder="Search..">
                                                 <i class="ri-search-line search-icon"></i>
                                             </div>
                                         </div>
@@ -58,7 +59,7 @@
                                         <thead class="table-light">
                                             <tr>
                                                 <th scope="col" style="width: 50px;">
-                                                   
+
                                                 </th>
                                                 <th class="sort" data-sort="customer_name">Services</th>
                                                 <th class="sort" data-sort="email">pourcentage de reduiction</th>
@@ -70,9 +71,9 @@
                                             @foreach ($services as $service)
 
                                             <tr>
-                                                
+
                                                 <th scope="row">
-                                                   
+
                                                 </th>
                                                 <td class="customer_name">{{$service->libelle}}</td>
                                                 <td class="email">@if ($service->pourcentage)
@@ -92,47 +93,31 @@
                                                 <td>
                                                     <div class="d-flex gap-2">
                                                         <div class="edit">
-                                                            <a class="btn btn-sm btn-success edit-item-btn" href="{{route('service.edit',$service->id)}}">Modifier</a>
+                                                            <a class="btn btn-sm btn-success edit-item-btn"
+                                                                href="{{route('service.edit',$service->id)}}">Modifier</a>
                                                         </div>
                                                         <div class="remove">
-                                                            <button type="button" class="btn btn-sm btn-danger remove-item-btn"
+                                                            <button type="button"
+                                                                class="btn btn-sm btn-danger remove-item-btn"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#deleteRecordModal"
                                                                 onclick="showModal('{{ $route }}',{{ $service->id }})">Supprimer</button>
                                                         </div>
 
-                                                        
+
                                                     </div>
                                                 </td>
                                             </tr>
 
                                             @endforeach
                                         </tbody>
-                                        {{$services->links()}}
                                     </table>
-                                    <div class="noresult" style="display: none">
-                                        <div class="text-center">
-                                            <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
-                                                colors="primary:#121331,secondary:#08a88a"
-                                                style="width:75px;height:75px"></lord-icon>
-                                            <h5 class="mt-2">Sorry! No Result Found</h5>
-                                            <p class="text-muted mb-0">We've searched more than 150+ Orders We did not
-                                                find any orders for you search.</p>
-                                        </div>
+                                    <div class="d-flex justify-content-center mt-3">
+                                        {{$services->links()}}
                                     </div>
                                 </div>
 
-                                <div class="d-flex justify-content-end">
-                                    <div class="pagination-wrap hstack gap-2">
-                                        <a class="page-item pagination-prev disabled" href="javascript:void(0);">
-                                            prec
-                                        </a>
-                                        <ul class="pagination listjs-pagination mb-0"></ul>
-                                        <a class="page-item pagination-next" href="javascript:void(0);">
-                                            Suiv
-                                        </a>
-                                    </div>
-                                </div>
+
                             </div>
                         </div><!-- end card -->
                     </div>
@@ -232,12 +217,10 @@
                                     <span style="font-weight: bold; color:red">*</span>
                                     <div class="mb-2">
                                         <label for="oui">Oui</label>
-                                        <input type="radio" id="oui" name="personalise" value="1"
-                                            >
+                                        <input type="radio" id="oui" name="personalise" value="1">
 
                                         <label style="margin-left:0.8rem;" for="non">Non</label>
-                                        <input type="radio" id="non" name="personalise" value="0"
-                                            checked>
+                                        <input type="radio" id="non" name="personalise" value="0" checked>
                                     </div>
                                 </fieldset>
 
@@ -256,7 +239,7 @@
             </div>
 
             <!-- Modal -->
-           
+
             <!--end modal -->
 
         </div>

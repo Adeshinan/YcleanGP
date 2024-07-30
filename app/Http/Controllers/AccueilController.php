@@ -29,7 +29,9 @@ class AccueilController extends Controller
 {
     //
 
-
+    public function Apropos(){
+        return view('accueil.apropos');
+    }
 
 
     public function ReservationLigne(){
@@ -67,6 +69,9 @@ class AccueilController extends Controller
                 'address' => 'nullable|string',
                 'code' => 'nullable|string',
                 'ville' => 'nullable|string',
+                'instruction' => 'required|string',
+            'station' => 'required|string',
+            'propriete' => 'required|string',
                 
                 'name' => 'required|string',
                 'adress' => 'required|string',
@@ -79,7 +84,7 @@ class AccueilController extends Controller
             ]);
 
 
-            if($validated->fails())
+         /*    if($validated->fails())
         {
             $errors = $validation->errors();
             $errorMessages = '';
@@ -89,7 +94,7 @@ class AccueilController extends Controller
 
             Alert::toast($errorMessages, 'error')->position('top-end')->timerProgressBar();
             return back()->withInput();
-        }
+        } */
 
 
 
@@ -112,11 +117,11 @@ class AccueilController extends Controller
 
            
             
-            $user = User::where('name', $userData['name'])
-            ->where('email', $userData['email'])
+            $user = User::where('email', $userData['email'])
             ->first();
 
             if ($user) {
+
                 // User exists, create reservation with existing user ID
                 Stripe::setApiKey(config('stripe.sk'));
                 $reservationData['user_id'] = $user->id;
@@ -205,7 +210,18 @@ class AccueilController extends Controller
                 // Send reservation details email to all admins
                 $admin = User::where('type_connecter', 'admin')->first();
                
-                    Mail::to($admin->email)->send(new ReservationDetailsMail($reservation));
+                $extra = Extra::all();
+                $parametre = Parametre::all();
+                $taux = Taux::all();
+                $service = Service::where('id',$reservation->service_id)->first();
+                $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
+                $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
+    
+    
+                
+    
+                
+                Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service));
               
                     Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
                     return redirect($session->url);
@@ -218,7 +234,14 @@ class AccueilController extends Controller
                 // Send reservation details email to all admins
                    $admin = User::where('type_connecter', 'admin')->first();
                 
-                   Mail::to($admin->email)->send(new ReservationDetailsMail($reservation));
+                   $extra = Extra::all();
+                   $parametre = Parametre::all();
+                   $taux = Taux::all();
+                   $service = Service::where('id',$reservation->service_id)->first();
+                   $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
+                   $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
+       
+                   Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service));
                 
                     Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
                     return back();
@@ -229,7 +252,7 @@ class AccueilController extends Controller
                 
             } else {
 
-                
+               
                 $faker = \Faker\Factory::create();
                 $password = $faker->password;
             
@@ -335,7 +358,18 @@ class AccueilController extends Controller
             
                 $admin = User::where('type_connecter', 'admin')->first();
               
-                Mail::to($admin->email)->send(new ReservationDetailsMail($reservation));
+                $extra = Extra::all();
+                $parametre = Parametre::all();
+                $taux = Taux::all();
+                $service = Service::where('id',$reservation->service_id)->first();
+                $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
+                $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
+    
+    
+                
+    
+                
+                Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service));
                
                     Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
                     return redirect($session->url);
@@ -348,7 +382,18 @@ class AccueilController extends Controller
                      
                      $admin = User::where('type_connecter', 'admin')->first();
               
-                     Mail::to($admin->email)->send(new ReservationDetailsMail($reservation));
+                     $extra = Extra::all();
+                     $parametre = Parametre::all();
+                     $taux = Taux::all();
+                     $service = Service::where('id',$reservation->service_id)->first();
+                     $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
+                     $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
+         
+         
+                     
+         
+                     
+                     Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service));
                 
                     Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
                     return back();

@@ -2,7 +2,7 @@
     <!-- LOGO -->
     <div class="navbar-brand-box mt-4">
         <!-- Dark Logo-->
-        <a href="index.html" class="logo logo-dark">
+        <a href="#" class="logo logo-dark">
             <span class="logo-sm">
                 <img src="Admin/assets/images/logo-sm.png" alt="" height="22">
             </span>
@@ -33,31 +33,24 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('dashboard')}}"  role="button"
-                        aria-expanded="false" aria-controls="sidebarDashboards">
+                    <a class="nav-link menu-link {{ request()->routeIs('dashboard') ? 'active' : '' }} "
+                        href="{{route('dashboard')}}" role="button" aria-expanded="false"
+                        aria-controls="sidebarDashboards">
                         <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
                     </a>
-                    
+
                 </li> <!-- end Dashboard Menu -->
 
                 @if(Auth::user()->type_connecter == 'admin')
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('service.index')}}">
+                    <a class="nav-link menu-link {{ request()->routeIs('service.index') ? 'active' : '' }}"
+                        href="{{route('service.index')}}">
                         <i class="ri-honour-line"></i> <span data-key="t-widgets">Services</span>
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('extra.index')}}">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Extra</span>
-                    </a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('parametre.index')}}">
-                        <i class="ri-honour-line"></i> <span data-key="t-widgets">Paramètre</span>
-                    </a>
-                </li>
+
 
 
                 @else
@@ -65,46 +58,93 @@
 
                 @endif
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarApps">
+                    <a class="nav-link menu-link {{ request()->routeIs('reservation.index') || request()->routeIs('reservation.valider') ? 'active' : '' }}"
+                        href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="sidebarApps">
                         <i class="ri-apps-2-line"></i> <span data-key="t-dashboards">Reservation</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarApps">
+                    <div class="menu-dropdown mega-dropdown-menu collapse {{ request()->routeIs('reservation.index') || request()->routeIs('reservationliste.valider')  ? 'show' : '' }} "
+                        id="sidebarApps">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{route('reservation.index')}}" class="nav-link" data-key="t-analytics"> En
+                                <a href="{{route('reservation.index')}}"
+                                    class="nav-link {{ request()->routeIs('reservation.index') ? 'active' : '' }}"
+                                    data-key="t-analytics"> En
                                     attente </a>
                             </li>
-                            
+
                             <li class="nav-item">
-                                <a href="{{route('reservationliste.valider')}}" class="nav-link" data-key="t-crm"> valider </a>
+                                <a href="{{route('reservationliste.valider')}}"
+                                    class="nav-link {{ request()->routeIs('reservationliste.valider') ? 'active' : '' }}"
+                                    data-key="t-crm">
+                                    valider </a>
                             </li>
 
-                           {{--  <li class="nav-item">
-                                <a href="index.html" class="nav-link" data-key="t-ecommerce"> Ecommerce </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="dashboard-crypto.html" class="nav-link" data-key="t-crypto"> Crypto </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="dashboard-projects.html" class="nav-link" data-key="t-projects"> Projects </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="dashboard-nft.html" class="nav-link" data-key="t-nft"> NFT</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="dashboard-job.html" class="nav-link" data-key="t-job">Job</a>
-                            </li> --}}
+
                         </ul>
 
                     </div>
                 </li>
-                
+
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('agenda.client')}}">
                         <i class="ri-honour-line"></i> <span data-key="t-widgets">Agenda</span>
                     </a>
                 </li>
+
+
+
+                @if(Auth::user()->type_connecter == 'admin')
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('extra.index') || request()->routeIs('parametre.index') || request()->routeIs('coupon.index') ||  request()->routeIs('taux.index') || request()->routeIs('taxe.index')  ? 'active' : '' }}"
+                        href="#sidebarAuth" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="sidebarAuth">
+                        <i class="ri-settings-5-line"></i> <span data-key="t-dashboards">Paramètre</span>
+                    </a>
+                    <div class="menu-dropdown mega-dropdown-menu collapse {{ request()->routeIs('extra.index') || request()->routeIs('parametre.index') || request()->routeIs('coupon.index') ||  request()->routeIs('taux.index') || request()->routeIs('taxe.index')  ? 'show' : '' }} "
+                        id="sidebarAuth">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link menu-link {{ request()->routeIs('extra.index') ? 'active' : '' }}"
+                                    href="{{route('extra.index')}}">
+                                    <span data-key="t-widgets">Extra</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link menu-link {{ request()->routeIs('parametre.index') ? 'active' : '' }}"
+                                    href="{{route('parametre.index')}}">
+                                    <span data-key="t-widgets">Personnalisation</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link menu-link {{ request()->routeIs('coupon.index') ? 'active' : '' }}"
+                                    href="{{route('coupon.index')}}">
+                                    <span data-key="t-widgets">Coupon</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link menu-link {{ request()->routeIs('taux.index') ? 'active' : '' }}"
+                                    href="{{route('taux.index')}}">
+                                    <span data-key="t-widgets">Taux</span>
+                                </a>
+                            </li>
+
+
+                            <li class="nav-item">
+                                <a class="nav-link menu-link {{ request()->routeIs('taxe.index') ? 'active' : '' }}"
+                                    href="{{route('taxe.index')}}">
+                                    <span data-key="t-widgets">Taxe</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </li>
+
+                @endif
                 <!-- end Dashboard Menu -->
 
                 {{-- <li class="nav-item">

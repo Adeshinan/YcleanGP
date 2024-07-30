@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Dompdf\Dompdf;
 use Stripe\Stripe;
 use App\Models\Taux;
 use App\Models\Taxe;
@@ -16,6 +17,7 @@ use Stripe\Checkout\Session;
 use App\Mail\ReservationDetailsMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Response;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ReservationController extends Controller
@@ -96,10 +98,15 @@ class ReservationController extends Controller
             'address' => 'nullable|string',
             'code' => 'nullable|string',
             'ville' => 'nullable|string',
+            'instruction' => 'required|string',
+            'station' => 'required|string',
+            'propriete' => 'required|string',
             'type_paiement' => 'required|integer',
         ]);
 
-        if($validated->fails())
+
+       
+        /* if($validated->fails())
         {
             $errors = $validation->errors();
             $errorMessages = '';
@@ -109,7 +116,7 @@ class ReservationController extends Controller
 
             Alert::toast($errorMessages, 'error')->position('top-end')->timerProgressBar();
             return back()->withInput();
-        }
+        } */
 
        
         Stripe::setApiKey(config('stripe.sk'));
@@ -192,7 +199,19 @@ class ReservationController extends Controller
 
             $admin = User::where('type_connecter', 'admin')->first();
               
-            Mail::to($admin->email)->send(new ReservationDetailsMail($reservation));
+
+            $extra = Extra::all();
+            $parametre = Parametre::all();
+            $taux = Taux::all();
+            $service = Service::where('id',$reservation->service_id)->first();
+            $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
+            $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
+
+
+            
+
+            
+            Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service));
                 
             Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
             return redirect($session->url);
@@ -202,10 +221,21 @@ class ReservationController extends Controller
 
             $admin = User::where('type_connecter', 'admin')->first();
               
-            Mail::to($admin->email)->send(new ReservationDetailsMail($reservation));
+            $extra = Extra::all();
+            $parametre = Parametre::all();
+            $taux = Taux::all();
+            $service = Service::where('id',$reservation->service_id)->first();
+            $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
+            $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
+
+
+            
+
+            
+            Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service));
             
             Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
-            return redirect()->route('reservation.index');
+            return redirect()->route('success');
         }
 
     } catch (\Throwable $ex) {
@@ -295,6 +325,24 @@ private function getSessionDates($date_visite, $nbre_fois)
     public function edit(string $id)
     {
         //
+        try {
+            //code...
+            $reservation = Reservation::find($id);
+            $page = 'Enregistrement reservation';
+        $entete = 'Enregistrer Reservation  -  Y Clean';
+        
+        $services = Service::all();
+
+        $serv = Service::where('id',$reservation->service_id)->first();
+        $extra = Extra::all();
+        $taux = Taux::all();
+        $parametres = Parametre::all();
+        $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
+        $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
+            return view('client.reservation.edit',compact('reservation','extra','services','entete','page','taux','parametres','tps','tvq','serv'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
@@ -354,12 +402,44 @@ private function getSessionDates($date_visite, $nbre_fois)
 
 
     public function success(){
-        return "paiement reçu";
+        return view('accueil.succes');
     }
 
 
     public function checkout(){
-        return "paiement echoué";
+        return view('accueil.echec');
+    }
+
+    public function Facture($id){
+        
+        $reservation = Reservation::find($id);
+        $extra = Extra::all();
+        $parametre = Parametre::all();
+        $taux = Taux::all();
+        $service = Service::where('id',$reservation->service_id)->first();
+        $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
+        $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
+        if ($reservation) {
+
+
+
+            $dompdf = new Dompdf();
+          
+            // Charger la vue avec les données
+            $view = view('client.reservation.facture')->with(['reservation' => $reservation,'extra'=> $extra,'parametre'=>$parametre,'taux'=>$taux,'service'=>$service,'tps'=>$tps,'tvq'=>$tvq])->render();
+            
+            // Générer le PDF
+            $dompdf->loadHtml($view);
+            $dompdf->render();
+            
+            // Renvoyer le PDF en réponse
+            return new Response(
+               $dompdf->stream('reservation_' . $reservation->service->libelle . '.pdf'),
+                200,
+                ['Content-Type' => 'application/pdf']
+            );
+
+        }
     }
 
 

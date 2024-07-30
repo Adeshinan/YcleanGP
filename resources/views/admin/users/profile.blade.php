@@ -14,7 +14,7 @@
                 <div class="row g-4">
                     <div class="col-auto">
                         <div class="avatar-lg">
-                            <img src="assets/images/users/avatar-1.jpg" alt="user-img" class="img-thumbnail rounded-circle" />
+                            <img src="Admin/assets/images/users/avatar-1.jpg" alt="user-img" class="img-thumbnail rounded-circle" />
                         </div>
                     </div>
                     <!--end col-->
@@ -32,20 +32,7 @@
                     </div>
                     <!--end col-->
                     <div class="col-12 col-lg-auto order-last order-lg-0">
-                        <div class="row text text-white-50 text-center">
-                            <div class="col-lg-6 col-4">
-                                <div class="p-2">
-                                    <h4 class="text-white mb-1">24.3K</h4>
-                                    <p class="fs-14 mb-0">Followers</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-4">
-                                <div class="p-2">
-                                    <h4 class="text-white mb-1">1.3K</h4>
-                                    <p class="fs-14 mb-0">Following</p>
-                                </div>
-                            </div>
-                        </div>
+                       
                     </div>
                     <!--end col-->
 
@@ -66,30 +53,25 @@
 
                                         <div class="card">
                                             <div class="card-body">
-                                                <h5 class="card-title mb-3">Info</h5>
+                                                <h5 class="card-title mb-3">Information</h5>
                                                 <div class="table-responsive">
                                                     <table class="table table-borderless mb-0">
                                                         <tbody>
                                                             <tr>
                                                                 <th class="ps-0" scope="row">Nom et prénom :</th>
-                                                                <td class="text-muted">{{Auth::user()->name}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th class="ps-0" scope="row">Contact :</th>
-                                                                <td class="text-muted">{{Auth::user()->numero}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th class="ps-0" scope="row">E-mail :</th>
-                                                                <td class="text-muted">{{Auth::user()->email}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th class="ps-0" scope="row">Localisation :</th>
-                                                                <td class="text-muted">{{Auth::user()->address}},{{Auth::user()->ville}} ,{{Auth::user()->postal}}
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <th class="ps-0" scope="row">Joining Date</th>
-                                                                <td class="text-muted">24 Nov 2021</td>
+                                                                <th class="ps-0" scope="row">Date de création du compte :</th>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -103,54 +85,44 @@
                                         
                                         <!--end card-->
                                     </div>
-                                    <!--end col-->
+                                   
                                     <div class="col-xxl-8">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h5 class="card-title mb-3">About</h5>
-                                                <p>Hi I'm Anna Adame, It will be as simple as Occidental; in fact, it will be Occidental. To an English person, it will seem like simplified English, as a skeptical Cambridge friend of mine told me what Occidental is European languages are members of the same family.</p>
-                                                <p>You always want to make sure that your fonts work well together and try to limit the number of fonts you use to three or less. Experiment and play around with the fonts that you already have in the software you’re working with reputable font websites. This may be the most commonly encountered tip I received from the designers I spoke with. They highly encourage that you use different fonts in one design, but do not over-exaggerate and go overboard.</p>
-                                                <div class="row">
-                                                    <div class="col-6 col-md-4">
-                                                        <div class="d-flex mt-4">
-                                                            <div class="flex-shrink-0 avatar-xs align-self-center me-3">
-                                                                <div class="avatar-title bg-light rounded-circle fs-16 text-primary">
-                                                                    <i class="ri-user-2-fill"></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="flex-grow-1 overflow-hidden">
-                                                                <p class="mb-1">Designation :</p>
-                                                                <h6 class="text-truncate mb-0">Lead Designer / Developer</h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--end col-->
-                                                    <div class="col-6 col-md-4">
-                                                        <div class="d-flex mt-4">
-                                                            <div class="flex-shrink-0 avatar-xs align-self-center me-3">
-                                                                <div class="avatar-title bg-light rounded-circle fs-16 text-primary">
-                                                                    <i class="ri-global-line"></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="flex-grow-1 overflow-hidden">
-                                                                <p class="mb-1">Website :</p>
-                                                                <a href="#" class="fw-semibold">www.velzon.com</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--end col-->
-                                                </div>
-                                                <!--end row-->
-                                            </div>
-                                            <!--end card-body-->
-                                        </div><!-- end card -->
-
                                         
 
-                                      
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title mb-3"></h5>
+                                                <div class="table-responsive mt-4">
+                                                    <table class="table table-borderless mb-0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="ps-0" scope="row">{{Auth::user()->name}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="ps-0" scope="row">{{Auth::user()->numero}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="ps-0" scope="row">{{Auth::user()->email}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="ps-0" scope="row">{{Auth::user()->address}},{{Auth::user()->ville}} ,{{Auth::user()->postal}}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="ps-0" scope="row">{{Auth::user()->created_at}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div><!-- end card body -->
+                                        </div><!-- end card -->
 
+                                 
+                                        <!--end card-->
+
+                                        
+                                        <!--end card-->
                                     </div>
-                                    <!--end col-->
                                 </div>
                                 <!--end row-->
                             </div>

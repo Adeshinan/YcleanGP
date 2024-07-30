@@ -22,13 +22,12 @@ class ServiceController extends Controller
         try
         {
             $page = 'Liste des Services';
-            $int =1;
             $entete = ' Liste des Service - Y Clean';
             $parametre = Parametre::all();
             $extra = Extra::all();
             $route = route('service.delete', [":id"]);
             $services = Service::latest()->paginate(5);
-                return view('admin.service.index', compact('services','int','entete','page','parametre','extra','route'))
+                return view('admin.service.index', compact('services','entete','page','parametre','extra','route'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);
         }
         catch(\Illuminate\Database\QueryException $ex)
@@ -76,7 +75,7 @@ class ServiceController extends Controller
         ]);
 
 
-        if($validatedData->fails())
+       /*  if($validatedData->fails())
         {
             $errors = $validation->errors();
             $errorMessages = '';
@@ -86,7 +85,7 @@ class ServiceController extends Controller
 
             Alert::toast($errorMessages, 'error')->position('top-end')->timerProgressBar();
             return back()->withInput();
-        }
+        } */
 
         // Créer le service
         $service = Service::create([
@@ -106,6 +105,7 @@ class ServiceController extends Controller
         
 
     } catch (\Throwable $ex) {
+        dd($ex);
         Alert::toast('Une erreur est survenue lors de l\'enrengistrement', 'error')->position('top-end')->timerProgressBar();
             \Log::error($ex->getMessage());
             return back()->withInput();

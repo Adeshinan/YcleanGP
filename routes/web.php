@@ -6,9 +6,12 @@ use App\Models\Extra;
 use App\Models\Service;
 use App\Models\Parametre;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TauxController;
+use App\Http\Controllers\TaxeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExtraController;
 use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\AccueilController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
@@ -31,10 +34,8 @@ use App\Http\Controllers\ReservationController;
 Route::get('/', function () {
     return view('accueil.first');
 });
-Route::get('/apropos', function () {
-    return view('accueil.apropos');
-});
 
+Route::get('/apropos',[AccueilController::class,'Apropos'])->name('accueil.apropos');
 Route::get('/reservation_en_ligne',[AccueilController::class,'ReservationLigne'])->name('reservation.ligne');
 Route::post('/passer_reservation_en_ligne',[AccueilController::class,'Reservation'])->name('reservation.passer');
 
@@ -60,6 +61,14 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::resource('parametre', ParametreController::class);
     Route::get('/valider/{id}', [ReservationController::class,'Valider'])->name('reservation.valider');
 
+
+    Route::resource('coupon', CouponController::class);
+    Route::get('delete_coupon/{id}',[CouponController::class,'delete'])->name('coupon.delete');
+
+    Route::resource('taux', TauxController::class);
+    
+    Route::resource('taxe', TaxeController::class);
+
 });
 
 
@@ -83,6 +92,7 @@ Route::get('user_profile',[UserController::class,'profile'])->name('user.profile
 
 Route::resource('reservation', ReservationController::class);
 Route::get('/valider_reservation', [ReservationController::class,'ReservationValider'])->name('reservationliste.valider');
+Route::get('/facture/{id}', [ReservationController::class,'Facture'])->name('reservation.facture');
 Route::get('/success', [ReservationController::class,'success'])->name('success');
 Route::get('/checkout', [ReservationController::class,'checkout'])->name('checkout');
 Route::get('reservations/{id}/next-sessions', [ReservationController::class, 'getNextSessionsFromReservation'])->name('reservation.getNextSessions');

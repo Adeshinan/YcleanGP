@@ -38,6 +38,10 @@ return new class extends Migration
             //$table->text('autre_info')->nullable();
             $table->integer('valider')->default(0);
             $table->decimal('prixTotal', 8, 2)->nullable();
+            $table->string('instruction');
+            $table->string('station');
+            $table->string('propriete');
+
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('service_id');

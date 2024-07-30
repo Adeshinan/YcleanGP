@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Taux extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'libelle',
+        'pourcentage',
+    ];
 }
