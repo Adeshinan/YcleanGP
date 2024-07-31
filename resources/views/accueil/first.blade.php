@@ -112,6 +112,76 @@
             <!-- end col -->
         </div>
         <!-- end row -->
+
+        <div class="row align-items-center gy-4">
+            <div class="col-lg-6 order-2 order-lg-1">
+                <div class="text-muted">
+                    <h5 class="fs-12 text-uppercase text-success">N°5</h5>
+                    <h4 class="mb-3" style='text-transform: uppercase;'>CARTE DE FIDÉLITÉ Y CLEAN</h4>
+                    <p class="mb-4 ff-secondary">
+                        Cher(e) client(e) 
+                        Nous tenons à vous remercier pour votre confiance continue envers Y CLEAN. Nous sommes heureux de vous annoncer que nous avons une offre spéciale pour nos clients fidèles tels que vous. 
+                        Après avoir effectué 10 ménages avec notre entreprise, vous êtes éligible pour recevoir un ménage gratuit. Nous voulons vous remercier de votre fidélité en vous offrant ce petit geste de gratitude.
+                        Nous espérons que cette offre spéciale vous permettra de continuer à profiter de notre service de nettoyage exceptionnel. Si vous avez des questions ou si vous souhaitez planifier votre prochain ménage, n'hésitez pas à nous contacter.
+                        Merci encore pour votre fidélité à Y CLEAN.
+                    </p>
+                    <p class="mb-4 ff-secondary">
+                        Profitez de nos services d'entretien ménager et bénéficiez d'avantages exclusifs avec notre carte de fidélité ! Plus vous utilisez nos services, plus vous accumulez des points pour obtenir des récompenses spéciales. Ne manquez pas cette opportunité de simplifier votre vie tout en étant récompensé. Demandez votre carte de fidélité dès maintenant ! 
+                    </p>
+                </div>
+            </div>
+            <!-- end col -->
+            <div class="col-lg-6 col-sm-7 col-10 ms-auto order-1 order-lg-2">
+                <div>
+                    <img src="Admin/assets/images/landing/features/img-2.png" alt="" class="img-fluid">
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+        <div class="row align-items-center mt-5 pt-lg-5 gy-4">
+            <div class="col-lg-6 col-sm-7 col-10 mx-auto">
+                <div>
+                    <img src="Admin/assets/images/landing/features/img-3.png" alt="" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="text-muted ps-lg-5">
+                    <h5 class="fs-12 text-uppercase text-success">N°6</h5>
+                    <h4 class="mb-3">DEMANDEZ VOTRE ESTIMATION GRATUITE ET SANS ENGAGEMENT</h4>
+                    <p class="mb-4">
+                        Nous fournissons un service d’estimation gratuite, en effet vous pouvez nous demander un prix approximatif de nos service d’entretien ménager par téléphone ou un prix exact à travers une visite des lieux qui sera faite par un de nos opérateurs et sans aucun frais ni aucun engagement.
+                    </p>                    
+                    <p class="mb-4">
+                        Nous sommes fiers de fournir des services d'entretien ménager de qualité à des prix compétitifs. Contactez-nous aujourd'hui pour demander votre estimation gratuite et découvrir comment nous pouvons vous aider à garder votre espace propre et bien entretenu. 
+                    </p>                    
+                    <p class="mb-4">
+                        Il faut noter qu’une visite d’estimation est la meilleur solution pour avoir un prix exact mais aussi pour avoir des réponses à toutes vos questions directement du préposé qui sera en charge de votre service d’entretien ménager.
+                    </p> 
+                </div>
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end row -->
+
+        <div class="row align-items-center gy-4">
+            <div class="col-lg-6 order-2 order-lg-1">
+                <div class="text-muted">
+                    <h5 class="fs-12 text-uppercase text-success">N°7</h5>
+                    <h4 class="mb-3" style='text-transform: uppercase;'>LE MEILLEUR MÉNAGE À QUELQUES CLIQUES</h4>
+                    <p class="mb-4 ff-secondary">
+                        À la différence des plateformes classiques d'entretien ménager, chez Y CLEAN, nous mettons l'accent sur votre tranquillité d'esprit. Plus besoin de passer des appels interminables ! Optez pour la simplicité en choisissant le moment idéal pour votre ménage et effectuez le paiement en ligne en toute facilité via notre site. Votre confort est notre priorité.
+                    </p>
+                </div>
+            </div>
+            <!-- end col -->
+            <div class="col-lg-6 col-sm-7 col-10 ms-auto order-1 order-lg-2">
+                <div>
+                    <img src="Admin/assets/images/landing/features/img-2.png" alt="" class="img-fluid">
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
     </div>
     <!-- end container -->
 </section>
@@ -121,8 +191,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="text-center mb-5">
-                    <h2 class="mb-3 fw-semibold lh-base">Connect NFT Marketplace</h2>
-                    <p class="text-muted">A non-fungible token is a non-interchangeable unit of data stored on a blockchain, a form of digital ledger, that can be sold and traded.</p>
+                    <h2 class="mb-3 fw-semibold lh-base">Comment ça fonctionne?</h2>
                 </div>
             </div><!-- end col -->
         </div><!-- end row -->
@@ -131,20 +200,24 @@
             <div class="col-lg-4">
                 <div class="card text-center border shadow-none material-shadow">
                     <div class="card-body py-5 px-4">
-                        <img src="Admin/assets/images/nft/wallet/metamask.png" alt="" height="55" class="mb-3 pb-2">
-                        <h5>Metamask</h5>
-                        <p class="text-muted pb-1">MetaMask is a popular cryptocurrency wallet known for its ease of use, availability on both desktops.</p>
-                        <a href="#!" class="btn btn-soft-info">Connect Wallet</a>
+                        <img src="Admin/assets/images/nft/wallet/metamask.png" alt="" height="100" class="mb-3 pb-2">
+                        <h5>RÉSERVEZ EN LIGNE</h5>
+                        <p class="text-muted pb-1">
+                        Réservez facilement depuis votre téléphone ou votre ordinateur en moins de 2 min.     
+                        </p>
+                        
                     </div>
                 </div>
             </div><!-- end col -->
             <div class="col-lg-4">
                 <div class="card text-center border shadow-none material-shadow">
                     <div class="card-body py-5 px-4">
-                        <img src="Admin/assets/images/nft/wallet/coinbase.png" alt="" height="55" class="mb-3 pb-2">
-                        <h5>Coinbase Wallet</h5>
-                        <p class="text-muted pb-1">Coinbase Wallet is a self-custody wallet that gives you complete control of your crypto for your Wallet.</p>
-                        <a href="#!" class="btn btn-info">Change Wallet</a>
+                        <img src="Admin/assets/images/nft/wallet/coinbase.png" alt="" height="100" class="mb-3 pb-2">
+                        <h5>RECEVEZ VOTRE CONFIRMATION</h5>
+                        <p class="text-muted pb-1">
+                            Vous recevrez une confirmation instantanée par courriel pour confirmer votre rendez-vous.
+                        </p>
+                        
                     </div>
                 </div>
             </div>
@@ -152,10 +225,12 @@
             <div class="col-lg-4">
                 <div class="card text-center border shadow-none material-shadow">
                     <div class="card-body py-5 px-4">
-                        <img src="Admin/assets/images/nft/wallet/binance.png" alt="" height="55" class="mb-3 pb-2">
-                        <h5>Binance</h5>
-                        <p class="text-muted pb-1">Binance is considered a safe exchange that allows user account protection via the use of Two Authentication.</p>
-                        <a href="#!" class="btn btn-soft-info">Connect Wallet</a>
+                        <img src="Admin/assets/images/nft/wallet/binance.png" alt="" height="100" class="mb-3 pb-2">
+                        <h5>RELAXEZ</h5>
+                        <p class="text-muted pb-1">
+                            Une équipe professionnelle certifiée et formée nettoiera votre mileu en suivant une liste exhaustive de tâches. 
+                        </p>
+                        
                     </div>
                 </div>
             </div><!-- end col -->
@@ -418,121 +493,6 @@
         </div><!--end row-->
     </div><!-- end container -->
 </section><!-- end features -->
-
-<!-- start plan -->
-<section class="section bg-light" id="categories">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-lg-5">
-                <div class="text-center mb-5">
-                    <h2 class="mb-3 fw-semibold lh-base">Trending All Categories</h2>
-                    <p class="text-muted">The process of creating an NFT may cost less than a dollar, but the process of selling it can cost up to a thousand dollars. For example, Allen Gannett, a software developer.</p>
-                </div>
-            </div><!-- end col -->
-        </div><!-- end row -->
-        <div class="row">
-            <div class="col-lg-12">
-                <!-- Swiper -->
-                <div class="swiper mySwiper pb-4">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row g-1 mb-3">
-                                        <div class="col-6">
-                                            <img src="Admin/assets/images/nft/img-06.jpg" alt="" class="img-fluid rounded">
-                                            <img src="https://img.themesbrand.com/velzon/images/img-2.gif" alt="" class="img-fluid rounded mt-1">
-                                        </div><!--end col-->
-                                        <div class="col-6">
-                                            <img src="https://img.themesbrand.com/velzon/images/img-5.gif" alt="" class="img-fluid rounded mb-1">
-                                            <img src="Admin/assets/images/nft/img-03.jpg" alt="" class="img-fluid rounded">
-                                        </div><!--end col-->
-                                    </div><!--end row-->
-                                    <a href="#!" class="float-end"> View All <i class="ri-arrow-right-line align-bottom"></i></a>
-                                    <h5 class="mb-0 fs-16"><a href="#!">Artwork <span class="badge bg-success-subtle text-success">206</span></a></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row g-1 mb-3">
-                                        <div class="col-6">
-                                            <img src="Admin/assets/images/nft/img-05.jpg" alt="" class="img-fluid rounded">
-                                            <img src="https://img.themesbrand.com/velzon/images/img-1.gif" alt="" class="img-fluid rounded mt-1">
-                                        </div><!--end col-->
-                                        <div class="col-6">
-                                            <img src="https://img.themesbrand.com/velzon/images/img-4.gif" alt="" class="img-fluid rounded mb-1">
-                                            <img src="Admin/assets/images/nft/img-04.jpg" alt="" class="img-fluid rounded">
-                                        </div><!--end col-->
-                                    </div><!--end row-->
-                                    <a href="#!" class="float-end"> View All <i class="ri-arrow-right-line align-bottom"></i></a>
-                                    <h5 class="mb-0 fs-16"><a href="#!">Crypto Card <span class="badge bg-success-subtle text-success">743</span></a></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row g-1 mb-3">
-                                        <div class="col-6">
-                                            <img src="Admin/assets/images/nft/img-02.jpg" alt="" class="img-fluid rounded">
-                                            <img src="https://img.themesbrand.com/velzon/images/img-3.gif" alt="" class="img-fluid rounded mt-1">
-                                        </div><!--end col-->
-                                        <div class="col-6">
-                                            <img src="https://img.themesbrand.com/velzon/images/img-1.gif" alt="" class="img-fluid rounded mb-1">
-                                            <img src="Admin/assets/images/nft/img-01.jpg" alt="" class="img-fluid rounded">
-                                        </div><!--end col-->
-                                    </div><!--end row-->
-                                    <a href="#!" class="float-end"> View All <i class="ri-arrow-right-line align-bottom"></i></a>
-                                    <h5 class="mb-0 fs-16"><a href="#!">Music <span class="badge bg-success-subtle text-success">679</span></a></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row g-1 mb-3">
-                                        <div class="col-6">
-                                            <img src="Admin/assets/images/nft/img-03.jpg" alt="" class="img-fluid rounded">
-                                            <img src="https://img.themesbrand.com/velzon/images/img-5.gif" alt="" class="img-fluid rounded mt-1">
-                                        </div><!--end col-->
-                                        <div class="col-6">
-                                            <img src="https://img.themesbrand.com/velzon/images/img-2.gif" alt="" class="img-fluid rounded mb-1">
-                                            <img src="Admin/assets/images/nft/img-05.jpg" alt="" class="img-fluid rounded">
-                                        </div><!--end col-->
-                                    </div><!--end row-->
-                                    <a href="#!" class="float-end"> View All <i class="ri-arrow-right-line align-bottom"></i></a>
-                                    <h5 class="mb-0 fs-16"><a href="#!">Games <span class="badge bg-success-subtle text-success">341</span></a></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row g-1 mb-3">
-                                        <div class="col-6">
-                                            <img src="Admin/assets/images/nft/img-02.jpg" alt="" class="img-fluid rounded">
-                                            <img src="https://img.themesbrand.com/velzon/images/img-3.gif" alt="" class="img-fluid rounded mt-1">
-                                        </div><!--end col-->
-                                        <div class="col-6">
-                                            <img src="https://img.themesbrand.com/velzon/images/img-1.gif" alt="" class="img-fluid rounded mb-1">
-                                            <img src="Admin/assets/images/nft/img-01.jpg" alt="" class="img-fluid rounded">
-                                        </div><!--end col-->
-                                    </div><!--end row-->
-                                    <a href="#!" class="float-end"> View All <i class="ri-arrow-right-line align-bottom"></i></a>
-                                    <h5 class="mb-0 fs-16"><a href="#!">Photography <span class="badge bg-success-subtle text-success">1452</span></a></h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-pagination swiper-pagination-dark"></div>
-                </div>
-            </div>
-        </div>
-    </div><!-- end container -->
-</section>
-<!-- end plan -->
 
 <!-- start Discover Items-->
 <section class="section">
