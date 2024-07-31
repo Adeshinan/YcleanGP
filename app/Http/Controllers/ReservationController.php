@@ -103,6 +103,7 @@ class ReservationController extends Controller
             'station' => 'required|string',
             'propriete' => 'required|string',
             'type_paiement' => 'required|integer',
+            'coupon' => 'nullable|string',
         ]);
 
 
