@@ -33,14 +33,14 @@
                                 <div class="card-header border-bottom-dashed p-4">
                                     <div class="d-flex">
                                         <div class="flex-grow-1">
-                                            <img src="Admin/assets/images/logo-dark.png" class="card-logo card-logo-dark"
-                                                alt="logo dark" height="17">
-                                            <img src="Admin/assets/images/logo-light.png" class="card-logo card-logo-light"
-                                                alt="logo light" height="17">
+                                            <img src="Admin/assets/images/logo-dark.png"
+                                                class="card-logo card-logo-dark" alt="logo dark" height="17">
+                                            <img src="Admin/assets/images/logo-light.png"
+                                                class="card-logo card-logo-light" alt="logo light" height="17">
                                             <div class="mt-sm-5 mt-4">
                                                 <h6 class="text-muted text-uppercase fw-semibold">Adresse </h6>
                                                 @if ($reservation->pour_qui == 1)
-                                                
+
                                                 <p class="text-muted mb-1" id="address-details">
                                                     {{$reservation->user->address}}</p>
                                                 <p class="text-muted mb-0" id="zip-code"><span>Code
@@ -50,16 +50,17 @@
                                                     {{$reservation->address}}</p>
                                                 <p class="text-muted mb-0" id="zip-code"><span>Code
                                                         postal : </span>{{$reservation->code}}</p>
-                                                        <p class="text-muted mb-0" id="zip-code"><span>Ville : </span>{{$reservation->ville}}</p>
+                                                <p class="text-muted mb-0" id="zip-code"><span>Ville :
+                                                    </span>{{$reservation->ville}}</p>
                                                 @endif
-                                               
+
                                             </div>
                                         </div>
                                         <div class="flex-shrink-0 mt-sm-0 mt-3">
 
                                             <h6><span class="text-muted fw-normal">Email: </span><span
                                                     id="email">{{$reservation->user->email}}</span></h6>
-                                            <h6 class="mb-0"><span class="text-muted fw-normal">Numéro de contact: 
+                                            <h6 class="mb-0"><span class="text-muted fw-normal">Numéro de contact:
                                                 </span><span id="contact-no"> {{$reservation->user->numero}}</span></h6>
                                         </div>
                                     </div>
@@ -103,35 +104,42 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-6 mt-sm-5 mt-4 mr-3" >
+                                <div class="col-6 mt-sm-5 mt-4 mr-3">
                                     <h3>Prochaines sessions</h3>
                                     <ul id="sessions">
-                                         @foreach ($next_sessions as $session)
-    
-                                         <li> {{$reservation->formatted_date_session =
+                                        @foreach ($next_sessions as $session)
+
+                                        <li> {{$reservation->formatted_date_session =
                                             Carbon\Carbon::parse($session)->translatedFormat('d
                                             F Y à H\h:i\m'); }}</li>
                                         @endforeach
                                     </ul>
                                 </div>
 
-                                    <div class="col-6 mt-sm-5 mt-4 ml-3">
-                                        <h3>Autre information</h3>
+                                <div class="col-6 mt-sm-5 mt-4 ml-3">
+                                    <h3>Autre information</h3>
 
-                                        <ul id="sessions">
-                                           
-       
-                                            <li> <h4>Instruction spéciale : </h4>{{$reservation->instruction}}</li>
-                                            <li> <h4>Information sur le stationnement : </h4>{{$reservation->station}}</li>
-                                            <li> <h4>Comment accéderons-nous à la propriété : </h4>{{$reservation->propriete}}</li>
-                                          
-                                       </ul>
-                                    </div>
+                                    <ul id="sessions">
+
+
+                                        <li>
+                                            <h4>Instruction spéciale : </h4>{{$reservation->instruction}}
+                                        </li>
+                                        <li>
+                                            <h4>Information sur le stationnement : </h4>{{$reservation->station}}
+                                        </li>
+                                        <li>
+                                            <h4>Comment accéderons-nous à la propriété : </h4>
+                                            {{$reservation->propriete}}
+                                        </li>
+
+                                    </ul>
+                                </div>
                             </div>
 
-                           
+
                             <!--end col-->
-                            
+
                             <!--end col-->
                             <div class="col-lg-12">
                                 <div class="card-body p-4">
@@ -151,7 +159,8 @@
                                                 <tr>
 
                                                     <td class="text-start">
-                                                        <span class="fw-medium">{{$reservation->service->libelle}}</span>
+                                                        <span
+                                                            class="fw-medium">{{$reservation->service->libelle}}</span>
 
                                                     </td>
                                                     <td>{{$reservation->service->prixhors}}</td>
@@ -274,43 +283,62 @@
                                                 @php
                                                 $prixHT = 0;
                                                 $rabais = 0;
-                                            @endphp
-                                            
-                                            <tr>
-                                                <td class="text-start">
-                                                    @if ( $tauxItem->libelle )
-                                                        
-                                                    <span class="fw-medium">Rabais </span>
-                                                    @endif
-                                                </td>
-                                                <td>{{ $tauxItem->pourcentage }} %</td>
-                                                <td></td>
-                                                @php
-                                                    if ($service->est_agent == 1) {
-                                                        if ($reservation->nbre_personne == $service->agent && $reservation->heure_session == $service->heure) {
-                                                           
-                                                            $prixHT = $prixparametre + $totalExtraPrice + $prix;
-                                                        } else {
-                                                            $prixHT = $prixparametre + $totalExtraPrice + $service->prixhors;
-                                                        }
-                                                        $rabais = $prixHT * ($tauxItem->pourcentage / 100);
-                                                    }else{
-                                                        
-                                                        $prixHT = $prixparametre + $totalExtraPrice + $service->prixhors;
-                                                        $rabais = $prixHT * ($tauxItem->pourcentage / 100);
-                                                    }
                                                 @endphp
-                                                <td class="text-end">- ${{$rabais}} CAD</td>
-                                            </tr>
-                                            
+
+                                                <tr>
+                                                    <td class="text-start">
+                                                        @if ( $tauxItem->libelle )
+
+                                                        <span class="fw-medium">Rabais </span>
+                                                        @endif
+                                                    </td>
+                                                    <td>{{ $tauxItem->pourcentage }} %</td>
+                                                    <td></td>
+                                                    @php
+                                                    if ($service->est_agent == 1) {
+                                                    if ($reservation->nbre_personne == $service->agent &&
+                                                    $reservation->heure_session == $service->heure) {
+
+                                                    $prixHT = $prixparametre + $totalExtraPrice + $prix;
+                                                    } else {
+                                                    $prixHT = $prixparametre + $totalExtraPrice + $service->prixhors;
+                                                    }
+                                                    $rabais = $prixHT * ($tauxItem->pourcentage / 100);
+                                                    }else{
+
+                                                    $prixHT = $prixparametre + $totalExtraPrice + $service->prixhors;
+                                                    $rabais = $prixHT * ($tauxItem->pourcentage / 100);
+
+                                                    $couponreduit = $prixHT - $rabais ;
+                                                    }
+                                                    @endphp
+                                                    <td class="text-end">- ${{$rabais}} CAD</td>
+                                                </tr>
+
 
                                                 @else
 
                                                 @endif
                                                 @endforeach
 
-                                               
+                                                @if ( $coupon )
+                                                <tr>
+                                                    <td class="text-start">
 
+
+                                                        <span class="fw-medium">Coupon de reduction </span>
+
+                                                    </td>
+
+                                                    <td>{{ $coupon->pourcentage }} %</td>
+                                                    <td></td>
+                                                    @php
+                                                    $couponprix = $couponreduit * ($coupon->pourcentage / 100);
+                                                    @endphp
+                                                    <td class="text-end"> - {{ $couponprix }} CAD</td>
+                                                </tr>
+
+                                                @endif
                                             </tbody>
                                         </table>
                                         <!--end table-->
@@ -320,47 +348,75 @@
                                             style="width:250px">
                                             <tbody>
                                                 <tr>
-                                                   
+
                                                     <td>PrixHT</td>
                                                     <td class="text-end">
-                                                    @if ($service->est_agent == 1)
+                                                        @if ($service->est_agent == 1)
 
 
-                                                        @if ($reservation->nbre_personne == $service->agent && $reservation->heure_session == $service->heure) 
-                                                           @php
-                                                                $prixHT = $prixparametre + $totalExtraPrice + $prix - $rabais;
-                                                           @endphp
-                                                            ${{ $prixHT}} CAD
-                                                         @else 
-                                                         @php
-                                                              $prixHT = $prixparametre + $totalExtraPrice + $service->prixhors - $rabais;
-                                                         @endphp
-                                                            ${{ $prixHT}} CAD
+                                                        @if ($reservation->nbre_personne == $service->agent &&
+                                                        $reservation->heure_session == $service->heure)
+                                                        @if ($coupon)
+                                                        @php
+                                                        $prixHT = $prixparametre + $totalExtraPrice + $prix - $rabais - $couponprix;
+                                                        @endphp
+                                                        ${{ $prixHT}} CAD
+                                                        @else
+
+                                                        @php
+                                                        $prixHT = $prixparametre + $totalExtraPrice + $prix - $rabais ;
+                                                        @endphp
+                                                        ${{ $prixHT}} CAD
                                                         @endif
 
-                                                    @else
-                                                    @php
-                                                    $prixHT = $prixparametre + $totalExtraPrice + $service->prixhors - $rabais;
-                                                    @endphp
-                                                      ${{ $prixHT}} CAD
+                                                        @else
 
-                                                    @endif
+                                                            @if ($coupon)
+                                                            @php
+                                                            $prixHT = $prixparametre + $totalExtraPrice + $service->prixhors - $rabais - $couponprix;
+                                                            @endphp
+                                                            ${{ $prixHT}} CAD
+                                                            @else
+                                                            @php
+                                                            $prixHT = $prixparametre + $totalExtraPrice + $service->prixhors - $rabais ;
+                                                            @endphp
+                                                            ${{ $prixHT}} CAD
+                                                            @endif
+                                                       
+                                                        @endif
+
+                                                        @else
+
+                                                            @if ($coupon)
+                                                            @php
+                                                            $prixHT = $prixparametre + $totalExtraPrice + $service->prixhors - $rabais - $couponprix;
+                                                            @endphp
+                                                            ${{ $prixHT}} CAD
+                                                            @else
+                                                            @php
+                                                            $prixHT = $prixparametre + $totalExtraPrice + $service->prixhors - $rabais ;
+                                                            @endphp
+                                                            ${{ $prixHT}} CAD
+                                                            @endif
+                                                      
+
+                                                        @endif
 
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>TPS/TVQ</td>
                                                     @php
-                                                        $taux = $tps + $tvq ;
-                                                        $prixTaxe = $prixHT * ( $taux / 100);
+                                                    $taux = $tps + $tvq ;
+                                                    $prixTaxe = $prixHT * ( $taux / 100);
                                                     @endphp
                                                     <td class="text-end">${{$prixTaxe}} CAD</td>
                                                 </tr>
-                                                
+
                                                 <tr class="border-top border-top-dashed fs-15">
                                                     <th scope="row">PrixTTC</th>
                                                     @php
-                                                        $prixTTC = $prixHT + $prixTaxe
+                                                    $prixTTC = $prixHT + $prixTaxe
                                                     @endphp
                                                     <th class="text-end">${{$prixTTC}} CAD</th>
                                                 </tr>
@@ -371,15 +427,17 @@
                                     <div class="row">
 
                                         <div class="col-6 mt-3">
-                                            <h6 class="text-muted text-uppercase fw-semibold mb-3"> Details du paiement:</h6>
+                                            <h6 class="text-muted text-uppercase fw-semibold mb-3"> Details du paiement:
+                                            </h6>
                                             <p class="text-muted mb-1"> Methode de paiement: <span class="fw-medium"
-                                                    id="payment-method" style="font-weight: bold">@if ($reservation->type_paiement == 1)
-                                                        Carte Bancaire
+                                                    id="payment-method" style="font-weight: bold">
+                                                    @if($reservation->type_paiement == 1)
+                                                    Carte Bancaire
                                                     @else
-                                                        Espèce
+                                                    Espèce
                                                     @endif</span></p>
-                                            <p class="text-muted">Total payé: <span class="fw-medium" id="">$ </span><span
-                                                    id="card-total-amount">{{$prixTTC}} CAD</span></p>
+                                            <p class="text-muted">Total payé: <span class="fw-medium" id="">$
+                                                </span><span id="card-total-amount">{{$prixTTC}} CAD</span></p>
                                         </div>
 
                                         @if($reservation->type_paiement == 1)
@@ -387,16 +445,20 @@
                                             <img src="{{asset('Admin/assets/img/payer.jpg')}}" alt="" height="100">
                                         </div>
                                         @endif
-                                        
+
                                     </div>
-                                    
-                                    
+
+
                                     <div class="hstack gap-2 justify-content-end d-print-none mt-4">
                                         @if($reservation->valider == 1)
-                                        <a href="{{route('reservation.facture',$reservation->id)}} " class="btn btn-primary"> <i class="ri-file-ppt-2-line"></i> Télécharger la facture</a>
+                                        <a href="{{route('reservation.facture',$reservation->id)}} "
+                                            class="btn btn-primary"> <i class="ri-file-ppt-2-line"></i> Télécharger la
+                                            facture</a>
                                         @endif
                                         @if(Auth::user()->type_connecter == 'admin' && $reservation->valider == 0)
-                                        <a href="{{route('reservation.valider',$reservation->id)}} " class="btn btn-primary"><i class="ri-checkbox-circle-line"></i>  Valider la reservation</a>
+                                        <a href="{{route('reservation.valider',$reservation->id)}} "
+                                            class="btn btn-primary"><i class="ri-checkbox-circle-line"></i> Valider la
+                                            reservation</a>
                                         @endif
                                     </div>
                                 </div>
@@ -446,5 +508,3 @@
     // Appeler fetchNextSessions une première fois au chargement de la page
     fetchNextSessions();
 </script>
-
-    

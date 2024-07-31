@@ -36,7 +36,7 @@
     <div class="layout-wrapper landing">
         <nav class="{{ request()->Is('/') ? ' navbar navbar-expand-lg navbar-landing navbar-light fixed-top' : 'navbar navbar-expand-lg navbar-landing fixed-top job-navbar' }}  " id="navbar">
             <div class="container-fluid custom-container">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="#">
                     <img src="Admin/assets/images/logo-dark.png" class="card-logo card-logo-dark" alt="logo dark"
                         height="17">
                     <img src="Admin/assets/images/logo-light.png" class="card-logo card-logo-light" alt="logo light"

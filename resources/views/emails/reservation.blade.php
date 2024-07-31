@@ -136,6 +136,14 @@
             @if ($service->est_agent == 1)
             <p><strong>Nombre d'agent:</strong> {{$reservation->nbre_personne}} Agent</p>
             @endif
+
+            <p><strong>Coupon:</strong>@if ($coupon)
+                Appliqué
+            @else
+                Non appliqué
+            @endif
+                 </p>
+
             <p><strong>Prix:</strong> $ {{$reservation->prixTotal}} CAD</p>
             <p><strong>Méthode de paiement:</strong> @if ($reservation->type_paiement == 1)
                 Carte Bancaire

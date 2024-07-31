@@ -41,6 +41,7 @@ return new class extends Migration
             $table->string('instruction');
             $table->string('station');
             $table->string('propriete');
+            $table->string('coupon')->nullable();
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

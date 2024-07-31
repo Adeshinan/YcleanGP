@@ -19,10 +19,11 @@ class ReservationDetailsMail extends Mailable
     public $parametre;
     public $extra;
     public $service;
+    public $coupon;
     /**
      * Create a new message instance.
      */
-    public function __construct($reservation,$taux,$parametre,$extra,$service)
+    public function __construct($reservation,$taux,$parametre,$extra,$service,$coupon)
     {
         //
 
@@ -31,6 +32,7 @@ class ReservationDetailsMail extends Mailable
         $this->parametre = $parametre;
         $this->extra = $extra;
         $this->service = $service;
+        $this->coupon = $coupon;
     }
 
     /**

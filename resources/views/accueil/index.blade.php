@@ -407,6 +407,14 @@
 
                                         </div>
 
+                                        <div class="col-xxl-6 col-md-6" id="">
+                                            <div>
+                                                <label for="borderInputCity" class="form-label">Coupon de réduction <span class="text-danger">(si vous posséder)</span></label>
+                                                <input type="text" name="coupon" class="form-control" id=""
+                                                    placeholder="Entrez le code du coupon" >
+                                            </div>
+                                        </div>
+
                                         <div class="hstack gap-2 justify-content-end">
 
                                             <div class="col-xxl-6 col-md-6">

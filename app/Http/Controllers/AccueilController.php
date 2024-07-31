@@ -73,6 +73,7 @@ class AccueilController extends Controller
                 'instruction' => 'required|string',
             'station' => 'required|string',
             'propriete' => 'required|string',
+                'coupon' => 'nullable|string',
                 
                 'name' => 'required|string',
                 'adress' => 'required|string',
@@ -80,11 +81,13 @@ class AccueilController extends Controller
                 'postal' => 'required|string',
                 'contact' => 'required|string',
                 'vill' => 'required|string',
+                
 
                 'type_paiement' => 'required|integer',
             ]);
 
 
+           
          /*    if($validated->fails())
         {
             $errors = $validation->errors();
@@ -106,7 +109,6 @@ class AccueilController extends Controller
                 'postal' => $validated['postal'],
                 'contact' => $validated['contact'],
                 'vill' => $validated['vill'],
-                'coupon' => $validated['coupon'],
             ];
 
 
@@ -162,37 +164,52 @@ class AccueilController extends Controller
                 }
         
                 $PrixDebut = $servicePrice + $extrasPrice + $paramsPrice;
-        
-                $taxes = Taxe::all();
-                $totalTaxPercentage = $taxes->sum('pourcentage');
-        
-                $taxAmount = $PrixDebut * ($totalTaxPercentage / 100);
-                $PrixDebutWithTaxes = $PrixDebut + $taxAmount;
-        
-                $PrixTotal = $PrixDebutWithTaxes;
+
+               
                 if (isset($validated['nbre_fois'])) {
                     $taux = Taux::where('libelle', $validated['nbre_fois'])->first();
                     if ($taux) {
-                        $PrixTotal = $PrixDebutWithTaxes - ($PrixDebutWithTaxes * ($taux->pourcentage / 100));
+                        $PrixHT = $PrixDebut - ($PrixDebut * ($taux->pourcentage / 100));
                     }
                 }
                
+               
+               
+                
                 $sessionDates = $this->getSessionDates($validated['date_visite'], $validated['nbre_fois']);
                 $reservationData['session_dates'] = json_encode($sessionDates);
         
                
-            $coupon = Coupon::where('libelle',$userData['coupon'])->first();
+            $coupon = Coupon::where('libelle',$validated['coupon'])->first();
                
+           
             if($coupon){
-                $prix = $PrixTotal * ($coupon->pourcentage / 100);
+                $prix = $PrixHT - ($PrixHT * ($coupon->pourcentage / 100) );
+
+               
                 
-                $reservationData['prixTotal'] = $prix;
+                $taxes = Taxe::all();
+                $totalTaxPercentage = $taxes->sum('pourcentage');
+                    
+               
+                $taxAmount = $prix * ($totalTaxPercentage / 100);
+              
+                $PrixTotal = $prix + $taxAmount;
+                
+                
+                
             }else{
-                $reservationData['prixTotal'] = $PrixTotal;
-            }
                 
-                
+                $taxes = Taxe::all();
+                $totalTaxPercentage = $taxes->sum('pourcentage');
         
+                $taxAmount = $PrixHT * ($totalTaxPercentage / 100);
+                $PrixTotal = $PrixHT + $taxAmount;
+            }
+        
+               
+                
+            $reservationData['prixTotal'] = $PrixTotal;
                 
                 if($validated['type_paiement'] == 1){
                     $session = Session::create([
@@ -203,7 +220,7 @@ class AccueilController extends Controller
                                 'product_data' => [
                                     "name" => $service->libelle,
                                 ],
-                                'unit_amount'=> $reservationData['prixTotal'] * 100
+                                'unit_amount'=> $PrixTotal * 100
                             ],
                             'quantity'=> 1,
                         ],
@@ -214,7 +231,7 @@ class AccueilController extends Controller
                     ]);
         
                     $reservation = Reservation::create($reservationData);
-
+                  
                      
             
                 // Send reservation details email to all admins
@@ -226,12 +243,12 @@ class AccueilController extends Controller
                 $service = Service::where('id',$reservation->service_id)->first();
                 $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
                 $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
-    
-    
-                
+                $coupon = Coupon::where('libelle',$reservation->coupon)->first();
     
                 
-                Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service));
+    
+                
+                Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service,$coupon));
               
                     Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
                     return redirect($session->url);
@@ -250,8 +267,9 @@ class AccueilController extends Controller
                    $service = Service::where('id',$reservation->service_id)->first();
                    $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
                    $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
-       
-                   Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service));
+                $coupon = Coupon::where('libelle',$reservation->coupon)->first();
+                    
+                   Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service,$coupon));
                 
                     Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
                     return back();
@@ -318,36 +336,44 @@ class AccueilController extends Controller
         
                 $PrixDebut = $servicePrice + $extrasPrice + $paramsPrice;
         
-                $taxes = Taxe::all();
-                $totalTaxPercentage = $taxes->sum('pourcentage');
-        
-                $taxAmount = $PrixDebut * ($totalTaxPercentage / 100);
-                $PrixDebutWithTaxes = $PrixDebut + $taxAmount;
-        
-                $PrixTotal = $PrixDebutWithTaxes;
                 if (isset($validated['nbre_fois'])) {
                     $taux = Taux::where('libelle', $validated['nbre_fois'])->first();
                     if ($taux) {
-                        $PrixTotal = $PrixDebutWithTaxes - ($PrixDebutWithTaxes * ($taux->pourcentage / 100));
+                        $PrixHT = $PrixDebut - ($PrixDebut * ($taux->pourcentage / 100));
                     }
                 }
                
-                // Générer les dates des séances à venir
+               
+                
                 $sessionDates = $this->getSessionDates($validated['date_visite'], $validated['nbre_fois']);
-                $validated['session_dates'] = json_encode($sessionDates);
+                $reservationData['session_dates'] = json_encode($sessionDates);
         
                
-
-                $coupon = Coupon::where('libelle',$userData['coupon'])->first();
+            $coupon = Coupon::where('libelle',$validated['coupon'])->first();
                
-                if($coupon){
-                    $prix = $PrixTotal * ($coupon->pourcentage / 100);
-                    
-                    $validated['prixTotal'] = $prix;
-                }else{
-                    $validated['prixTotal'] = $PrixTotal;
-                }
+           
+            if($coupon){
+                $prix = $PrixHT - ($PrixHT * ($coupon->pourcentage / 100) );
+
+                $taxes = Taxe::all();
+                $totalTaxPercentage = $taxes->sum('pourcentage');
+        
+                $taxAmount = $PrixHT * ($totalTaxPercentage / 100);
                 
+                $PrixTotal =($PrixHT - $prix)  + $taxAmount;
+                
+            }else{
+                
+                $taxes = Taxe::all();
+                $totalTaxPercentage = $taxes->sum('pourcentage');
+        
+                $taxAmount = $PrixHT * ($totalTaxPercentage / 100);
+                $PrixTotal = $PrixHT + $taxAmount;
+            }
+                
+            
+               
+            $reservationData['prixTotal'] = $PrixTotal;
         
                 if($validated['type_paiement'] == 1){
                     $session = Session::create([
@@ -358,7 +384,7 @@ class AccueilController extends Controller
                                 'product_data' => [
                                     "name" => $service->libelle,
                                 ],
-                                'unit_amount'=> $validated['prixTotal'] * 100
+                                'unit_amount'=> $PrixTotal * 100
                             ],
                             'quantity'=> 1,
                         ],
@@ -384,12 +410,13 @@ class AccueilController extends Controller
                 $service = Service::where('id',$reservation->service_id)->first();
                 $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
                 $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
+                $coupon = Coupon::where('libelle',$reservation->coupon)->first();
     
     
                 
     
                 
-                Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service));
+                Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service,$coupon));
                
                     Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
                     return redirect($session->url);
@@ -408,12 +435,13 @@ class AccueilController extends Controller
                      $service = Service::where('id',$reservation->service_id)->first();
                      $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
                      $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
+                     $coupon = Coupon::where('libelle',$reservation->coupon)->first();
          
          
                      
          
                      
-                     Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service));
+                     Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service,$coupon));
                 
                     Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
                     return back();

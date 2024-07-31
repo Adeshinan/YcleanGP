@@ -9,6 +9,7 @@ use App\Models\Taux;
 use App\Models\Taxe;
 use App\Models\User;
 use App\Models\Extra;
+use App\Models\Coupon;
 use App\Models\Service;
 use App\Models\Parametre;
 use App\Models\Reservation;
@@ -155,23 +156,46 @@ class ReservationController extends Controller
 
         $PrixDebut = $servicePrice + $extrasPrice + $paramsPrice;
 
-        $taxes = Taxe::all();
-        $totalTaxPercentage = $taxes->sum('pourcentage');
-
-        $taxAmount = $PrixDebut * ($totalTaxPercentage / 100);
-        $PrixDebutWithTaxes = $PrixDebut + $taxAmount;
-
-        $PrixTotal = $PrixDebutWithTaxes;
         if (isset($validated['nbre_fois'])) {
             $taux = Taux::where('libelle', $validated['nbre_fois'])->first();
             if ($taux) {
-                $PrixTotal = $PrixDebutWithTaxes - ($PrixDebutWithTaxes * ($taux->pourcentage / 100));
+                $PrixHT = $PrixDebut - ($PrixDebut * ($taux->pourcentage / 100));
             }
         }
        
-        // Générer les dates des séances à venir
+       
+       
+        
         $sessionDates = $this->getSessionDates($validated['date_visite'], $validated['nbre_fois']);
-        $validated['session_dates'] = json_encode($sessionDates);
+        $reservationData['session_dates'] = json_encode($sessionDates);
+
+       
+    $coupon = Coupon::where('libelle',$validated['coupon'])->first();
+       
+   
+    if($coupon){
+        $prix = $PrixHT - ($PrixHT * ($coupon->pourcentage / 100) );
+
+       
+        
+        $taxes = Taxe::all();
+        $totalTaxPercentage = $taxes->sum('pourcentage');
+            
+       
+        $taxAmount = $prix * ($totalTaxPercentage / 100);
+      
+        $PrixTotal = $prix + $taxAmount;
+        
+        
+        
+    }else{
+        
+        $taxes = Taxe::all();
+        $totalTaxPercentage = $taxes->sum('pourcentage');
+
+        $taxAmount = $PrixHT * ($totalTaxPercentage / 100);
+        $PrixTotal = $PrixHT + $taxAmount;
+    }
 
        
         $validated['prixTotal'] = $PrixTotal;
@@ -295,7 +319,8 @@ private function getSessionDates($date_visite, $nbre_fois)
         $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
         $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
         $next_sessions = $this->getNextSessions($reservation->session_dates);
-        return view('client.reservation.show',compact('reservation','entete','extra','parametre','taux','service','tps','tvq','page','next_sessions'));
+        $coupon = Coupon::where('libelle',$reservation->coupon)->first();
+        return view('client.reservation.show',compact('reservation','entete','extra','parametre','taux','service','tps','tvq','page','next_sessions','coupon'));
     }
 
 
