@@ -8,13 +8,14 @@ use App\Models\Taux;
 use App\Models\Taxe;
 use App\Models\User;
 use App\Models\Extra;
+use App\Models\Coupon;
 use App\Models\Service;
 use App\Models\Parametre;
 use App\Models\Reservation;
 use Faker\Factory as Faker;
 use Illuminate\Http\Request;
-use Stripe\Checkout\Session;
 
+use Stripe\Checkout\Session;
 use App\Rules\StrongPassword;
 use App\Mail\ReservationDetailsMail;
 use Illuminate\Support\Facades\Auth;
@@ -105,10 +106,10 @@ class AccueilController extends Controller
                 'postal' => $validated['postal'],
                 'contact' => $validated['contact'],
                 'vill' => $validated['vill'],
+                'coupon' => $validated['coupon'],
             ];
 
 
-           
             $reservationData = $validated;
 
 
@@ -180,8 +181,17 @@ class AccueilController extends Controller
                 $reservationData['session_dates'] = json_encode($sessionDates);
         
                
+            $coupon = Coupon::where('libelle',$userData['coupon'])->first();
                
+            if($coupon){
+                $prix = $PrixTotal * ($coupon->pourcentage / 100);
+                
+                $reservationData['prixTotal'] = $prix;
+            }else{
                 $reservationData['prixTotal'] = $PrixTotal;
+            }
+                
+                
         
                 
                 if($validated['type_paiement'] == 1){
@@ -193,7 +203,7 @@ class AccueilController extends Controller
                                 'product_data' => [
                                     "name" => $service->libelle,
                                 ],
-                                'unit_amount'=> $PrixTotal * 100
+                                'unit_amount'=> $reservationData['prixTotal'] * 100
                             ],
                             'quantity'=> 1,
                         ],
@@ -327,7 +337,17 @@ class AccueilController extends Controller
                 $validated['session_dates'] = json_encode($sessionDates);
         
                
-                $validated['prixTotal'] = $PrixTotal;
+
+                $coupon = Coupon::where('libelle',$userData['coupon'])->first();
+               
+                if($coupon){
+                    $prix = $PrixTotal * ($coupon->pourcentage / 100);
+                    
+                    $validated['prixTotal'] = $prix;
+                }else{
+                    $validated['prixTotal'] = $PrixTotal;
+                }
+                
         
                 if($validated['type_paiement'] == 1){
                     $session = Session::create([
@@ -338,7 +358,7 @@ class AccueilController extends Controller
                                 'product_data' => [
                                     "name" => $service->libelle,
                                 ],
-                                'unit_amount'=> $PrixTotal * 100
+                                'unit_amount'=> $validated['prixTotal'] * 100
                             ],
                             'quantity'=> 1,
                         ],
