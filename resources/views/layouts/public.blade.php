@@ -26,6 +26,27 @@
     <!-- custom Css-->
     <link href="Admin/assets/css/custom.min.css" rel="stylesheet" type="text/css" />
 
+    <style>
+        .image-container1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Styling the image */
+        .styled-image1 {
+            width: 350px; /* Adjust the width as needed */
+            height: auto; /* Maintains aspect ratio */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+            transition: transform 0.3s ease; /* Smooth transition for scaling */
+        }
+
+        .styled-image1:hover {
+            transform: scale(1.1); /* Scale up the image on hover */
+        }
+    </style>
+
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#navbar-example">
