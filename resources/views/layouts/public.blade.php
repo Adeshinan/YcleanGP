@@ -72,10 +72,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto mt-2 mt-lg-0" id="navbar-example">
                     <li class="nav-item">
-                            <a class="nav-link {{ request()->Is('/') ? 'active' : '' }}" href="/" style='text-transform: uppercase;'>Acceuil</a>
+                            <a class="nav-link {{ request()->Is('/') ? 'active' : '' }}" href="https://yclean.ca/" style='text-transform: uppercase;'>Acceuil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('accueil.apropos') ? 'active' : '' }} " href="{{route('accueil.apropos')}}" style='text-transform: uppercase;'>A Propos</a>
+                            <a class="nav-link {{ request()->routeIs('accueil.apropos') ? 'active' : '' }} " href="https://yclean.ca/%C3%A0-propos" style='text-transform: uppercase;'>A Propos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('reservation.ligne') ? 'active' : '' }}" active" href="{{route('reservation.ligne')}}" style='text-transform: uppercase;'>Réservation en ligne</a>
@@ -104,7 +104,7 @@
                 <div class="row align-items-center gy-4">
                     <div class="col-sm">
                         <div>
-                            <h4 class="text-white mb-0 fw-semibold">Create and Sell Your NFT's</h4>
+                            <h4 class="text-white mb-0 fw-semibold">Pour accéder à davantage de fonctionnalités, veuillez vous connecter.</h4>
                         </div>
                     </div>
                     <!-- end col -->

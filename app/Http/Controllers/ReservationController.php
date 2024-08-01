@@ -231,12 +231,12 @@ class ReservationController extends Controller
             $service = Service::where('id',$reservation->service_id)->first();
             $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
             $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
-
-
-            
+            $coupon = Coupon::where('libelle',$reservation->coupon)->first();
 
             
-            Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service));
+
+            
+            Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service,$coupon));
                 
             Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
             return redirect($session->url);
@@ -252,12 +252,12 @@ class ReservationController extends Controller
             $service = Service::where('id',$reservation->service_id)->first();
             $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
             $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
-
-
-            
+            $coupon = Coupon::where('libelle',$reservation->coupon)->first();
 
             
-            Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service));
+
+            
+            Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service,$coupon));
             
             Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
             return redirect()->route('success');
