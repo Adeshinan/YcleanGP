@@ -90,10 +90,24 @@ Route::get('user_profile',[UserController::class,'profile'])->name('user.profile
     Route::get('/messages/{user}', [MessageController::class, 'getMessages'])->name('getMessages');
 
 
+    Route::middleware('auth')->group(function() {
+        Route::get('/chat', [MessageController::class, 'index'])->name('chat.index');
+        Route::get('/chat/messages/{receiverId}', [MessageController::class, 'getMessages'])->name('chat.messages');
+        Route::post('/chat/messages/send', [MessageController::class, 'sendMessage'])->name('chat.sendMessage');
+        Route::post('/chat/messages/read/{id}', [MessageController::class, 'markAsRead'])->name('chat.markAsRead');
+        Route::get('/chat/contacts', [MessageController::class, 'getContacts'])->name('chat.contacts');
+    });
+    
+    
+    
+    
+    
+
 Route::resource('reservation', ReservationController::class);
 Route::get('/valider_reservation', [ReservationController::class,'ReservationValider'])->name('reservationliste.valider');
 Route::get('/facture/{id}', [ReservationController::class,'Facture'])->name('reservation.facture');
 Route::get('/success', [ReservationController::class,'success'])->name('success');
+Route::get('/success/horsligne', [ReservationController::class,'successHorsLigne'])->name('success.horsligne');
 Route::get('/checkout', [ReservationController::class,'checkout'])->name('checkout');
 Route::get('reservations/{id}/next-sessions', [ReservationController::class, 'getNextSessionsFromReservation'])->name('reservation.getNextSessions');
 Route::get('/reservations_all', [ReservationController::class, 'getAll'])->name('reservation.getAll');

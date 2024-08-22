@@ -39,9 +39,7 @@
                                                                             <thead class="table-light">
                                                                                 <tr>
                                                                                     <th scope="col" style="width: 50px;">
-                                                                                        <div class="form-check">
-                                                                                            <input class="form-check-input" type="checkbox" id="checkAll" value="option">
-                                                                                        </div>
+                                                                                       
                                                                                     </th>
                                                                                     <th class="sort" data-sort="customer_name">Services</th>
                                                                                     @if (Auth::user()->type_connecter == "admin")
@@ -57,9 +55,7 @@
                                                                                
                                                                                 <tr>
                                                                                     <th scope="row">
-                                                                                        <div class="form-check">
-                                                                                            <input class="form-check-input" type="checkbox" name="chk_child" value="option1">
-                                                                                        </div>
+                                                                                       
                                                                                     </th>
                                                                                    
                                                                                     <td class="customer_name">{{$reservation->service->libelle}}</td>

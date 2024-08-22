@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ReservationController extends Controller
 {
@@ -104,10 +105,11 @@ class ReservationController extends Controller
             'propriete' => 'required|string',
             'type_paiement' => 'required|integer',
             'coupon' => 'nullable|string',
+            'position' => 'nullable|string',
         ]);
 
 
-       
+        
         /* if($validated->fails())
         {
             $errors = $validation->errors();
@@ -168,9 +170,11 @@ class ReservationController extends Controller
        
         
         $sessionDates = $this->getSessionDates($validated['date_visite'], $validated['nbre_fois']);
-        $reservationData['session_dates'] = json_encode($sessionDates);
+        
+        
+        $validated['session_dates'] = json_encode($sessionDates);
 
-       
+        
     $coupon = Coupon::where('libelle',$validated['coupon'])->first();
        
    
@@ -224,19 +228,20 @@ class ReservationController extends Controller
 
             $admin = User::where('type_connecter', 'admin')->first();
               
-
+           
             $extra = Extra::all();
             $parametre = Parametre::all();
-            $taux = Taux::all();
+           
             $service = Service::where('id',$reservation->service_id)->first();
             $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
             $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
+            $coupon = Coupon::where('libelle',$reservation->coupon)->first();
 
 
             
 
             
-            Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service));
+            Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$service,$coupon));
                 
             Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
             return redirect($session->url);
@@ -248,19 +253,19 @@ class ReservationController extends Controller
               
             $extra = Extra::all();
             $parametre = Parametre::all();
-            $taux = Taux::all();
             $service = Service::where('id',$reservation->service_id)->first();
             $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
             $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
+            $coupon = Coupon::where('libelle',$reservation->coupon)->first();
 
 
             
 
             
-            Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service));
+            Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$service,$coupon));
             
             Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
-            return redirect()->route('success');
+            return redirect()->route('success.horsligne');
         }
 
     } catch (\Throwable $ex) {
@@ -319,11 +324,21 @@ private function getSessionDates($date_visite, $nbre_fois)
         $service = Service::where('id',$reservation->service_id)->first();
         $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
         $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
-        $next_sessions = $this->getNextSessions($reservation->session_dates);
+        $next_sessions = $this->paginateCollection($this->getNextSessions($reservation->session_dates),5);
         $coupon = Coupon::where('libelle',$reservation->coupon)->first();
         return view('client.reservation.show',compact('reservation','entete','extra','parametre','taux','service','tps','tvq','page','next_sessions','coupon'));
     }
 
+
+    public function paginateCollection($items,$perPage =5, $page = null, $options =[])
+    {
+        $page = $page ?: (LengthAwarePaginator::resolveCurrentPage() ?: 1);
+        $items= $items instanceof \Illuminate\Support\Collection ? $items : collect($items);
+        $total = $items->count();
+        $results = $items->slice(($page - 1) * $perPage, $perPage)->values();
+        
+        return new LengthAwarePaginator($results , $total, $perPage, $page , $options);
+    }
 
     private function getNextSessions($session_dates)
 {
@@ -360,12 +375,12 @@ private function getSessionDates($date_visite, $nbre_fois)
         $services = Service::all();
 
         $serv = Service::where('id',$reservation->service_id)->first();
-        $extra = Extra::all();
+        $extras = Extra::all();
         $taux = Taux::all();
         $parametres = Parametre::all();
         $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
         $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
-            return view('client.reservation.edit',compact('reservation','extra','services','entete','page','taux','parametres','tps','tvq','serv'));
+            return view('client.reservation.edit',compact('reservation','extras','services','entete','page','taux','parametres','tps','tvq','serv'));
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -434,6 +449,10 @@ private function getSessionDates($date_visite, $nbre_fois)
 
     public function checkout(){
         return view('accueil.echec');
+    }
+
+    public function successHorsLigne(){
+        return view('accueil.succesHorsLigne');
     }
 
     public function Facture($id){

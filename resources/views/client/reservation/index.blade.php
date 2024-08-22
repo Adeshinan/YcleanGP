@@ -11,12 +11,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Liste des Reservations</h4>
+                        <h4 class="mb-sm-0">{{$page}}</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
-                                <li class="breadcrumb-item active">Listjs</li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Reservation</a></li>
+                                <li class="breadcrumb-item active">{{$page}}</li>
                             </ol>
                         </div>
 
@@ -40,8 +40,7 @@
                                         <div>
                                             <a href="{{route('reservation.create')}}" class="btn btn-success"><i
                                                     class="ri-add-line align-bottom me-1"></i> Passer Réservation</a>
-                                            <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i
-                                                    class="ri-delete-bin-2-line"></i></button>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -55,10 +54,7 @@
                                             <thead class="table-light">
                                                 <tr>
                                                     <th scope="col" style="width: 50px;">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                id="checkAll" value="option">
-                                                        </div>
+                                                       
                                                     </th>
                                                     <th class="sort" data-sort="customer_name">Services</th>
                                                     @if (Auth::user()->type_connecter == "admin")
@@ -75,10 +71,7 @@
 
                                                 <tr>
                                                     <th scope="row">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                name="chk_child" value="option1">
-                                                        </div>
+                                                        
                                                     </th>
 
                                                     <td class="customer_name">{{$reservation->service->libelle}}</td>
@@ -95,9 +88,9 @@
                                                                 <a href="{{route('reservation.show',$reservation->id)}}"
                                                                     class="btn btn-sm btn-primary edit-item-btn">Détail</a>
                                                             </div>
-                                                           {{--  <div class="edit">
+                                                         <div class="edit">
                                                                 <a href="{{route('reservation.edit',$reservation->id)}}" class="btn btn-sm btn-success edit-item-btn">Edité</a>
-                                                            </div> --}}
+                                                            </div>
                                                            
                                                         </div>
                                                     </td>

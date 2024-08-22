@@ -373,10 +373,8 @@
                                         <div class="col-xxl-6 col-md-6">
                                             <div>
                                                 <label for="labelInput" class="form-label">Vos Instructions</label>
-                                                <select class="form-select" name="instruction" id="">
-                                                    <option value=""></option>
-                                                    <option value="Ne pas touchés les murs">Ne pas touchés les murs</option>
-                                                </select>
+                                                <textarea class="form-control" name="instruction"  cols="30" rows="4" placeholder="Vos instructions"></textarea>
+                                               
                                             </div>
 
                                         </div>
@@ -384,25 +382,31 @@
                                         <div class="col-xxl-6 col-md-6">
                                             <div>
                                                 <label for="labelInput" class="form-label">Information de stationnement</label>
-                                                <select class="form-select" name="station" id="">
-                                                    <option value=""></option>
-                                                    <option value="J'ai un stationnement">J'ai un stationnement</option>
-                                                    <option value="J'ai pas un stationnement">J'ai pas un stationnement</option>
+
+                                                <select class="form-select" name="station" id="StationSelect">
+                                                    <option value="" selected>Veuillez sélectionner une option</option>
+                                                    <option value="0">J'ai pas un stationnement</option>
+                                                    <option  value="1">J'ai un stationnement</option>
                                                 </select>
                                             </div>
 
                                         </div>
 
 
-                                        <div class="col-xxl-6 col-md-6">
+                                        <div class="col-xxl-6 col-md-6" id="positionStation" style="display: none">
+                                            <div>
+                                                <label for="labelInput" class="form-label">Entrer la position de votre stationnement</label>
+                                                <textarea class="form-control" name="position"  cols="30" rows="4" placeholder="position de votre stationnement"></textarea>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-xxl-6 col-md-6" >
                                             <div>
                                                 <label for="labelInput" class="form-label">Comment accéderons-nous à la propriété ?</label>
-                                                <select class="form-select" name="propriete" id="">
-                                                    <option value=""></option>
-                                                    <option value="Je serai présent">Je serai présent</option>
-                                                    <option value=""></option>
-                                                    <option value=""></option>
-                                                </select>
+
+                                                <textarea class="form-control" name="propriete"  cols="30" rows="4" placeholder="Emplacement de la clé, combinaison, commentaire, demande spécifiques etc..."></textarea>
+                                               
                                             </div>
 
                                         </div>
@@ -493,7 +497,19 @@
 
 
 
-
+            <script>
+                document.getElementById('StationSelect').addEventListener('change', function() {
+                    var textarea = document.getElementById('positionStation');
+                   
+                    if (this.value == '1') {
+                        textarea.style.display = 'block';
+                        textarea.setAttribute('required', 'required');
+                    } else {
+                        textarea.style.display = 'none';
+                        textarea.removeAttribute('required');
+                    }
+                });
+              </script>
 
             @include('profile.partials.js.donnee')
             @include('profile.partials.js.reservation')
@@ -508,5 +524,7 @@
     <!-- start cta -->
   
 @endsection
+
+
       
  

@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Providers\RouteServiceProvider;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use App\Notifications\ValidationNotification;
 
@@ -74,6 +75,8 @@ class AccueilController extends Controller
             'station' => 'required|string',
             'propriete' => 'required|string',
                 'coupon' => 'nullable|string',
+                'position' => 'nullable|string',
+
                 
                 'name' => 'required|string',
                 'adress' => 'required|string',
@@ -177,7 +180,7 @@ class AccueilController extends Controller
                
                 
                 $sessionDates = $this->getSessionDates($validated['date_visite'], $validated['nbre_fois']);
-                $reservationData['session_dates'] = json_encode($sessionDates);
+                $validated['session_dates'] = json_encode($sessionDates);
         
                
             $coupon = Coupon::where('libelle',$validated['coupon'])->first();
@@ -234,12 +237,11 @@ class AccueilController extends Controller
                   
                      
             
-                // Send reservation details email to all admins
+               
                 $admin = User::where('type_connecter', 'admin')->first();
                
                 $extra = Extra::all();
                 $parametre = Parametre::all();
-                $taux = Taux::all();
                 $service = Service::where('id',$reservation->service_id)->first();
                 $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
                 $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
@@ -248,7 +250,7 @@ class AccueilController extends Controller
                 
     
                 
-                Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service,$coupon));
+                Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$service,$coupon));
               
                     Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
                     return redirect($session->url);
@@ -263,16 +265,15 @@ class AccueilController extends Controller
                 
                    $extra = Extra::all();
                    $parametre = Parametre::all();
-                   $taux = Taux::all();
                    $service = Service::where('id',$reservation->service_id)->first();
                    $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
                    $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
                 $coupon = Coupon::where('libelle',$reservation->coupon)->first();
                     
-                   Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service,$coupon));
+                   Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$service,$coupon));
                 
                     Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
-                    return back();
+                    return redirect()->route('success.horsligne');
                 }
 
 
@@ -346,7 +347,7 @@ class AccueilController extends Controller
                
                 
                 $sessionDates = $this->getSessionDates($validated['date_visite'], $validated['nbre_fois']);
-                $reservationData['session_dates'] = json_encode($sessionDates);
+                $validated['session_dates'] = json_encode($sessionDates);
         
                
             $coupon = Coupon::where('libelle',$validated['coupon'])->first();
@@ -406,7 +407,6 @@ class AccueilController extends Controller
               
                 $extra = Extra::all();
                 $parametre = Parametre::all();
-                $taux = Taux::all();
                 $service = Service::where('id',$reservation->service_id)->first();
                 $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
                 $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
@@ -416,7 +416,7 @@ class AccueilController extends Controller
                 
     
                 
-                Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service,$coupon));
+                Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$service,$coupon));
                
                     Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
                     return redirect($session->url);
@@ -431,7 +431,6 @@ class AccueilController extends Controller
               
                      $extra = Extra::all();
                      $parametre = Parametre::all();
-                     $taux = Taux::all();
                      $service = Service::where('id',$reservation->service_id)->first();
                      $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
                      $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
@@ -441,10 +440,10 @@ class AccueilController extends Controller
                      
          
                      
-                     Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$taux,$service,$coupon));
+                     Mail::to($admin->email)->send(new ReservationDetailsMail($reservation, $extra,$parametre,$service,$coupon));
                 
                     Alert::toast('Enregistrement effectué avec succès', 'success')->position('top-end')->timerProgressBar();
-                    return back();
+                    return redirect()->route('success.horsligne');
                 }
 
 
@@ -508,14 +507,14 @@ class AccueilController extends Controller
         try {
             //code...
 
-            $validated = $request->validate([
+            $validated=Validator::make($request->all(),[
                 'password' => ['required', 'confirmed', new StrongPassword],
                
             ]);
             
             if($validated->fails())
             {
-                $errors = $validation->errors();
+                $errors = $validated->errors();
                 $errorMessages = '';
                 foreach ($errors->all() as $message) {
                     $errorMessages .= $message . '<br>';

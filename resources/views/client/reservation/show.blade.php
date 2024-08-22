@@ -113,6 +113,7 @@
                                             Carbon\Carbon::parse($session)->translatedFormat('d
                                             F Y à H\h:i\m'); }}</li>
                                         @endforeach
+                                        {{$next_sessions->links()}}
                                     </ul>
                                 </div>
 
@@ -126,7 +127,13 @@
                                             <h4>Instruction spéciale : </h4>{{$reservation->instruction}}
                                         </li>
                                         <li>
-                                            <h4>Information sur le stationnement : </h4>{{$reservation->station}}
+                                            <h4>Information sur le stationnement : </h4>
+                                            @if ($reservation->station = '0')
+                                            J'ai pas un stationnement
+                                            @else
+                                            J'ai un stationnement
+                                            @endif
+                                           
                                         </li>
                                         <li>
                                             <h4>Comment accéderons-nous à la propriété : </h4>

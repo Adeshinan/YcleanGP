@@ -48,11 +48,9 @@
                                                 <select name="service_id" id="serviceSelect" class="form-control"
                                                     oninput="toggleFields(this.value),afficheCommune(this.value),getServicePrice(this.value)"
                                                     required>
-                                                    @foreach ($services as $service)
-                                                    <option 
-                                                        @if ($reservation->service_id == $service->id) value="{{$reservation->service_id}}" selected @endif>
-                                                        {{$service->libelle}}
-                                                    </option>
+
+                                                    @foreach($services as $service)
+                                                    <option value="{{$service->id}}" @if($service->id == $reservation->service_id) selected @endif>{{$service->libelle}} </option>
                                                     @endforeach
 
                                                 </select>
@@ -64,39 +62,12 @@
                                             <div>
                                                 <label for="labelInput" class="form-label">Extra</label>
                                                
-
+                                              
                                                 <select class="js-example-basic-multiple" name="extra[]" id="extra"
                                                     multiple="multiple" onchange="getExtra(this)">
-
-                                                    @php
-                                                    $reservationExtras = json_decode($reservation->extra, true);
-                                                    $totalExtraPrice = 0;
-                                                    @endphp
-            
-                                                    @foreach ($extra as $item)
-                                                    @if (in_array($item->id, $reservationExtras))
-            
-                                                    @php
-                                                    // Vérifier si l'extra de l'item est dans la liste des extras de la
-            
-                                                    $isInReservation = in_array($item->id, $reservationExtras);
-            
-                                                    // Ajouter le prix de l'item au total si c'est dans la réservation
-                                                    if ($isInReservation) {
-                                                    $totalExtraPrice += $item->prix;
-                                                    }
-                                                    @endphp
-
-                                                    <option value="{{$item->id}}" selected>{{$item->libelle}}</option>
-
-                                                    @else
-                                                    <!-- Code pour le cas où l'élément n'existe pas dans la liste de reservation extras -->
-                                                    @endif
-                                                    @php
-                                                    $prixExtra = 0;
-            
-                                                    $prixExtra = $prixExtra + $item->prix
-                                                    @endphp
+                                                  
+                                                    @foreach($extras as $extra)
+                                                    <option value="{{$extra->id}}" @if(in_array($extra->id, json_decode($reservation->extra,true) ?? [])) selected @endif>{{$extra->libelle}} </option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -106,7 +77,7 @@
                                         <div class="col-xxl-6 col-md-6" id="chambresField" style="display: none;">
                                             <div>
                                                 <label for="placeholderInput" class="form-label">Chambres</label>
-                                                <input name="chambre" type="number" id="chambres" class="form-control"
+                                                <input name="chambre" value="{{$reservation->chambre}}" type="number" id="chambres" class="form-control"
                                                     placeholder="Entrer un nombre" value="0">
                                             </div>
                                         </div>
@@ -114,32 +85,32 @@
                                         <div class="col-xxl-6 col-md-6" id="cuisinesField" style="display: none;">
                                             <div>
                                                 <label for="valueInput" class="form-label">Cuisines</label>
-                                                <input name="cuisine" type="number" class="form-control" id="cuisines"
-                                                    placeholder="Entrer un nombre" value="0">
+                                                <input name="cuisine" value="{{$reservation->cuisine}}" type="number" class="form-control" id="cuisines"
+                                                    placeholder="Entrer un nombre">
                                             </div>
                                         </div>
                                         <!--end col-->
                                         <div class="col-xxl-6 col-md-6" id="salleDeBainField" style="display: none;">
                                             <div>
                                                 <label for="readonlyPlaintext" class="form-label">Salle de Bain</label>
-                                                <input name="salle_bain" type="number" class="form-control"
-                                                    id="salle_bain" placeholder="Entrer un nombre" value="0">
+                                                <input name="salle_bain" value="{{$reservation->salle_bain}}" type="number" class="form-control"
+                                                    id="salle_bain" placeholder="Entrer un nombre">
                                             </div>
                                         </div>
                                         <!--end col-->
                                         <div class="col-xxl-6 col-md-6" id="salleAEauField" style="display: none;">
                                             <div>
                                                 <label for="readonlyInput" class="form-label">Salle à Eau</label>
-                                                <input name="salle_eau" type="number" class="form-control"
-                                                    id="salle_eau" placeholder="Entrer un nombre" value="0">
+                                                <input name="salle_eau" value="{{$reservation->salle_eau}}" type="number" class="form-control"
+                                                    id="salle_eau" placeholder="Entrer un nombre">
                                             </div>
                                         </div>
                                         <!--end col-->
                                         <div class="col-xxl-6 col-md-6" id="salonsField" style="display: none;">
                                             <div>
                                                 <label for="disabledInput" class="form-label">Salons</label>
-                                                <input name="salon" type="number" class="form-control" id="salon"
-                                                    placeholder="Entrer un nombre" value="0">
+                                                <input name="salon" value="{{$reservation->salon}}" type="number" class="form-control" id="salon"
+                                                    placeholder="Entrer un nombre">
                                             </div>
                                         </div>
                                         <!--end col-->
@@ -149,7 +120,7 @@
                                                 <div class="form-icon">
                                                     <input name="buanderie" type="number"
                                                         class="form-control form-control-icon" id="buanderie"
-                                                        placeholder="Entrer un nombre" value="0">
+                                                        placeholder="Entrer un nombre" value="{{$reservation->buanderie}}">
 
                                                 </div>
                                             </div>
@@ -161,7 +132,7 @@
                                                 <div class="form-icon right">
                                                     <input name="entre_couloir" type="number"
                                                         class="form-control form-control-icon" id="entre_couloir"
-                                                        placeholder="Entrer un nombre" value="0">
+                                                        placeholder="Entrer un nombre" value="{{$reservation->entre_couloir}}">
 
                                                 </div>
                                             </div>
@@ -171,7 +142,7 @@
                                             <div>
                                                 <label for="exampleInputdate" class="form-label"> Escaliers</label>
                                                 <input name="escalier" type="number" class="form-control" id="escalier"
-                                                    placeholder="Entrer un nombre" value="0">
+                                                    placeholder="Entrer un nombre" value="{{$reservation->escalier}}">
                                             </div>
                                         </div>
                                         <!--end col-->
@@ -180,7 +151,7 @@
                                             <div>
                                                 <label for="exampleInputpassword" class="form-label">Nombre
                                                     d'agent</label>
-                                                <input type="number" name="nbre_personne" class="form-control"
+                                                <input type="number" name="nbre_personne" value="{{$reservation->nbre_personne}}" class="form-control"
                                                     id="exampleInputpassword" placeholder="Entrer le nombre d'agent">
                                             </div>
                                         </div>
@@ -190,18 +161,18 @@
                                                 <label for="exampleInputpassword" class="form-label">Heure de
                                                     travail</label>
                                                 <select class="form-control" name="heure_session" id="">
-                                                    <option selected value="">Choisisez l'heure de session</option>
-                                                    <option value="2">2H</option>
-                                                    <option value="2.5">2H30</option>
-                                                    <option value="3">3H</option>
-                                                    <option value="3.5">3H30</option>
-                                                    <option value="4">4H</option>
-                                                    <option value="4.5">4H30</option>
-                                                    <option value="5">5H</option>
-                                                    <option value="5.5">5H30</option>
-                                                    <option value="6">6H</option>
-                                                    <option value="6.5">6H30</option>
-                                                    <option value="7">7H</option>
+                                                  
+                                                    <option @if ($reservation->heure_session == 2)  selected  @endif value="2">2H</option>
+                                                    <option @if ($reservation->heure_session == 2.5)  selected  @endif value="2.5">2H30</option>
+                                                    <option @if ($reservation->heure_session == 3)  selected  @endif value="3">3H</option>
+                                                    <option @if ($reservation->heure_session == 3.5)  selected  @endif value="3.5">3H30</option>
+                                                    <option @if ($reservation->heure_session == 4)  selected  @endif value="4">4H</option>
+                                                    <option @if ($reservation->heure_session == 4.5)  selected  @endif value="4.5">4H30</option>
+                                                    <option @if ($reservation->heure_session == 5)  selected  @endif value="5">5H</option>
+                                                    <option @if ($reservation->heure_session == 5.5)  selected  @endif value="5.5">5H30</option>
+                                                    <option @if ($reservation->heure_session == 6)  selected  @endif value="6">6H</option>
+                                                    <option @if ($reservation->heure_session == 6.5)  selected  @endif value="6.5">6H30</option>
+                                                    <option @if ($reservation->heure_session == 7)  selected  @endif value="7">7H</option>
 
                                                     <option value=""></option>
                                                 </select>
@@ -213,8 +184,9 @@
                                                 <label for="exampleInputtime" class="form-label">Nombre de fois</label>
                                                 <select class="form-control" name="nbre_fois" id="nbre_fois">
                                                     <option selected></option>
+                                                   
                                                     @foreach ($taux as $item)
-                                                    <option value="{{$item->libelle}}">{{$item->libelle}}</option>
+                                                    <option value="{{$item->libelle}}" @if($item->libelle == $reservation->nbre_fois) selected @endif>{{$item->libelle}}</option>
                                                     @endforeach
                                                 </select>
 
@@ -226,7 +198,7 @@
                                                 <label for="exampleInputpassword" class="form-label">Date et heure debut
                                                     de
                                                     Visite</label>
-                                                <input type="datetime-local" name="date_visite" class="form-control"
+                                                <input type="datetime-local" name="date_visite" value="{{$reservation->date_visite}}" class="form-control"
                                                     id="exampleInputpassword">
                                             </div>
                                         </div>
@@ -241,9 +213,9 @@
                                                 <span style="font-weight: bold; color:red">*</span>
                                                 <div class="mb-2">
                                                     <label for="oui">Pour moi</label>
-                                                    <input type="radio" id="oui" name="pour_qui" value="1" checked>
+                                                    <input type="radio" id="oui" name="pour_qui" value="1" @if( $reservation->pour_qui == 1) checked @endif >
                                                     <label style="margin-left:0.8rem;" for="non">Pour autre</label>
-                                                    <input type="radio" id="non" name="pour_qui" value="0" >
+                                                    <input type="radio" id="non" name="pour_qui" value="0" @if( $reservation->pour_qui == 0) checked @endif >
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -252,7 +224,7 @@
                                             <div>
                                                 <label for="borderInputAddress" class="form-label">Adresse de
                                                     l'intéressé</label>
-                                                <input type="text" name="address" class="form-control" id=""
+                                                <input type="text" name="address" value="{{$reservation->address}}" class="form-control" id=""
                                                     placeholder="Entrez votre adresse">
                                             </div>
                                         </div>
@@ -262,7 +234,7 @@
                                             <div>
                                                 <label for="borderInputPostalCode" class="form-label">Code postal de
                                                     l'intéressé</label>
-                                                <input type="text" name="code" class="form-control" id=""
+                                                <input type="text" name="code" value="{{$reservation->code}}" class="form-control" id=""
                                                     placeholder="Entrez votre code postal" required>
                                             </div>
                                         </div>
@@ -270,7 +242,7 @@
                                             <div>
                                                 <label for="borderInputCity" class="form-label">Ville de
                                                     l'intéressé</label>
-                                                <input type="text" name="ville" class="form-control" id=""
+                                                <input type="text" name="ville" value="{{$reservation->ville}}" class="form-control" id=""
                                                     placeholder="Entrez votre ville" required>
                                             </div>
                                         </div>
@@ -279,10 +251,8 @@
                                         <div class="col-xxl-6 col-md-6">
                                             <div>
                                                 <label for="labelInput" class="form-label">Vos Instructions</label>
-                                                <select class="form-select" name="instruction" id="">
-                                                    <option value=""></option>
-                                                    <option value="Ne pas touchés les murs">Ne pas touchés les murs</option>
-                                                </select>
+                                                <textarea class="form-control" name="instruction"  cols="30" rows="4" placeholder="Vos instructions">{{$reservation->instruction}}</textarea>
+                                               
                                             </div>
 
                                         </div>
@@ -290,25 +260,30 @@
                                         <div class="col-xxl-6 col-md-6">
                                             <div>
                                                 <label for="labelInput" class="form-label">Information de stationnement</label>
-                                                <select class="form-select" name="station" id="">
-                                                    <option value=""></option>
-                                                    <option value="J'ai un stationnement">J'ai un stationnement</option>
-                                                    <option value="J'ai pas un stationnement">J'ai pas un stationnement</option>
+
+                                                <select class="form-select" name="station" id="StationSelect">
+                                                    <option value="0" @if($reservation->nbre_fois == 0 ) selected @endif>J'ai pas un stationnement</option>
+                                                    <option  value="1" @if($reservation->nbre_fois == 1 ) selected @endif>J'ai un stationnement</option>
                                                 </select>
                                             </div>
 
                                         </div>
 
 
-                                        <div class="col-xxl-6 col-md-6">
+                                        <div class="col-xxl-6 col-md-6" id="positionStation" style="display: none">
+                                            <div>
+                                                <label for="labelInput" class="form-label">Entrer la position de votre stationnement</label>
+                                                <textarea class="form-control" name="position"  cols="30" rows="4" placeholder="position de votre stationnement">{{$reservation->position}}</textarea>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-xxl-6 col-md-6" >
                                             <div>
                                                 <label for="labelInput" class="form-label">Comment accéderons-nous à la propriété ?</label>
-                                                <select class="form-select" name="propriete" id="">
-                                                    <option value=""></option>
-                                                    <option value="Je serai présent">Je serai présent</option>
-                                                    <option value=""></option>
-                                                    <option value=""></option>
-                                                </select>
+
+                                                <textarea class="form-control" name="propriete"  cols="30" rows="4" placeholder="Emplacement de la clé, combinaison, commentaire, demande spécifiques etc...">{{$reservation->propriete}}</textarea>
+                                               
                                             </div>
 
                                         </div>
@@ -321,7 +296,7 @@
                                                     aria-controls="paymentmethodCollapse">
                                                     <div class="form-check card-radio">
                                                         <input id="paymentMethod03" name="type_paiement" type="radio"
-                                                            value="0" class="form-check-input" checked>
+                                                            value="0" class="form-check-input" @if($reservation->type_paiement == 0 ) checked @endif >
                                                         <label class="form-check-label" for="paymentMethod03">
                                                             <span class="fs-16 text-muted me-2"><i
                                                                     class="ri-money-dollar-box-fill align-bottom"></i></span>
@@ -335,7 +310,7 @@
                                                     aria-expanded="true" aria-controls="paymentmethodCollapse">
                                                     <div class="form-check card-radio">
                                                         <input id="paymentMethod02" name="type_paiement" type="radio"
-                                                            value="1" class="form-check-input">
+                                                            value="1" class="form-check-input"  @if($reservation->type_paiement == 1 ) checked @endif >
                                                         <label class="form-check-label" for="paymentMethod02">
                                                             <span class="fs-16 text-muted me-2"><i
                                                                     class="ri-bank-card-fill align-bottom"></i></span>

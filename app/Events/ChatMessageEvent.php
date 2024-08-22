@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Messagerie;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -17,17 +18,21 @@ class ChatMessageEvent implements ShouldBroadcastNow
 
     public $message;
 
-    public function __construct($message)
+    public function __construct(Messagerie $message)
     {
         $this->message = $message;
     }
 
-    public function broadcastOn():array
+    public function broadcastOn()
     {
        
-        return[
-            new PrivateChannel('chat-channel.'.$this->message->reception_id),
-        ] ;
+        return new PrivateChannel('chat-channel.'.$this->message->reception_id);
+        
+    }
+
+    public function broadcastWith()
+    {
+        return ['message' => $this->message];
     }
 
     

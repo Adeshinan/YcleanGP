@@ -57,7 +57,7 @@
                                     </div>
 
                                     <div class="chat-message-list">
-                                        <ul class="list-unstyled chat-list chat-user-list" id="userList">
+                                        {{-- <ul class="list-unstyled chat-list chat-user-list" id="userList">
                                             @foreach ($lastMessages as $message)
                                                 <li class="chat-user" data-user-id="{{ $message->sender_id }}">
                                                     <div class="d-flex align-items-center">
@@ -69,7 +69,7 @@
                                                     </div>
                                                 </li>
                                             @endforeach
-                                        </ul>
+                                        </ul> --}}
                                     </div>
                                     
                                     <!-- End chat-message-list -->
@@ -277,28 +277,15 @@
     </div>
 
     <script>
-        Echo.private(`chat-channel.${sender_id}`)
-    .listen('ChatMessageEvent', (e) => {
-        // Assuming e.message contains the message data with ID
-        const messageId = e.message.id;
-
-        // Find the message element in the DOM
-        const messageElement = document.querySelector(`li.chat-list[data-message-id="${messageId}"]`);
-
-        if (messageElement) {
-            // Update the check mark to indicate the message has been seen
-            const checkMark = messageElement.querySelector('.check-message-icon');
-            if (checkMark) {
-                checkMark.classList.remove('text-success');
-                checkMark.classList.add('text-primary');
-                // Add a second check mark to indicate the message has been seen
-                checkMark.innerHTML = '<i class=" bx bx-check-double"></i>';
-            }
-        } else {
-            console.warn(`Message element with ID ${messageId} not found.`);
-        }
-    });
-
+        document.addEventListener('DOMContentLoaded', function () {
+            const userId = @json(auth()->id()); // Récupérer l'ID de l'utilisateur connecté
+    
+            Echo.private(chat-channel.${userId})
+                .listen('ChatMessageEvent', (event) => {
+                    // Transférer l'événement à Livewire
+                    Livewire.emit('messageReceived', event.message);
+                });
+        });
     </script>
 </div>
 

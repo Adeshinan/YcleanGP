@@ -113,16 +113,16 @@
                 <p><strong>Extras:</strong></p>
                 @php
                 $reservationExtras = json_decode($reservation->extra, true);
-                $totalExtraPrice = 0;
+               
                 @endphp
                 <ul>
 
 
-                    @foreach ($extra as $item)
-                    @if (in_array($item->id, $reservationExtras))
+                    @foreach ($extra as $ex)
+                    @if (in_array($ex->id , $reservationExtras))
+                   
+                    <li>{{$ex->libelle}}</li>
 
-
-                    <li>{{$item->libelle}}</li>
                     @endif
 
                     @endforeach
@@ -144,15 +144,25 @@
             @endif
                  </p>
 
-            <p><strong>Prix:</strong> $ {{$reservation->prixTotal}} CAD</p>
-            <p><strong>Méthode de paiement:</strong> @if ($reservation->type_paiement == 1)
+            <p><strong>Prix : </strong> $ {{$reservation->prixTotal}} CAD</p>
+            <p><strong>Méthode de paiement : </strong> @if ($reservation->type_paiement == 1)
                 Carte Bancaire
                 @else
                 Espèce
                 @endif</p>
             <p><strong>Instructions spéciales:</strong> {{$reservation->instruction}}</p>
-            <p><strong>Information de stationnement:</strong> {{$reservation->station}}</p>
-            <p><strong>Comment accéderons-nous à la propriété?</strong> {{$reservation->propriete}}</p>
+            <p><strong>Information de stationnement : </strong>
+                @if ($reservation->station = '0')
+                J'ai pas un stationnement
+                @else
+                J'ai un stationnement
+                @endif
+            </p>
+            @if ($reservation->station = '0')
+            <p><strong>Position du stationnement : </strong> {{$reservation->position}} </p>
+            @endif
+           
+            <p><strong>Comment accéderons-nous à la propriété? : </strong> {{$reservation->propriete}}</p>
         </div>
     </div>
 </body>

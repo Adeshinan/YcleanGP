@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use App\Providers\RouteServiceProvider;
+use App\Http\Requests\Auth\LoginRequest;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -26,12 +27,23 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
 
-        
+        try {
+            //code...
+            
             $request->authenticate();
 
             $request->session()->regenerate();
     
             return redirect()->intended(RouteServiceProvider::HOME);
+            
+        } catch (\Throwable $th) {
+            //throw $th;
+            Alert::toast($th->getMessage(), 'error')->position('top-end')->timerProgressBar();
+            return back()->withInput();
+           
+        }
+
+        
         
     }
 

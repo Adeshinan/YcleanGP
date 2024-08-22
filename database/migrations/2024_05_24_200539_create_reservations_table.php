@@ -38,15 +38,16 @@ return new class extends Migration
             //$table->text('autre_info')->nullable();
             $table->integer('valider')->default(0);
             $table->decimal('prixTotal', 8, 2)->nullable();
-            $table->string('instruction');
+            $table->text('instruction');
             $table->string('station');
-            $table->string('propriete');
+            $table->text('position')->nullable();
+            $table->text('propriete');
             $table->string('coupon')->nullable();
 
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('service_id');
-            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
+            $table->foreign('service_id')->references('id')->on('services');
             $table->timestamps();
             $table->softDeletes();
         
