@@ -237,7 +237,6 @@ class ReservationController extends Controller
             $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
             $coupon = Coupon::where('libelle',$reservation->coupon)->first();
 
-
             
 
             
@@ -257,7 +256,6 @@ class ReservationController extends Controller
             $tps = Taxe::where('libelle', 'tps')->first()->pourcentage;
             $tvq = Taxe::where('libelle', 'tvq')->first()->pourcentage;
             $coupon = Coupon::where('libelle',$reservation->coupon)->first();
-
 
             
 

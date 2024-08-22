@@ -26,6 +26,27 @@
     <!-- custom Css-->
     <link href="Admin/assets/css/custom.min.css" rel="stylesheet" type="text/css" />
 
+    <style>
+        .image-container1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Styling the image */
+        .styled-image1 {
+            width: 350px; /* Adjust the width as needed */
+            height: auto; /* Maintains aspect ratio */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+            transition: transform 0.3s ease; /* Smooth transition for scaling */
+        }
+
+        .styled-image1:hover {
+            transform: scale(1.1); /* Scale up the image on hover */
+        }
+    </style>
+
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#navbar-example">
@@ -51,10 +72,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto mt-2 mt-lg-0" id="navbar-example">
                     <li class="nav-item">
-                            <a class="nav-link {{ request()->Is('/') ? 'active' : '' }}" href="/" style='text-transform: uppercase;'>Acceuil</a>
+                            <a class="nav-link {{ request()->Is('/') ? 'active' : '' }}" href="https://yclean.ca/" style='text-transform: uppercase;'>Acceuil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('accueil.apropos') ? 'active' : '' }} " href="{{route('accueil.apropos')}}" style='text-transform: uppercase;'>A Propos</a>
+                            <a class="nav-link {{ request()->routeIs('accueil.apropos') ? 'active' : '' }} " href="https://yclean.ca/%C3%A0-propos" style='text-transform: uppercase;'>A Propos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('reservation.ligne') ? 'active' : '' }}" active" href="{{route('reservation.ligne')}}" style='text-transform: uppercase;'>Réservation en ligne</a>
@@ -83,7 +104,7 @@
                 <div class="row align-items-center gy-4">
                     <div class="col-sm">
                         <div>
-                            <h4 class="text-white mb-0 fw-semibold">Create and Sell Your NFT's</h4>
+                            <h4 class="text-white mb-0 fw-semibold">Pour accéder à davantage de fonctionnalités, veuillez vous connecter.</h4>
                         </div>
                     </div>
                     <!-- end col -->

@@ -33,26 +33,7 @@
                         </div><!-- end card header -->
 
                         <div class="card-body">
-                            <div class="listjs-table" id="customerList">
-                                <div class="row g-4 mb-3">
-                                    <div class="col-sm-auto">
-                                        <div>
-                                            
-
-                                        </div>
-                                    </div>
-                                    <div class="col-sm">
-                                        <div class="d-flex justify-content-sm-end">
-                                            <div class="search-box ms-2">
-                                                <input type="text" id="searchInput" class="form-control search"
-                                                    placeholder="Search..">
-                                                <i class="ri-search-line search-icon"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="table-responsive table-card mt-3 mb-1">
+                                <div class="table-responsive table-card mb-1">
                                     <table class="table align-middle table-nowrap" id="customerTable">
                                         <thead class="table-light">
                                             <tr>
