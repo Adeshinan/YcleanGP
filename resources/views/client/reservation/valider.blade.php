@@ -71,9 +71,7 @@
                                                                                             <div class="show">
                                                                                                 <a href="{{route('reservation.show',$reservation->id)}}" class="btn btn-sm btn-primary edit-item-btn">Détail</a>
                                                                                             </div>
-                                                                                            <div class="edit">
-                                                                                                <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#showModal">Edité</button>
-                                                                                            </div>
+                                                                                           
                                                                                             
                                                                                         </div>
                                                                                     </td>

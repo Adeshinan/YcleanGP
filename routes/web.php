@@ -69,12 +69,22 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     
     Route::resource('taxe', TaxeController::class);
 
+    Route::get('/reservations/monthly', [DashbordController::class, 'getMonthlyReservations']);
+
 });
 
 
 
 Route::middleware(['auth', 'isclient'])->group(function () {
-
+    Route::resource('reservation', ReservationController::class);
+    Route::get('update_reservation/{id}', [ReservationController::class,'updateReservation'])->name('update.reservation');
+    Route::get('/valider_reservation', [ReservationController::class,'ReservationValider'])->name('reservationliste.valider');
+    Route::get('/facture/{id}', [ReservationController::class,'Facture'])->name('reservation.facture');
+    Route::get('/success', [ReservationController::class,'success'])->name('success');
+    Route::get('/success/horsligne', [ReservationController::class,'successHorsLigne'])->name('success.horsligne');
+    Route::get('/checkout', [ReservationController::class,'checkout'])->name('checkout');
+    Route::get('reservations/{id}/next-sessions', [ReservationController::class, 'getNextSessionsFromReservation'])->name('reservation.getNextSessions');
+    Route::get('/reservations_all', [ReservationController::class, 'getAll'])->name('reservation.getAll');
     
 });
 
@@ -103,14 +113,7 @@ Route::get('user_profile',[UserController::class,'profile'])->name('user.profile
     
     
 
-Route::resource('reservation', ReservationController::class);
-Route::get('/valider_reservation', [ReservationController::class,'ReservationValider'])->name('reservationliste.valider');
-Route::get('/facture/{id}', [ReservationController::class,'Facture'])->name('reservation.facture');
-Route::get('/success', [ReservationController::class,'success'])->name('success');
-Route::get('/success/horsligne', [ReservationController::class,'successHorsLigne'])->name('success.horsligne');
-Route::get('/checkout', [ReservationController::class,'checkout'])->name('checkout');
-Route::get('reservations/{id}/next-sessions', [ReservationController::class, 'getNextSessionsFromReservation'])->name('reservation.getNextSessions');
-Route::get('/reservations_all', [ReservationController::class, 'getAll'])->name('reservation.getAll');
+
 
 
 

@@ -131,7 +131,7 @@
                                 <div class="mb-3">
                                     <label for="edit-pourcentage" class="form-label">Pourcentage</label>
                                     <input type="number" name="pourcentage" id="edit-pourcentage" class="form-control"
-                                        placeholder="Entrer le pourcentage" required />
+                                        placeholder="Entrer le pourcentage" step="0.0001" min="0" max="100" required />
                                 </div>
                             </div>
                             <div class="modal-footer">

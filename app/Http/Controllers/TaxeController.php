@@ -65,7 +65,7 @@ class TaxeController extends Controller
           
             $validator = Validator::make($request->all(), [
                 'libelle' => 'required|string|max:255',
-                'pourcentage' => 'required|string',
+                'pourcentage' => 'required|numeric',
                 
             ]);
             $taxe = Taxe::findOrFail($id);

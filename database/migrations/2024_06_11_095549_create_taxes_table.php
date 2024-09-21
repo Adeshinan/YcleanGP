@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('taxes', function (Blueprint $table) {
             $table->id();
             $table->string('libelle');
-            $table->integer('pourcentage');
+            $table->string('pourcentage');
             $table->timestamps();
         });
     }

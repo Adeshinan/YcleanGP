@@ -8,9 +8,9 @@
         <div class="container-fluid">
 
             <!-- start page title -->
-            <div class="row">
+            <div id="banniere" class="row">
                 <div class="col-12">
-                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    <div  class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0">{{$page}}</h4>
 
                         <div class="page-title-right">
@@ -103,7 +103,7 @@
                                 <!--end card-body-->
                             </div>
 
-                            <div class="row">
+                            <div id="session" class="row">
                                 <div class="col-6 mt-sm-5 mt-4 mr-3">
                                     <h3>Prochaines sessions</h3>
                                     <ul id="sessions">
@@ -447,9 +447,9 @@
                                                 </span><span id="card-total-amount">{{$prixTTC}} CAD</span></p>
                                         </div>
 
-                                        @if($reservation->type_paiement == 1)
+                                        @if($reservation->type_paiement == 1 || $reservation->valider == 1)
                                         <div class="col-6 mt-3">
-                                            <img src="{{asset('Admin/assets/img/payer.jpg')}}" alt="" height="100">
+                                            <img src="{{asset('Admin/assets/images/payer.jpg')}}" alt="" height="100">
                                         </div>
                                         @endif
 
@@ -458,9 +458,11 @@
 
                                     <div class="hstack gap-2 justify-content-end d-print-none mt-4">
                                         @if($reservation->valider == 1)
-                                        <a href="{{route('reservation.facture',$reservation->id)}} "
+                                       {{--  <a href="{{route('reservation.facture',$reservation->id)}} "
                                             class="btn btn-primary"> <i class="ri-file-ppt-2-line"></i> Télécharger la
-                                            facture</a>
+                                            facture</a> --}}
+                                            <button id="download-pdf" class="btn btn-primary"><i class="ri-file-ppt-2-line"></i> Télécharger la facture</button>
+
                                         @endif
                                         @if(Auth::user()->type_connecter == 'admin' && $reservation->valider == 0)
                                         <a href="{{route('reservation.valider',$reservation->id)}} "
@@ -489,11 +491,56 @@
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
 
-@endsection
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
-    // Fonction pour récupérer les prochaines sessions via AJAX
+    document.addEventListener('DOMContentLoaded', function() {
+        const { jsPDF } = window.jspdf;
+        
+        document.getElementById('download-pdf').addEventListener('click', function() {
+            const doc = new jsPDF('p', 'mm', 'a4'); 
+
+            const downloadButton = document.getElementById('download-pdf');
+            const ban = document.getElementById('banniere');
+            const ses = document.getElementById('session');
+
+               
+                downloadButton.style.display = 'none';
+                banniere.style.display = 'none';
+                ses.style.display = 'none';
+           
+            const pageWidth = 210;
+            const pageHeight = 297;
+
+            
+            html2canvas(document.querySelector('.page-content'), {
+                scale: 1,
+                useCORS: true 
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = pageWidth;
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+
+               
+                doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight > pageHeight ? pageHeight : imgHeight);
+
+               
+                doc.save('facture.pdf');
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
+<script>
+  
     function fetchNextSessions() {
         fetch('{{ route('reservation.getNextSessions', ['id' => $reservation->id]) }}')
             .then(response => response.json())
@@ -509,9 +556,9 @@
             .catch(error => console.error('Error fetching sessions:', error));
     }
     
-    // Rafraîchir les sessions toutes les 60 secondes (60000 ms)
     setInterval(fetchNextSessions, 60000);
     
-    // Appeler fetchNextSessions une première fois au chargement de la page
     fetchNextSessions();
 </script>
+
+@endsection

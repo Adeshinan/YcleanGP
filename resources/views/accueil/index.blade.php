@@ -116,7 +116,8 @@
                                     <div class="row gy-4">
                                         <div class="col-xxl-6 col-md-6">
                                             <div>
-                                                <label for="basiInput" class="form-label">Service</label>
+                                                <label for="basiInput" class="form-label" style="font-weight: bold">Service</label>
+                                                <span class="text-danger" style="font-weight: bold">*</span>
                                                 <select name="service_id" id="serviceSelect" class="form-control"
                                                     oninput="toggleFields(this.value),afficheCommune(this.value),getServicePrice(this.value)"
                                                     required>
@@ -132,7 +133,7 @@
                                         <!--end col-->
                                         <div class="col-xxl-6 col-md-6">
                                             <div>
-                                                <label for="labelInput" class="form-label">Extra</label>
+                                                <label for="labelInput" class="form-label" style="font-weight: bold">Extra</label>
                                                 <select class="js-example-basic-multiple" name="extra[]" id="extra"
                                                     multiple="multiple" onchange="getExtra(this)">
                                                 </select>
@@ -141,7 +142,7 @@
                                         <!--end col-->
                                         <div class="col-xxl-6 col-md-6" id="chambresField" style="display: none;">
                                             <div>
-                                                <label for="placeholderInput" class="form-label">Chambres</label>
+                                                <label for="placeholderInput" class="form-label" style="font-weight: bold">Chambres</label>
                                                 <input name="chambre" type="number" id="chambres"
                                                     class="form-control" placeholder="Entrer un nombre" value="0">
                                             </div>
@@ -149,7 +150,7 @@
                                         <!--end col-->
                                         <div class="col-xxl-6 col-md-6" id="cuisinesField" style="display: none;">
                                             <div>
-                                                <label for="valueInput" class="form-label">Cuisines</label>
+                                                <label for="valueInput" class="form-label" style="font-weight: bold">Cuisines</label>
                                                 <input name="cuisine" type="number" class="form-control"
                                                     id="cuisines" placeholder="Entrer un nombre" value="0">
                                             </div>
@@ -158,7 +159,7 @@
                                         <div class="col-xxl-6 col-md-6" id="salleDeBainField"
                                             style="display: none;">
                                             <div>
-                                                <label for="readonlyPlaintext" class="form-label">Salle de
+                                                <label for="readonlyPlaintext" class="form-label" style="font-weight: bold">Salle de
                                                     Bain</label>
                                                 <input name="salle_bain" type="number" class="form-control"
                                                     id="salle_bain" placeholder="Entrer un nombre" value="0">
@@ -167,7 +168,7 @@
                                         <!--end col-->
                                         <div class="col-xxl-6 col-md-6" id="salleAEauField" style="display: none;">
                                             <div>
-                                                <label for="readonlyInput" class="form-label">Salle
+                                                <label for="readonlyInput" class="form-label" style="font-weight: bold">Salle
                                                     à Eau</label>
                                                 <input name="salle_eau" type="number" class="form-control"
                                                     id="salle_eau" placeholder="Entrer un nombre" value="0">
@@ -176,7 +177,7 @@
                                         <!--end col-->
                                         <div class="col-xxl-6 col-md-6" id="salonsField" style="display: none;">
                                             <div>
-                                                <label for="disabledInput" class="form-label">Salons</label>
+                                                <label for="disabledInput" class="form-label" style="font-weight: bold">Salons</label>
                                                 <input name="salon" type="number" class="form-control" id="salon"
                                                     placeholder="Entrer un nombre" value="0">
                                             </div>
@@ -184,7 +185,7 @@
                                         <!--end col-->
                                         <div class="col-xxl-6 col-md-6" id="buanderieField" style="display: none;">
                                             <div>
-                                                <label for="iconInput" class="form-label">Buanderie</label>
+                                                <label for="iconInput" class="form-label" style="font-weight: bold">Buanderie</label>
                                                 <div class="form-icon">
                                                     <input name="buanderie" type="number"
                                                         class="form-control form-control-icon" id="buanderie"
@@ -197,7 +198,7 @@
                                         <div class="col-xxl-6 col-md-6" id="entrerCouloireField"
                                             style="display: none;">
                                             <div>
-                                                <label for="iconrightInput" class="form-label">Entrer
+                                                <label for="iconrightInput" class="form-label" style="font-weight: bold">Entrer
                                                     Couloire</label>
                                                 <div class="form-icon right">
                                                     <input name="entre_couloir" type="number"
@@ -210,7 +211,7 @@
                                         <!--end col-->
                                         <div class="col-xxl-6 col-md-6" id="escalierField" style="display: none;">
                                             <div>
-                                                <label for="exampleInputdate" class="form-label">
+                                                <label for="exampleInputdate" class="form-label" style="font-weight: bold">
                                                     Escaliers</label>
                                                 <input name="escalier" type="number" class="form-control"
                                                     id="escalier" placeholder="Entrer un nombre" value="0">
@@ -220,7 +221,7 @@
 
                                         <div class="col-xxl-6 col-md-6" id="agentField" style="display: none;">
                                             <div>
-                                                <label for="exampleInputpassword" class="form-label">Nombre
+                                                <label for="exampleInputpassword" class="form-label" style="font-weight: bold">Nombre
                                                     d'agent</label>
                                                 <input type="number" name="nbre_personne" class="form-control"
                                                     id="exampleInputpassword"
@@ -230,7 +231,7 @@
                                         <!--end col-->
                                         <div class="col-xxl-6 col-md-6" id="heuresField" style="display: none;">
                                             <div>
-                                                <label for="exampleInputpassword" class="form-label">Heure de
+                                                <label for="exampleInputpassword" class="form-label" style="font-weight: bold">Heure de
                                                     travail</label>
                                                 <select class="form-control" name="heure_session" id="">
                                                     <option selected value="">Choisisez l'heure de
@@ -254,9 +255,10 @@
 
                                         <div class="col-xxl-6 col-md-6">
                                             <div>
-                                                <label for="exampleInputtime" class="form-label">Nombre de
+                                                <label for="exampleInputtime" class="form-label" style="font-weight: bold">Nombre de
                                                     fois</label>
-                                                <select class="form-control" name="nbre_fois" id="nbre_fois">
+                                                    <span class="text-danger" style="font-weight: bold">*</span>
+                                                <select class="form-control" name="nbre_fois" id="nbre_fois" required>
                                                     <option selected></option>
                                                     @foreach ($taux as $item)
                                                     <option value="{{$item->libelle}}">
@@ -269,12 +271,13 @@
                                         <!--end col-->
                                         <div class="col-xxl-6 col-md-6">
                                             <div>
-                                                <label for="exampleInputpassword" class="form-label">Date et heure
+                                                <label for="exampleInputpassword" class="form-label" style="font-weight: bold">Date et heure
                                                     debut
                                                     de
                                                     Visite</label>
+                                                    <span class="text-danger" style="font-weight: bold">*</span>
                                                 <input type="datetime-local" name="date_visite" class="form-control"
-                                                    id="exampleInputpassword">
+                                                    id="exampleInputpassword" required>
                                             </div>
                                         </div>
 
@@ -282,7 +285,8 @@
 
                                         <div class="col-xxl-6 col-md-6">
                                             <div>
-                                                <label for="exampleInputtime" class="form-label">Nom et prénoms</label>
+                                                <label for="exampleInputtime" class="form-label" style="font-weight: bold">Nom et prénoms</label>
+                                                <span class="text-danger" style="font-weight: bold">*</span>
                                                 <input type="text" name="name" class="form-control" id="" placeholder="Entrer le nom" required>
                                             </div>
                                         </div>
@@ -290,6 +294,7 @@
                                         <div class="col-xxl-6 col-md-6">
                                             <div>
                                                 <label for="borderInputCity" class="form-label">Email </label>
+                                                <span class="text-danger" style="font-weight: bold">*</span>
                                                 <input type="text" name="email" class="form-control" id=""
                                                     placeholder="Entrez votre email" required>
                                             </div>
@@ -298,28 +303,32 @@
                                         <!--end col-->
                                         <div class="col-xxl-6 col-md-6">
                                             <div>
-                                                <label for="borderInputPostalCode" class="form-label">Adresse</label>
+                                                <label for="borderInputPostalCode" class="form-label" style="font-weight: bold">Adresse</label>
+                                                <span class="text-danger" style="font-weight: bold">*</span>
                                                 <input type="text" name="adress" class="form-control" id=""
                                                     placeholder="Entrez votre adresse" required>
                                             </div>
                                         </div>
                                         <div class="col-xxl-6 col-md-6">
                                             <div>
-                                                <label for="borderInputPostalCode" class="form-label">Code postal</label>
+                                                <label for="borderInputPostalCode" class="form-label" style="font-weight: bold">Code postal</label>
+                                                <span class="text-danger" style="font-weight: bold">*</span>
                                                 <input type="text" name="postal" class="form-control" id=""
                                                     placeholder="Entrez votre code postal" required>
                                             </div>
                                         </div>
                                         <div class="col-xxl-6 col-md-6">
                                             <div>
-                                                <label for="borderInputPostalCode" class="form-label">Numero de téléphone</label>
+                                                <label for="borderInputPostalCode" class="form-label" style="font-weight: bold">Numero de téléphone</label>
+                                                <span class="text-danger" style="font-weight: bold">*</span>
                                                 <input type="text" name="contact" class="form-control" id=""
                                                     placeholder="Entrez votre numero de téléphone" required>
                                             </div>
                                         </div>
                                         <div class="col-xxl-6 col-md-6">
                                             <div>
-                                                <label for="borderInputCity" class="form-label">Ville </label>
+                                                <label for="borderInputCity" class="form-label" style="font-weight: bold">Ville </label>
+                                                <span class="text-danger" style="font-weight: bold">*</span>
                                                 <input type="text" name="vill" class="form-control" id=""
                                                     placeholder="Entrez votre ville" required>
                                             </div>
@@ -335,9 +344,9 @@
                                                     à qui ?</label>
                                                 <span style="font-weight: bold; color:red">*</span>
                                                 <div class="mb-2">
-                                                    <label for="oui">Pour moi</label>
+                                                    <label for="oui" style="font-weight: bold">Pour moi</label>
                                                     <input type="radio" id="oui" name="pour_qui" value="1" checked>
-                                                    <label style="margin-left:0.8rem;" for="non">Pour autre</label>
+                                                    <label style="margin-left:0.8rem;" for="non" style="font-weight: bold">Pour autre</label>
                                                     <input type="radio" id="non" name="pour_qui" value="0">
                                                 </div>
                                             </fieldset>
@@ -345,8 +354,9 @@
 
                                         <div class="col-xxl-6 col-md-6" id="addressField">
                                             <div>
-                                                <label for="borderInputAddress" class="form-label">Adresse de
+                                                <label for="borderInputAddress" class="form-label" style="font-weight: bold">Adresse de
                                                     l'intéressé</label>
+                                                     <span class="text-danger" style="font-weight: bold">*</span>
                                                 <input type="text" name="address" class="form-control" id=""
                                                     placeholder="Entrez votre adresse">
                                             </div>
@@ -355,25 +365,28 @@
 
                                         <div class="col-xxl-6 col-md-6" id="postalCodeField">
                                             <div>
-                                                <label for="borderInputPostalCode" class="form-label">Code postal de
+                                                <label for="borderInputPostalCode" class="form-label" style="font-weight: bold">Code postal de
                                                     l'intéressé</label>
+                                                    <span class="text-danger" style="font-weight: bold">*</span>
                                                 <input type="text" name="code" class="form-control" id=""
-                                                    placeholder="Entrez votre code postal" required>
+                                                    placeholder="Entrez votre code postal">
                                             </div>
                                         </div>
                                         <div class="col-xxl-6 col-md-6" id="cityField">
                                             <div>
-                                                <label for="borderInputCity" class="form-label">Ville de
+                                                <label for="borderInputCity" class="form-label" style="font-weight: bold">Ville de
                                                     l'intéressé</label>
+                                                    <span class="text-danger" style="font-weight: bold">*</span>
                                                 <input type="text" name="ville" class="form-control" id=""
-                                                    placeholder="Entrez votre ville" required>
+                                                    placeholder="Entrez votre ville">
                                             </div>
                                         </div>
 
                                         <div class="col-xxl-6 col-md-6">
                                             <div>
-                                                <label for="labelInput" class="form-label">Vos Instructions</label>
-                                                <textarea class="form-control" name="instruction"  cols="30" rows="4" placeholder="Vos instructions"></textarea>
+                                                <label for="labelInput" class="form-label" style="font-weight: bold">Vos Instructions</label>
+                                                <span class="text-danger" style="font-weight: bold">*</span>
+                                                <textarea class="form-control" name="instruction"  cols="30" rows="4" placeholder="Vos instructions" required></textarea>
                                                
                                             </div>
 
@@ -381,9 +394,10 @@
 
                                         <div class="col-xxl-6 col-md-6">
                                             <div>
-                                                <label for="labelInput" class="form-label">Information de stationnement</label>
+                                                <label for="labelInput" class="form-label" style="font-weight: bold">Information de stationnement</label>
+                                                <span class="text-danger" style="font-weight: bold">*</span>
 
-                                                <select class="form-select" name="station" id="StationSelect">
+                                                <select class="form-select" name="station" id="StationSelect" required>
                                                     <option value="" selected>Veuillez sélectionner une option</option>
                                                     <option value="0">J'ai pas un stationnement</option>
                                                     <option  value="1">J'ai un stationnement</option>
@@ -395,7 +409,9 @@
 
                                         <div class="col-xxl-6 col-md-6" id="positionStation" style="display: none">
                                             <div>
-                                                <label for="labelInput" class="form-label">Entrer la position de votre stationnement</label>
+                                                <label for="labelInput" class="form-label" style="font-weight: bold">Entrer la position de votre stationnement</label>
+                                                <span class="text-danger" style="font-weight: bold">*</span>
+
                                                 <textarea class="form-control" name="position"  cols="30" rows="4" placeholder="position de votre stationnement"></textarea>
                                             </div>
 
@@ -403,9 +419,10 @@
 
                                         <div class="col-xxl-6 col-md-6" >
                                             <div>
-                                                <label for="labelInput" class="form-label">Comment accéderons-nous à la propriété ?</label>
+                                                <label for="labelInput" class="form-label" style="font-weight: bold">Comment accéderons-nous à la propriété ?</label>
+                                                <span class="text-danger" style="font-weight: bold">*</span>
 
-                                                <textarea class="form-control" name="propriete"  cols="30" rows="4" placeholder="Emplacement de la clé, combinaison, commentaire, demande spécifiques etc..."></textarea>
+                                                <textarea class="form-control" name="propriete"  cols="30" rows="4" placeholder="Emplacement de la clé, combinaison, commentaire, demande spécifiques etc..." required></textarea>
                                                
                                             </div>
 
@@ -413,7 +430,7 @@
 
                                         <div class="col-xxl-6 col-md-6" id="">
                                             <div>
-                                                <label for="borderInputCity" class="form-label">Coupon de réduction <span class="text-danger">(si vous posséder)</span></label>
+                                                <label for="borderInputCity" class="form-label" style="font-weight: bold">Coupon de réduction <span class="text-danger">(si vous posséder)</span></label>
                                                 <input type="text" name="coupon" class="form-control" id=""
                                                     placeholder="Entrez le code du coupon" >
                                             </div>
@@ -431,7 +448,7 @@
                                                         <label class="form-check-label" for="paymentMethod03">
                                                             <span class="fs-16 text-muted me-2"><i
                                                                     class="ri-money-dollar-box-fill align-bottom"></i></span>
-                                                            <span class="fs-14 text-wrap">Paiement
+                                                            <span class="fs-14 text-wrap" style="font-weight: bold">Paiement
                                                                 en espèce</span>
                                                         </label>
                                                     </div>
@@ -447,7 +464,7 @@
                                                         <label class="form-check-label" for="paymentMethod02">
                                                             <span class="fs-16 text-muted me-2"><i
                                                                     class="ri-bank-card-fill align-bottom"></i></span>
-                                                            <span class="fs-14 text-wrap">Paiement
+                                                            <span class="fs-14 text-wrap" style="font-weight: bold">Paiement
                                                                 par Carte
                                                                 Bancaire</span>
                                                         </label>

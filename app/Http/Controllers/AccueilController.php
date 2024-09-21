@@ -180,10 +180,10 @@ class AccueilController extends Controller
                
                 
                 $sessionDates = $this->getSessionDates($validated['date_visite'], $validated['nbre_fois']);
-                $validated['session_dates'] = json_encode($sessionDates);
+                $reservationData['session_dates'] = json_encode($sessionDates);
         
                
-            $coupon = Coupon::where('libelle',$validated['coupon'])->first();
+            $coupon = Coupon::where('libelle',$reservationData['coupon'])->first();
                
            
             if($coupon){

@@ -244,19 +244,9 @@
                                     <div class="card-body p-0 pb-2">
                                         <div class="w-100">
                                             <div id="customer_impression_charts"
-                                                data-colors='["--vz-primary", "--vz-success", "--vz-danger"]'
-                                                data-colors-minimal='["--vz-light", "--vz-primary", "--vz-info"]'
-                                                data-colors-saas='["--vz-success", "--vz-info", "--vz-danger"]'
-                                                data-colors-modern='["--vz-warning", "--vz-primary", "--vz-success"]'
-                                                data-colors-interactive='["--vz-info", "--vz-primary", "--vz-danger"]'
-                                                data-colors-creative='["--vz-warning", "--vz-primary", "--vz-danger"]'
-                                                data-colors-corporate='["--vz-light", "--vz-primary", "--vz-secondary"]'
-                                                data-colors-galaxy='["--vz-secondary", "--vz-primary", "--vz-primary-rgb, 0.50"]'
-                                                data-colors-classic='["--vz-light", "--vz-primary", "--vz-secondary"]'
-                                                data-colors-vintage='["--vz-success", "--vz-primary", "--vz-secondary"]'
-                                                class="apex-charts" dir="ltr"></div>
+                                                 class="apex-charts" dir="ltr"></div>
                                         </div>
-                                    </div><!-- end card body -->
+                                    </div>
                                 </div><!-- end card -->
                             </div><!-- end col -->
 
@@ -342,6 +332,122 @@
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '/reservations/monthly',
+            method: 'GET',
+            success: function (data) {
+                // Créer le graphique avec les données reçues
+                var options = {
+                    series: [{
+                        name: 'Réservations',
+                        data: Object.values(data) // Utiliser les données reçues dans l'API
+                    }],
+                    chart: {
+                        height: 350,
+                        type: 'bar'
+                    },
+                    plotOptions: {
+                        bar: {
+                            borderRadius: 10,
+                            dataLabels: {
+                                position: 'top',
+                            },
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function (val) {
+                            return val;
+                        },
+                        offsetY: -20,
+                        style: {
+                            fontSize: '12px',
+                            colors: ["#304758"]
+                        }
+                    },
+                    xaxis: {
+                        categories: ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
+                        position: 'top',
+                        labels: {
+                            offsetY: -28,
+                        },
+                        axisBorder: {
+                            show: false
+                        },
+                        axisTicks: {
+                            show: false
+                        },
+                        crosshairs: {
+                            fill: {
+                                type: 'gradient',
+                                gradient: {
+                                    colorFrom: '#D8E3F0',
+                                    colorTo: '#BED1E6',
+                                    stops: [0, 100],
+                                    opacityFrom: 0.4,
+                                    opacityTo: 0.5,
+                                }
+                            }
+                        },
+                        tooltip: {
+                            enabled: true,
+                            offsetY: -35,
+                        }
+                    },
+                    fill: {
+                        gradient: {
+                            shade: 'light',
+                            type: "horizontal",
+                            shadeIntensity: 0.25,
+                            gradientToColors: undefined,
+                            inverseColors: true,
+                            opacityFrom: 0.85,
+                            opacityTo: 0.85,
+                            stops: [50, 0, 100, 100]
+                        },
+                    },
+                    colors: ['#00E396'], // Couleur des barres
+                    yaxis: {
+                        axisBorder: {
+                            show: false
+                        },
+                        axisTicks: {
+                            show: false,
+                        },
+                        labels: {
+                            show: false,
+                            formatter: function (val) {
+                                return val;
+                            }
+                        }
+                    },
+                    title: {
+                        text: 'Réservations Mensuelles',
+                        floating: true,
+                        offsetY: 330,
+                        align: 'center',
+                        style: {
+                            color: '#444'
+                        }
+                    }
+                };
+
+                // Initialiser le graphique avec ApexCharts
+                var chart = new ApexCharts(document.querySelector("#customer_impression_charts"), options);
+                chart.render();
+            },
+            error: function (error) {
+                console.error('Erreur lors de la récupération des données:', error);
+            }
+        });
+    });
+</script>
 
 @endsection
 

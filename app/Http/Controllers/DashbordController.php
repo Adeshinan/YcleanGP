@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class DashbordController extends Controller
@@ -59,4 +60,21 @@ class DashbordController extends Controller
         return view('erreur');
     }
     
+
+
+    public function getMonthlyReservations()
+    {
+        $reservations = DB::table('reservations')
+            ->select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as count'))
+            ->groupBy(DB::raw('MONTH(created_at)'))
+            ->get();
+        
+        $monthlyData = array_fill(1, 12, 0); 
+
+        foreach ($reservations as $reservation) {
+            $monthlyData[$reservation->month] = $reservation->count;
+        }
+
+        return response()->json($monthlyData);
+    }
 }

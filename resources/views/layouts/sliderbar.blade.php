@@ -86,12 +86,12 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
+               {{--  <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('agenda.client')}}">
                         <i class="ri-honour-line"></i> <span data-key="t-widgets">Agenda</span>
                     </a>
                 </li>
-
+ --}}
 
 
                 @if(Auth::user()->type_connecter == 'admin')

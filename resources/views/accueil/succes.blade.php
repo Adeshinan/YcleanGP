@@ -30,6 +30,7 @@
 
 <body>
     <div class="container">
+        @include('sweetalert::alert')
         <div class="success-container text-center">
             <img src="Admin/assets/images/verification-img.png" alt="Succès" class="success-image">
            

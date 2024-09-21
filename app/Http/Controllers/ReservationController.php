@@ -267,7 +267,6 @@ class ReservationController extends Controller
         }
 
     } catch (\Throwable $ex) {
-        dd($ex);
         Alert::toast('Une erreur est survenue lors de l\'enregistrement', 'error')->position('top-end')->timerProgressBar();
         \Log::error($ex->getMessage());
         return back()->withInput();
@@ -367,8 +366,8 @@ private function getSessionDates($date_visite, $nbre_fois)
         try {
             //code...
             $reservation = Reservation::find($id);
-            $page = 'Enregistrement reservation';
-        $entete = 'Enregistrer Reservation  -  Y Clean';
+            $page = 'Modification reservation';
+        $entete = 'Modification Reservation  -  Y Clean';
         
         $services = Service::all();
 
@@ -384,13 +383,142 @@ private function getSessionDates($date_visite, $nbre_fois)
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+   
+    public function updateReservation(Request $request, string $id)
     {
-        //
+        try {
+            $validated = $request->validate([
+                'service_id' => 'required|exists:services,id',
+                'extra' => 'nullable|array',
+                'chambre' => 'nullable|integer',
+                'cuisine' => 'nullable|integer',
+                'salle_bain' => 'nullable|integer',
+                'salle_eau' => 'nullable|integer',
+                'salon' => 'nullable|integer',
+                'buanderie' => 'nullable|integer',
+                'entre_couloir' => 'nullable|integer',
+                'escalier' => 'nullable|integer',
+                'nbre_personne' => 'nullable|integer',
+                'heure_session' => 'nullable|string',
+                'nbre_fois' => 'nullable|string',
+                'date_visite' => 'required|date',
+                'pour_qui' => 'required|boolean',
+                'address' => 'nullable|string',
+                'code' => 'nullable|string',
+                'ville' => 'nullable|string',
+                'instruction' => 'required|string',
+                'station' => 'required|string',
+                'propriete' => 'required|string',
+                'type_paiement' => 'required|integer',
+                'coupon' => 'nullable|string',
+                'position' => 'nullable|string',
+            ]);
+    
+            Stripe::setApiKey(config('stripe.sk'));
+    
+            $validated['user_id'] = Auth::id();
+    
+            $service = Service::findOrFail($validated['service_id']);
+            $servicePrice = $service->prixhors;
+    
+            $extrasPrice = 0;
+            if (isset($validated['extra'])) {
+                $extras = Extra::whereIn('id', $validated['extra'])->get();
+                foreach ($extras as $extra) {
+                    $extrasPrice += $extra->prix;
+                }
+                $validated['extra'] = json_encode($validated['extra']);
+            }
+    
+            if (
+                isset($validated['nbre_personne']) && $validated['nbre_personne'] <= $service->agent &&
+                isset($validated['heure_session']) && $validated['heure_session'] <= $service->heure
+            ) {
+                $servicePrice -= ($servicePrice * ($service->pourcentage / 100));
+            }
+    
+            $params = ['chambre', 'cuisine', 'salle_bain', 'salle_eau', 'salon', 'buanderie', 'entre_couloir', 'escalier'];
+            $paramsPrice = 0;
+            foreach ($params as $param) {
+                if (isset($validated[$param])) {
+                    $parametre = Parametre::where('libelle', $param)->first();
+                    if ($parametre) {
+                        $paramsPrice += $parametre->prix * $validated[$param];
+                    }
+                }
+            }
+    
+            $PrixDebut = $servicePrice + $extrasPrice + $paramsPrice;
+    
+            if (isset($validated['nbre_fois'])) {
+                $taux = Taux::where('libelle', $validated['nbre_fois'])->first();
+                if ($taux) {
+                    $PrixHT = $PrixDebut - ($PrixDebut * ($taux->pourcentage / 100));
+                }
+            }
+    
+            $sessionDates = $this->getSessionDates($validated['date_visite'], $validated['nbre_fois']);
+            $validated['session_dates'] = json_encode($sessionDates);
+    
+            $coupon = Coupon::where('libelle', $validated['coupon'])->first();
+    
+            if ($coupon) {
+                $prix = $PrixHT - ($PrixHT * ($coupon->pourcentage / 100));
+                $taxes = Taxe::all();
+                $totalTaxPercentage = $taxes->sum('pourcentage');
+                $taxAmount = $prix * ($totalTaxPercentage / 100);
+                $PrixTotal = $prix + $taxAmount;
+            } else {
+                $taxes = Taxe::all();
+                $totalTaxPercentage = $taxes->sum('pourcentage');
+                $taxAmount = $PrixHT * ($totalTaxPercentage / 100);
+                $PrixTotal = $PrixHT + $taxAmount;
+            }
+    
+            $validated['prixTotal'] = $PrixTotal;
+    
+           
+            $reservation = Reservation::findOrFail($id);
+    
+            if ($validated['type_paiement'] == 1) {
+                $session = Session::create([
+                    'line_items' => [
+                        [
+                            'price_data' => [
+                                'currency' => 'CAD',
+                                'product_data' => [
+                                    "name" => $service->libelle,
+                                ],
+                                'unit_amount' => $PrixTotal * 100
+                            ],
+                            'quantity' => 1,
+                        ],
+                    ],
+                    'mode' => 'payment',
+                    'success_url' => route('success'),
+                    'cancel_url' => route('checkout'),
+                ]);
+    
+               
+                $reservation->update($validated);
+    
+                Alert::toast('Modification effectué avec succès', 'success')->position('top-end')->timerProgressBar();
+                return redirect($session->url);
+            } else {
+             
+                $reservation->update($validated);
+    
+                Alert::toast('Modification effectué avec succès', 'success')->position('top-end')->timerProgressBar();
+                return redirect()->route('success.horsligne');
+            }
+        } catch (\Throwable $ex) {
+           
+            Alert::toast('Une erreur est survenue lors de l\'enregistrement', 'error')->position('top-end')->timerProgressBar();
+            \Log::error($ex->getMessage());
+            return back()->withInput();
+        }
     }
+    
 
     /**
      * Remove the specified resource from storage.

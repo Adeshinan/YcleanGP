@@ -29,9 +29,10 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
     <div class="container">
         <div class="success-container text-center">
-            <img src="Admin/assets/images/verification-img.png" alt="Succès" class="success-image">
+            <img src="{{asset('Admin/assets/images/verification-img.png')}}" alt="Succès" class="success-image">
            
             <h1 class="mt-4">Remerciement</h1>
             <p class="lead mt-4">Nous vous remercions d'avoir choisi notre service d'entretien ménager. Votre réservation a bien été enregistrée.
