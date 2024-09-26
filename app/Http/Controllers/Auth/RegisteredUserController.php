@@ -78,8 +78,7 @@ class RegisteredUserController extends Controller
     
             return redirect(RouteServiceProvider::HOME);
         } catch (\Throwable $ex) {
-           dd($ex);
-            //throw $th;
+          
             Alert::toast($th->getMessage(), 'error')->position('top-end')->timerProgressBar();
         }
        

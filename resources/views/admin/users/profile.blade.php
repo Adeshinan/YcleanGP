@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="profile-foreground position-relative mx-n4 mt-n4">
                 <div class="profile-wid-bg">
-                    <img src="assets/images/profile-bg.jpg" alt="" class="profile-wid-img" />
+                    <img src="Admin/assets/images/profile-bg.jpg" alt="" class="profile-wid-img" />
                 </div>
             </div>
             <div class="pt-4 mb-4 mb-lg-3 pb-lg-4 profile-wrapper">
@@ -29,6 +29,9 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-auto">
+                        <a class="btn btn-secondary" href="{{route('edit.profile',Auth::user()->id)}}">Modifier le profile</a>
                     </div>
                     <!--end col-->
                     <div class="col-12 col-lg-auto order-last order-lg-0">

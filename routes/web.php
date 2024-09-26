@@ -53,6 +53,7 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
 
     /////// Service ///////
     Route::resource('service', ServiceController::class);
+    
     Route::get('delete_service/{id}',[ServiceController::class,'delete'])->name('service.delete');
     //////////Extra //////
     Route::resource('extra', ExtraController::class);
@@ -74,11 +75,10 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
 });
 
 
-
-Route::middleware(['auth', 'isclient'])->group(function () {
-    Route::resource('reservation', ReservationController::class);
-    Route::get('update_reservation/{id}', [ReservationController::class,'updateReservation'])->name('update.reservation');
-    Route::get('/valider_reservation', [ReservationController::class,'ReservationValider'])->name('reservationliste.valider');
+Route::middleware('auth')->group(function () {
+Route::resource('reservation', ReservationController::class);
+Route::get('/valider_reservation', [ReservationController::class,'ReservationValider'])->name('reservationliste.valider');
+Route::get('update_reservation/{id}', [ReservationController::class,'updateReservation'])->name('update.reservation');
     Route::get('/facture/{id}', [ReservationController::class,'Facture'])->name('reservation.facture');
     Route::get('/success', [ReservationController::class,'success'])->name('success');
     Route::get('/success/horsligne', [ReservationController::class,'successHorsLigne'])->name('success.horsligne');
@@ -86,10 +86,13 @@ Route::middleware(['auth', 'isclient'])->group(function () {
     Route::get('reservations/{id}/next-sessions', [ReservationController::class, 'getNextSessionsFromReservation'])->name('reservation.getNextSessions');
     Route::get('/reservations_all', [ReservationController::class, 'getAll'])->name('reservation.getAll');
     
+    Route::get('user_profile',[UserController::class,'profile'])->name('user.profile');
+    Route::get('edit_profile/{id}',[UserController::class,'edit'])->name('edit.profile');
+    Route::post('update_profile/{id}',[UserController::class,'update'])->name('update.profile');
+    Route::post('update_user_password/{id}',[UserController::class,'updatePassword'])->name('update.pass');
 });
 
 
-Route::get('user_profile',[UserController::class,'profile'])->name('user.profile');
 
 
 
@@ -133,7 +136,7 @@ Route::get('agenda', [AgendaController::class,'index'])->name('agenda.client');
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile_edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

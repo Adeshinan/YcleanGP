@@ -88,10 +88,11 @@
                                                                 <a href="{{route('reservation.show',$reservation->id)}}"
                                                                     class="btn btn-sm btn-primary edit-item-btn">Détail</a>
                                                             </div>
+                                                         
                                                          <div class="edit">
                                                                 <a href="{{route('reservation.edit',$reservation->id)}}" class="btn btn-sm btn-success edit-item-btn">Edité</a>
                                                             </div>
-                                                           
+                                                        
                                                         </div>
                                                     </td>
                                                 </tr>
